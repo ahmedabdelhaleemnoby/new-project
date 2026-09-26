@@ -24,6 +24,7 @@ export async function generateMetadata({ params }: LayoutProps<"/[lang]">): Prom
 
 export default async function RootLayout({ children, params }: LayoutProps<"/[lang]">) {
   const { lang } = await getLocale(params);
-  // The inline script enables reveal styles before first paint, so revealed content doesn't flash; without JS nothing is hidden.
-  return <html lang={lang} dir={dirOf(lang)} className={`${manrope.variable} ${barlow.variable} ${plexArabic.variable} ${cairo.variable}`} suppressHydrationWarning><head><script dangerouslySetInnerHTML={{ __html: "if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&'IntersectionObserver'in window)document.documentElement.classList.add('motion')" }} /></head><body id="top">{children}<RevealObserver /></body></html>;
+  // The inline script runs before first paint: it enables reveal styles (without JS nothing is hidden) and
+  // hides the intro when it already played this session or the visitor prefers reduced motion.
+  return <html lang={lang} dir={dirOf(lang)} className={`${manrope.variable} ${barlow.variable} ${plexArabic.variable} ${cairo.variable}`} suppressHydrationWarning><head><script dangerouslySetInnerHTML={{ __html: "var d=document.documentElement,r=matchMedia('(prefers-reduced-motion: reduce)').matches,s;try{s=sessionStorage.getItem('ajyad-intro')}catch(e){s=1}if(r||s)d.classList.add('intro-seen');if(!r&&'IntersectionObserver'in window)d.classList.add('motion')" }} /></head><body id="top">{children}<RevealObserver /></body></html>;
 }

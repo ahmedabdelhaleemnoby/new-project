@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ArrowUpRight, Mail, MapPin, Phone } from "lucide-react";
+import { ArrowUpRight, Building2, Mail, MapPin, Phone } from "lucide-react";
 import { ContactForm } from "@/components/contact-form";
 import { PageIntro } from "@/components/page-intro";
 import { getLocale } from "@/i18n/dictionaries";
@@ -49,6 +49,17 @@ export default async function ContactPage({ params, searchParams }: PageProps<"/
                 <a className="text-link" href={site.address.mapUrl} target="_blank" rel="noopener noreferrer">{c.map} <ArrowUpRight size={16} aria-hidden="true" /></a>
               </div>
             </div>}
+            <div className="contact-detail">
+              <Building2 size={22} aria-hidden="true" />
+              <div>
+                <h3>{c.company}</h3>
+                <p>{site.fullName[lang]} · {site.legal.form[lang]}</p>
+                <dl className="legal-list">
+                  <div><dt>{c.commercialRegister}</dt><dd dir="ltr">{site.legal.commercialRegister}</dd></div>
+                  <div><dt>{c.taxCard}</dt><dd dir="ltr">{site.legal.taxCard}</dd></div>
+                </dl>
+              </div>
+            </div>
           </div>
 
           <div data-reveal="end">

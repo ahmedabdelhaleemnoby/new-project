@@ -1,5 +1,28 @@
 import { expect, test, type Page } from "@playwright/test";
 
+// The first-visit intro plays once per session; skip it except in the tests that cover it.
+test.beforeEach(async ({ page }, info) => {
+  if (!info.title.includes("intro")) await page.addInitScript(() => sessionStorage.setItem("ajyad-intro", "1"));
+});
+
+test("first-visit intro plays once per session and can be skipped", async ({ page }) => {
+  await page.goto("/");
+  const intro = page.locator(".intro");
+  await expect(intro).toBeVisible();
+  await page.getByRole("button", { name: "Skip intro" }).click();
+  await expect(intro).toHaveCount(0);
+  await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+  await page.reload();
+  await expect(page.locator(".intro")).toHaveCount(0);
+});
+
+test("intro is not shown with reduced motion", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/ar");
+  await expect(page.locator(".intro")).toBeHidden();
+  await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+});
+
 test("home navigation, highlight controls, and category preview", async ({ page, isMobile }) => {
   const errors: string[] = [];
   page.on("pageerror", e => errors.push(e.message));
