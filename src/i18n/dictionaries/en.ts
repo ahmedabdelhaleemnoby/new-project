@@ -400,6 +400,7 @@ export const en = {
       you: "You",
       roles: { admin: "Admin (everything)", editor: "Editor (website content)", sales: "Sales (enquiries)", hr: "HR (career enquiries)" },
     },
+    retry: "Try again",
     assignTo: "Assign to",
   },
   admin: {

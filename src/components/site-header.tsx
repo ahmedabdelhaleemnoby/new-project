@@ -80,7 +80,8 @@ export function SiteHeader({ lang, t, company, productMenu, sectors }: { lang: L
   const closeAll = () => { setMenu(null); setOpen(false); };
   const isActive = (p: string) => path === p || (p !== "/" && path.startsWith(p));
   const otherLang: Locale = lang === "en" ? "ar" : "en";
-  const switcher = <Link href={localePath(otherLang, path)} className="lang-switch" hrefLang={otherLang} lang={otherLang} aria-label={t.switchLanguageLabel} onClick={() => setOpen(false)}><Globe size={15} aria-hidden="true" />{t.switchLanguage}</Link>;
+  // A full page load, not client navigation: the root layout (lang, dir, fonts, pre-paint script) changes with the language.
+  const switcher = <a href={localePath(otherLang, path)} className="lang-switch" hrefLang={otherLang} lang={otherLang} aria-label={t.switchLanguageLabel}><Globe size={15} aria-hidden="true" />{t.switchLanguage}</a>;
 
   return <>
     <div className="utility-bar"><div className="container utility-inner"><span>{company.fullName.toUpperCase()}</span><div className="utility-links">{switcher}<a href={`mailto:${company.email}`}>{company.email} <ArrowUpRight size={12} /></a></div></div></div>

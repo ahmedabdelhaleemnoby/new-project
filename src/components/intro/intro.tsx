@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useLayoutEffect, useRef, useState } from "react";
 
 // First-visit intro: a Three.js kiln scene (loaded on demand), then the logo, then the overlay lifts.
 // Runs once per browser session. The root layout's inline script adds `intro-seen` before paint when
@@ -18,6 +18,7 @@ export function Intro({ skipLabel, logoAlt }: { skipLabel: string; logoAlt: stri
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const sceneRef = useRef<{ dispose(): void } | null>(null);
   const timers = useRef<number[]>([]);
+  const seenRef = useRef<boolean | null>(null);
 
   const finish = useCallback(() => {
     setPhase("done");
@@ -32,10 +33,18 @@ export function Intro({ skipLabel, logoAlt }: { skipLabel: string; logoAlt: stri
     timers.current = [window.setTimeout(finish, EXIT_MS)];
   }, [finish]);
 
-  useEffect(() => {
+  // Layout effect so a returning visitor never sees the overlay painted, including after a client-side
+  // language switch (React re-renders <html> and drops the `intro-seen` class set by the pre-paint script).
+  // Decided once per mount: React's development StrictMode runs effects twice, and the first run marks the intro as played.
+  useLayoutEffect(() => {
     const root = document.documentElement;
-    if (root.classList.contains("intro-seen")) { setPhase("done"); return; }
-    try { sessionStorage.setItem(STORAGE_KEY, "1"); } catch {}
+    if (seenRef.current === null) {
+      let seen = root.classList.contains("intro-seen") || window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      try { seen ||= sessionStorage.getItem(STORAGE_KEY) === "1"; } catch {}
+      seenRef.current = seen;
+      if (!seen) try { sessionStorage.setItem(STORAGE_KEY, "1"); } catch {}
+    }
+    if (seenRef.current) { root.classList.add("intro-seen"); setPhase("done"); return; }
     root.classList.add("intro-lock");
 
     let cancelled = false;
