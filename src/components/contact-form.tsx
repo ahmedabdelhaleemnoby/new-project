@@ -2,11 +2,15 @@
 
 import { useId, useRef, useState, type FormEvent } from "react";
 import { ArrowUpRight, Check, LoaderCircle } from "lucide-react";
+import { fill, type Locale } from "@/i18n/config";
+import type { Dictionary } from "@/i18n/dictionaries/en";
 import { submitEnquiry, type EnquiryResult, type EnquiryType } from "@/lib/enquiry";
+import { site } from "@/lib/site";
 
-type Status = { state: "idle" } | { state: "sending" } | { state: "sent"; reference: string } | { state: "error"; result: Exclude<EnquiryResult, { ok: true }> };
+type Failure = Exclude<EnquiryResult, { ok: true }>;
+type Status = { state: "idle" } | { state: "sending" } | { state: "sent"; reference: string } | { state: "error"; result: Failure };
 
-export function ContactForm({ type = "sales", productSlug = null, initialTopic = "" }: { type?: EnquiryType; productSlug?: string | null; initialTopic?: string }) {
+export function ContactForm({ lang, t, type = "sales", productSlug = null, initialTopic = "" }: { lang: Locale; t: Dictionary["form"]; type?: EnquiryType; productSlug?: string | null; initialTopic?: string }) {
   const id = useId();
   const isCareerEnquiry = type === "career";
   const [status, setStatus] = useState<Status>({ state: "idle" });
@@ -14,6 +18,22 @@ export function ContactForm({ type = "sales", productSlug = null, initialTopic =
   const idempotencyKey = useRef<string | null>(null);
   const errorRef = useRef<HTMLDivElement>(null);
   const fieldErrors = status.state === "error" && status.result.kind === "validation" ? status.result.fields : {};
+
+  function errorMessage(result: Failure) {
+    const email = site.salesEmail;
+    switch (result.kind) {
+      case "validation": return t.checkFields;
+      case "network": return fill(t.network, { email });
+      case "conflict": return t.conflict;
+      case "too-large": return t.tooLarge;
+      case "rate-limit": {
+        const s = result.retryAfter;
+        const wait = s === null ? t.fewMinutes : s < 90 ? fill(t.seconds, { count: Math.ceil(s) }) : fill(t.minutes, { count: Math.ceil(s / 60) });
+        return fill(t.rateLimit, { wait });
+      }
+      default: return fill(t.unavailable, { email });
+    }
+  }
 
   async function sendEnquiry(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -54,7 +74,9 @@ export function ContactForm({ type = "sales", productSlug = null, initialTopic =
   }
 
   function field(name: string) {
-    const error = fieldErrors[name] ?? (name === "topic" ? fieldErrors.productSlug : undefined);
+    const raw = fieldErrors[name] ?? (name === "topic" ? fieldErrors.productSlug : undefined);
+    // API validation messages are in English; show them there and a localized prompt otherwise.
+    const error = raw === undefined ? undefined : lang === "en" && raw ? raw : t.invalidField;
     return {
       id: `${id}-${name}`,
       "aria-invalid": error ? true : undefined,
@@ -64,13 +86,15 @@ export function ContactForm({ type = "sales", productSlug = null, initialTopic =
   }
   const f = { name: field("name"), company: field("company"), email: field("email"), phone: field("phone"), topic: field("topic"), message: field("message") };
   const sending = status.state === "sending";
+  const required = <span aria-hidden="true">*</span>;
+  const optionalLabel = <span>{t.optional}</span>;
 
   if (status.state === "sent") return (
     <div className="inquiry-form">
       <div className="form-success" role="status">
-        <p className="form-success-title"><Check size={18} aria-hidden="true" /> Thank you — your enquiry has been received.</p>
-        <p>Your reference is <strong>{status.reference}</strong>. Our team will reply by email.</p>
-        <button type="button" className="button button-outline" onClick={() => setStatus({ state: "idle" })}>Send another enquiry</button>
+        <p className="form-success-title"><Check size={18} aria-hidden="true" /> {t.sentTitle}</p>
+        <p>{fill(t.sentReference, { reference: status.reference })}</p>
+        <button type="button" className="button button-outline" onClick={() => setStatus({ state: "idle" })}>{t.sendAnother}</button>
       </div>
     </div>
   );
@@ -78,7 +102,7 @@ export function ContactForm({ type = "sales", productSlug = null, initialTopic =
   return (
     <form
       className="inquiry-form"
-      aria-label={isCareerEnquiry ? "Career enquiry" : type === "technical" ? "Technical enquiry" : "Product enquiry"}
+      aria-label={isCareerEnquiry ? t.labelCareer : type === "technical" ? t.labelTechnical : t.labelSales}
       aria-describedby={`${id}-note`}
       aria-busy={sending}
       onSubmit={sendEnquiry}
@@ -89,54 +113,52 @@ export function ContactForm({ type = "sales", productSlug = null, initialTopic =
     >
       <div className="form-grid">
         <div className="field">
-          <label htmlFor={f.name.id}>Full name <span aria-hidden="true">*</span></label>
-          <input id={f.name.id} name="name" aria-invalid={f.name["aria-invalid"]} aria-describedby={f.name["aria-describedby"]} autoComplete="name" placeholder="Your full name" required maxLength={120} />
+          <label htmlFor={f.name.id}>{t.name} {required}</label>
+          <input id={f.name.id} name="name" aria-invalid={f.name["aria-invalid"]} aria-describedby={f.name["aria-describedby"]} autoComplete="name" placeholder={t.namePlaceholder} required maxLength={120} />
           {f.name.error}
         </div>
         <div className="field">
-          <label htmlFor={f.company.id}>Company {isCareerEnquiry ? <span>(optional)</span> : <span aria-hidden="true">*</span>}</label>
-          <input id={f.company.id} name="company" aria-invalid={f.company["aria-invalid"]} aria-describedby={f.company["aria-describedby"]} autoComplete="organization" placeholder="Company name" required={!isCareerEnquiry} maxLength={160} />
+          <label htmlFor={f.company.id}>{t.company} {isCareerEnquiry ? optionalLabel : required}</label>
+          <input id={f.company.id} name="company" aria-invalid={f.company["aria-invalid"]} aria-describedby={f.company["aria-describedby"]} autoComplete="organization" placeholder={t.companyPlaceholder} required={!isCareerEnquiry} maxLength={160} />
           {f.company.error}
         </div>
         <div className="field">
-          <label htmlFor={f.email.id}>{isCareerEnquiry ? "Email" : "Work email"} <span aria-hidden="true">*</span></label>
-          <input id={f.email.id} name="email" aria-invalid={f.email["aria-invalid"]} aria-describedby={f.email["aria-describedby"]} type="email" autoComplete="email" placeholder={isCareerEnquiry ? "you@example.com" : "you@company.com"} required maxLength={254} />
+          <label htmlFor={f.email.id}>{isCareerEnquiry ? t.email : t.workEmail} {required}</label>
+          <input id={f.email.id} name="email" dir="ltr" aria-invalid={f.email["aria-invalid"]} aria-describedby={f.email["aria-describedby"]} type="email" autoComplete="email" placeholder={isCareerEnquiry ? t.emailPlaceholderCareer : t.emailPlaceholder} required maxLength={254} />
           {f.email.error}
         </div>
         <div className="field">
-          <label htmlFor={f.phone.id}>Phone <span>(optional)</span></label>
-          <input id={f.phone.id} name="phone" aria-invalid={f.phone["aria-invalid"]} aria-describedby={f.phone["aria-describedby"]} type="tel" autoComplete="tel" placeholder="Include country code" maxLength={50} />
+          <label htmlFor={f.phone.id}>{t.phone} {optionalLabel}</label>
+          <input id={f.phone.id} name="phone" dir="ltr" aria-invalid={f.phone["aria-invalid"]} aria-describedby={f.phone["aria-describedby"]} type="tel" autoComplete="tel" placeholder={t.phonePlaceholder} maxLength={50} />
           {f.phone.error}
         </div>
         <div className="field field-wide">
-          <label htmlFor={f.topic.id}>{isCareerEnquiry ? "Area of interest" : "Product of interest"} <span>(optional)</span></label>
-          <input id={f.topic.id} name="topic" aria-invalid={f.topic["aria-invalid"]} aria-describedby={f.topic["aria-describedby"]} defaultValue={initialTopic} placeholder={isCareerEnquiry ? "For example, production or engineering" : "Tell us what you’re looking for"} maxLength={160} />
+          <label htmlFor={f.topic.id}>{isCareerEnquiry ? t.topicCareer : t.topic} {optionalLabel}</label>
+          <input id={f.topic.id} name="topic" aria-invalid={f.topic["aria-invalid"]} aria-describedby={f.topic["aria-describedby"]} defaultValue={initialTopic} placeholder={isCareerEnquiry ? t.topicPlaceholderCareer : t.topicPlaceholder} maxLength={160} />
           {f.topic.error}
         </div>
         <div className="field field-wide">
-          <label htmlFor={f.message.id}>How can we help? <span aria-hidden="true">*</span></label>
-          <textarea id={f.message.id} name="message" aria-invalid={f.message["aria-invalid"]} aria-describedby={f.message["aria-describedby"]} placeholder={isCareerEnquiry ? "Tell us about your experience, the type of role you’re interested in, and your location…" : "Share your application, quantity, or project requirements…"} rows={5} required maxLength={4000} />
+          <label htmlFor={f.message.id}>{t.message} {required}</label>
+          <textarea id={f.message.id} name="message" aria-invalid={f.message["aria-invalid"]} aria-describedby={f.message["aria-describedby"]} placeholder={isCareerEnquiry ? t.messagePlaceholderCareer : t.messagePlaceholder} rows={5} required maxLength={4000} />
           {f.message.error}
         </div>
         <div className="form-honeypot" aria-hidden="true">
-          <label htmlFor={`${id}-website`}>Leave this field empty</label>
+          <label htmlFor={`${id}-website`}>{t.honeypot}</label>
           <input id={`${id}-website`} name="website" tabIndex={-1} autoComplete="off" />
         </div>
       </div>
 
       {status.state === "error" && (
         <div className="form-error" role="alert" tabIndex={-1} ref={errorRef}>
-          <p>{status.result.message}</p>
-          {status.result.kind !== "validation" && <a href="mailto:sales@asfourmr.com">Email sales@asfourmr.com instead <ArrowUpRight size={14} aria-hidden="true" /></a>}
+          <p>{errorMessage(status.result)}</p>
+          {status.result.kind !== "validation" && <a href={`mailto:${site.salesEmail}`}>{fill(t.emailInstead, { email: site.salesEmail })} <ArrowUpRight size={14} aria-hidden="true" /></a>}
         </div>
       )}
 
       <button type="submit" className="button button-blue" disabled={sending}>
-        {sending ? <>Sending… <LoaderCircle size={18} className="spin" aria-hidden="true" /></> : <>Send enquiry <ArrowUpRight size={18} aria-hidden="true" /></>}
+        {sending ? <>{t.sending} <LoaderCircle size={18} className="spin" aria-hidden="true" /></> : <>{t.send} <ArrowUpRight size={18} aria-hidden="true" /></>}
       </button>
-      <p className="form-note" id={`${id}-note`}>
-        Fields marked * are required. We use your details only to respond to this enquiry{isCareerEnquiry ? " and consider you for future opportunities" : ""}.
-      </p>
+      <p className="form-note" id={`${id}-note`}>{isCareerEnquiry ? t.noteCareer : t.note}</p>
     </form>
   );
 }

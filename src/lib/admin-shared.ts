@@ -1,10 +1,8 @@
-// Types and labels shared by the admin server code and admin Client Components.
+// Types shared by the admin server code and admin Client Components. Labels live in the dictionaries.
 import type { EnquiryType } from "@/lib/enquiry";
 
 export type WorkflowStatus = "new" | "in_progress" | "closed" | "spam";
 export const workflowStatuses: WorkflowStatus[] = ["new", "in_progress", "closed", "spam"];
-export const statusLabels: Record<WorkflowStatus, string> = { new: "New", in_progress: "In progress", closed: "Closed", spam: "Spam" };
-export const typeLabels: Record<EnquiryType, string> = { sales: "Sales", technical: "Technical", career: "Career" };
 
 export type Staff = { name: string; email: string; role: string };
 export type Enquiry = {

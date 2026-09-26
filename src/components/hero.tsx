@@ -2,14 +2,50 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
-import { useState } from "react";
-const slides = [
-  { image: "/images/hero.jpg", label: "ENGINEERED TO ENDURE. SINCE 1982.", title: <>BUILT FOR<br />THE EXTREME.</>, text: "Refractory solutions that keep your industry moving. From the heart of Egypt to the world’s most demanding environments.", caption: "THE ASFOUR PRODUCTION FACILITY · HELWAN, EGYPT" },
-  { image: "/images/production.jpg", label: "MATERIAL EXPERTISE. INDUSTRIAL STRENGTH.", title: <>PRECISION IN<br />EVERY PRODUCT.</>, text: "Shaped and unshaped refractories. A wide range of materials, with the expertise to find the right fit for your process.", caption: "REFRACTORY MANUFACTURING · ASFOUR M&R" },
-  { image: "/images/bricks.jpg", label: "ROOTED IN EGYPT. REACHING FURTHER.", title: <>LOCAL ROOTS.<br />GLOBAL REACH.</>, text: "Supporting industries across more than 30 countries with refractory materials and a commitment to long-term partnerships.", caption: "PREPARING FOR DELIVERY · ASFOUR M&R" },
-];
-export function Hero() {
+import { useEffect, useRef, useState } from "react";
+import { localePath, type Locale } from "@/i18n/config";
+import type { Dictionary } from "@/i18n/dictionaries/en";
+
+// TODO: replace these placeholder photos with Ajyad's own photography.
+const images = ["/images/hero.jpg", "/images/production.jpg", "/images/bricks.jpg"];
+const SLIDE_MS = 7000;
+
+export function Hero({ lang, t }: { lang: Locale; t: Dictionary["hero"] }) {
   const [index, setIndex] = useState(0);
-  const slide = slides[index];
-  return <section className="hero" aria-roledescription="carousel" aria-label="Asfour highlights"><div className="hero-image"><Image key={slide.image} src={slide.image} alt="Inside the Asfour refractory manufacturing facility in Egypt" fill sizes="100vw" priority /></div><div className="hero-shade" /><div className="container hero-inner"><div className="hero-content" key={index}><p className="eyebrow"><span className="small-square" />{slide.label}</p><h1>{slide.title}</h1><p className="hero-description">{slide.text}</p><div className="hero-actions"><Link className="button button-blue" href="/products">Explore our products <ArrowUpRight size={19} /></Link><Link className="button button-glass" href="/about">Discover Asfour <ArrowRight size={19} /></Link></div></div><div className="hero-bottom"><a href="#introduction" className="scroll-link"><ArrowDown size={17} /><span>SCROLL TO EXPLORE</span></a><div className="slide-controls"><span aria-live="polite"><b>0{index + 1}</b> / 03</span><button aria-label="Previous highlight" onClick={() => setIndex((index + 2) % 3)}><ArrowLeft size={19} /></button><button aria-label="Next highlight" onClick={() => setIndex((index + 1) % 3)}><ArrowRight size={19} /></button></div></div></div><span className="hero-photo-caption">{slide.caption}</span></section>;
+  const [paused, setPaused] = useState(false);
+  const [autoplay, setAutoplay] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+  const slide = t.slides[index];
+  const count = t.slides.length;
+
+  // Autoplay only without reduced motion, and pauses while the pointer or keyboard focus is in the hero.
+  useEffect(() => { setAutoplay(!window.matchMedia("(prefers-reduced-motion: reduce)").matches); }, []);
+  useEffect(() => {
+    if (!autoplay || paused) return;
+    const timer = window.setTimeout(() => setIndex(i => (i + 1) % count), SLIDE_MS);
+    return () => window.clearTimeout(timer);
+  }, [autoplay, paused, index, count]);
+
+  return <section ref={sectionRef} className="hero" aria-roledescription="carousel" aria-label={t.carousel}
+    onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}
+    onFocus={() => setPaused(true)} onBlur={event => { if (!sectionRef.current?.contains(event.relatedTarget as Node)) setPaused(false); }}>
+    <div className="hero-image"><Image key={images[index]} src={images[index]} alt={t.imageAlt} fill sizes="100vw" priority /></div>
+    <div className="hero-shade" />
+    <div className="container hero-inner">
+      <div className="hero-content" key={index}>
+        <p className="eyebrow"><span className="small-square" />{slide.label}</p>
+        <h1><span className="line"><span>{slide.title[0]}</span></span><span className="line"><span>{slide.title[1]}</span></span></h1>
+        <p className="hero-description">{slide.text}</p>
+        <div className="hero-actions"><Link className="button button-blue" href={localePath(lang, "/products")}>{t.explore} <ArrowUpRight size={19} /></Link><Link className="button button-glass" href={localePath(lang, "/about")}>{t.discover} <ArrowRight size={19} /></Link></div>
+      </div>
+      <div className="hero-bottom">
+        <a href="#introduction" className="scroll-link"><ArrowDown size={17} /><span>{t.scroll}</span></a>
+        <div className="slide-controls">
+          <span aria-live={autoplay && !paused ? "off" : "polite"}><span dir="ltr"><b>0{index + 1}</b> / 0{count}</span>{autoplay && <span className="slide-progress" aria-hidden="true"><i key={index} style={{ animationPlayState: paused ? "paused" : "running", ["--slide-ms" as string]: `${SLIDE_MS}ms` }} /></span>}</span>
+          <button aria-label={t.previous} onClick={() => setIndex((index + count - 1) % count)}><ArrowLeft size={19} /></button>
+          <button aria-label={t.next} onClick={() => setIndex((index + 1) % count)}><ArrowRight size={19} /></button>
+        </div>
+      </div>
+    </div>
+  </section>;
 }

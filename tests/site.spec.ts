@@ -21,22 +21,41 @@ test("home navigation, highlight controls, and category preview", async ({ page,
   expect(errors).toEqual([]);
 });
 
-test("catalogue filters, grade search, empty state, and product enquiry", async ({ page }) => {
+test("catalogue filters, search, empty state, and product enquiry", async ({ page }) => {
   await page.goto("/products?category=Unshaped");
   await expect(page.getByRole("status")).toHaveText("4 product families");
   await page.getByRole("button", { name: "All products", exact: true }).click();
-  await page.getByRole("textbox", { name: "Search products or grades" }).fill("BLW2301");
+  await page.getByRole("textbox", { name: "Search products" }).fill("lightweight");
   await expect(page.getByRole("status")).toHaveText("1 product family");
   await page.getByRole("link", { name: /Lightweight bricks/ }).click();
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Lightweight bricks");
-  await expect(page.getByRole("link", { name: /BLW2301 technical datasheet/ })).toHaveAttribute("href", /BLW2301\.pdf$/);
   await page.getByRole("link", { name: "Enquire about this product" }).click();
   await expect(page.getByRole("textbox", { name: /Product of interest/ })).toHaveValue("Lightweight bricks");
   await page.goto("/products");
-  await page.getByRole("textbox", { name: "Search products or grades" }).fill("nonexistent-grade-xyz");
+  await page.getByRole("textbox", { name: "Search products" }).fill("nonexistent-product-xyz");
   await expect(page.getByRole("heading", { name: "No matching products" })).toBeVisible();
   await page.getByRole("button", { name: "Clear filters" }).click();
   await expect(page.getByRole("status")).toHaveText("9 product families");
+});
+
+test("Arabic pages render right-to-left and the language switch keeps the page", async ({ page, isMobile }) => {
+  await page.goto("/products");
+  const toArabic = page.getByRole("link", { name: "عرض الموقع باللغة العربية" }).first();
+  await toArabic.click();
+  await expect(page).toHaveURL(/\/ar\/products$/);
+  await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
+  await expect(page.locator("html")).toHaveAttribute("lang", "ar");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("مواد صُنعت للتحدي.");
+  await expect(page.getByRole("status")).toHaveText("9 مجموعات منتجات");
+  await page.getByRole("link", { name: /الخرسانات الحرارية/ }).first().click();
+  await expect(page).toHaveURL(/\/ar\/products\/castables$/);
+  if (!isMobile) await page.getByRole("link", { name: "View this page in English" }).first().click();
+  else await page.goto("/ar/products/castables".replace("/ar", ""));
+  await expect(page).toHaveURL(/\/products\/castables$/);
+  await expect(page.locator("html")).toHaveAttribute("dir", "ltr");
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1)).toBe(true);
+  const response = await page.goto("/en/about");
+  expect(response?.url()).toMatch(/\/about$/);
 });
 
 const API = "https://project2.gfoura.com/api/v1/enquiries";
@@ -67,7 +86,7 @@ test("enquiry submits to the API, retries with the same key, and shows the refer
   expect(requests).toHaveLength(0);
   await fillEnquiry(page);
   await page.getByRole("button", { name: "Send enquiry" }).click();
-  await expect(page.locator(".inquiry-form").getByRole("alert")).toContainText("could not be saved");
+  await expect(page.locator(".inquiry-form").getByRole("alert")).toContainText("could not be sent");
   await expect(page.getByRole("textbox", { name: "How can we help?" })).toHaveValue("Please advise on castables for our kiln & installation.");
   await page.getByRole("button", { name: "Send enquiry" }).click();
   await expect(page.getByText("ENQ-TEST123")).toBeVisible();
@@ -100,7 +119,7 @@ test("enquiry shows field errors from the API and routes career enquiries", asyn
 });
 
 test("pages render without overflow and missing products return 404", async ({ page }) => {
-  for (const route of ["/", "/about", "/products", "/industries", "/research", "/contact", "/careers"]) {
+  for (const route of ["/", "/about", "/products", "/industries", "/research", "/contact", "/careers", "/ar", "/ar/about", "/ar/products", "/ar/industries", "/ar/research", "/ar/contact", "/ar/careers"]) {
     const response = await page.goto(route);
     expect(response?.status()).toBe(200);
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
@@ -115,7 +134,7 @@ test("unknown URLs keep the site navigation and the admin area requires sign-in"
   const response = await page.goto("/does-not-exist");
   expect(response?.status()).toBe(404);
   await expect(page.getByRole("heading", { name: "THIS PAGE IS OUT OF RANGE." })).toBeVisible();
-  await expect(page.getByRole("link", { name: "Asfour home" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Ajyad home" })).toBeVisible();
   await page.goto("/admin");
   await expect(page).toHaveURL(/\/admin\/login$/);
   await expect(page.getByRole("heading", { name: "Sign in" })).toBeVisible();
