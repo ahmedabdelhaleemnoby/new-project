@@ -12,7 +12,8 @@ export const products: Product[] = [
   { slug: "chamotte", name: "Chamotte", category: "Unshaped", short: "Raw materials for refractory and ceramic production.", description: "Chamotte is supplied across refractory, lightweight, and sanitary-ware ranges. Ask our sales team about available particle sizes and compositions for your production process.", grades: ["Refractory chamotte · CHR", "Lightweight chamotte · LWC", "Sanitary-ware chamotte · CHS"], image: "/images/hero.jpg" },
   { slug: "calcined-bauxite", name: "Calcined bauxite", category: "Unshaped", short: "A selection of particle sizes for your process.", description: "Calcined bauxite is offered in fine and aggregate sizes to meet a range of production requirements. Request current technical specifications and availability from our team.", grades: ["90 μm · C.B 90011", "500 μm · C.B 90012", "0–1 mm · C.B 90013", "1–3 mm · C.B 90014", "3–5 mm · C.B 90015"], image: "/images/bricks.jpg" },
 ];
-export const industries = [
+export type Industry = { name: string; slug: string; text: string; icon: string };
+export const industries: Industry[] = [
   { name: "Iron & steel", slug: "iron-steel", text: "Refractory and insulation solutions for steel production and casting.", icon: "steel" },
   { name: "Cement & lime", slug: "cement-lime", text: "Refractory material selection for demanding kiln operations.", icon: "cement" },
   { name: "Glass & ceramics", slug: "glass-ceramics", text: "Materials for thermal processes in glass and ceramic manufacturing.", icon: "glass" },

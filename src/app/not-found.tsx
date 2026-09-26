@@ -1,3 +1,7 @@
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
-export default function NotFound(){return <section className="not-found"><h1>404</h1><h2>THIS PAGE IS OUT OF RANGE.</h2><p>The page you’re looking for may have moved. Let’s get you back to our products.</p><Link className="button button-blue" href="/products">Explore products <ArrowRight size={18}/></Link></section>;}
+import { NotFoundContent } from "@/components/not-found-content";
+import { SiteShell } from "@/components/site-shell";
+
+// Unmatched URLs render outside the (site) group, so wrap them in the site chrome here.
+export default function NotFound() {
+  return <SiteShell><NotFoundContent /></SiteShell>;
+}

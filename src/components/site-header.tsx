@@ -5,7 +5,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, ChevronDown, FileText, Menu, X } from "lucide-react";
-import { productMenu, sectorMenu, type Datasheet } from "@/lib/menu";
+import type { Datasheet, MenuFamily } from "@/lib/menu";
 
 type MenuKey = "products" | "sectors";
 const links: [string, string, MenuKey?][] = [["/", "Home"], ["/about", "About us"], ["/products", "Products", "products"], ["/industries", "Sectors", "sectors"], ["/research", "R&D"], ["/contact", "Contact"]];
@@ -16,7 +16,7 @@ function SheetLink({ sheet, onClick }: { sheet: Datasheet; onClick?: () => void 
   return <a href={sheet.url} {...pdf} className="sheet-link" onClick={onClick} aria-label={`${sheet.label} datasheet (PDF, opens in new tab)`}><FileText size={13} />{sheet.label}</a>;
 }
 
-function ProductsPanel({ close }: { close: () => void }) {
+function ProductsPanel({ productMenu, close }: { productMenu: MenuFamily[]; close: () => void }) {
   const [active, setActive] = useState(productMenu[0].slug);
   const family = productMenu.find(f => f.slug === active) ?? productMenu[0];
   return <div className="nav-panel nav-panel-wide"><div className="container mega-inner">
@@ -31,11 +31,11 @@ function ProductsPanel({ close }: { close: () => void }) {
   </div></div>;
 }
 
-function SectorsPanel({ close }: { close: () => void }) {
+function SectorsPanel({ sectorMenu, close }: { sectorMenu: Datasheet[]; close: () => void }) {
   return <div className="nav-panel nav-panel-list"><p className="eyebrow">Sector brochures · PDF</p>{sectorMenu.map(sheet => <a key={sheet.url} href={sheet.url} {...pdf} onClick={close} aria-label={`${sheet.label} (PDF, opens in new tab)`}>{sheet.label}<FileText size={14} /></a>)}</div>;
 }
 
-export function SiteHeader() {
+export function SiteHeader({ productMenu, sectorMenu }: { productMenu: MenuFamily[]; sectorMenu: Datasheet[] }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [menu, setMenu] = useState<MenuKey | null>(null);
@@ -68,7 +68,7 @@ export function SiteHeader() {
           return <div key={href} className={`nav-item${key === "products" ? " nav-item-wide" : ""}${menu === key ? " open" : ""}`} onMouseEnter={() => { if (canHover()) setMenu(key); }} onMouseLeave={() => { if (canHover()) setMenu(null); }}>
             {top}
             <button type="button" className="nav-caret" data-menu={key} aria-label={`${title} menu`} aria-expanded={menu === key} onClick={event => setMenu(menu !== key || (event.detail > 0 && canHover()) ? key : null)}><ChevronDown size={14} /></button>
-            {menu === key && (key === "products" ? <ProductsPanel close={closeAll} /> : <SectorsPanel close={closeAll} />)}
+            {menu === key && (key === "products" ? <ProductsPanel productMenu={productMenu} close={closeAll} /> : <SectorsPanel sectorMenu={sectorMenu} close={closeAll} />)}
           </div>;
         })}</nav>
         <Link className="button button-blue header-cta" href="/contact" onClick={() => setOpen(false)}>Let’s talk <ArrowUpRight size={18} /></Link>

@@ -38,8 +38,9 @@ The Playwright checks exercise desktop and mobile navigation, catalogue filters 
 - `/products/[slug]` — nine product families with enquiry links; verified external datasheets on lightweight and dense alumina brick pages.
 - `/industries` — sector overview and installation services.
 - `/research` — research and development.
-- `/contact` — sales details and accessible enquiry form; accepts `?product=` for prefill.
+- `/contact` — sales details and enquiry form connected to the enquiry API; accepts `?type=`, `?product=` (slug) and `?topic=`.
 - `/careers` — speculative career enquiry route.
+- `/admin` — staff area: sign in, enquiry list with filters/search/pagination, enquiry detail with status, assignment and notification retry. Uses the API's `/admin/*` endpoints.
 
 ## Customize
 
@@ -47,7 +48,7 @@ The Playwright checks exercise desktop and mobile navigation, catalogue filters 
 - Homepage content: `src/app/page.tsx`; slides: `src/components/hero.tsx`.
 - Design tokens and responsive styles: `src/app/globals.css`.
 - Shared navigation and footer: `src/components/site-header.tsx` and `site-footer.tsx`.
-- Contact behaviour: `src/components/contact-form.tsx`.
+- Contact behaviour: `src/components/contact-form.tsx`; API client: `src/lib/enquiry.ts`.
 - Branding/photos: `public/images`; fonts: `public/fonts`.
 
 ## Backend requirements
@@ -56,7 +57,9 @@ See [BACKEND_REQUIREMENTS.md](BACKEND_REQUIREMENTS.md) for the proposed enquiry 
 
 ## Current integration scope
 
-The enquiry form validates input and prepares a mailto draft that the visitor reviews and sends in their email app. It also offers a copy action. It does not send email from a backend, store leads, or show a false delivery confirmation. Career enquiries use an optional company field. For direct submission, connect an email/CRM provider and add server-side validation and delivery handling.
+The enquiry form submits directly from the browser to the Asfour M&R enquiry API (`POST /enquiries`, Laravel, docs at https://project2.gfoura.com/docs/api). Set the base URL with `NEXT_PUBLIC_ENQUIRY_API_URL` (see `.env.example`; defaults to `https://project2.gfoura.com/api/v1`). The API must allow the site origin through CORS; it currently allows `https://project1.gfoura.com`, so submissions from `localhost` fail until that origin is added. Enquiry type comes from the link (`/contact?type=sales|technical|career`), products are sent by slug (`?product=<slug>`), and `?topic=` prefills the topic. Each submission sends an `Idempotency-Key` that is reused on retries of unchanged content. The staff area under `/admin` calls the API from the Next.js server with a bearer token kept in an httpOnly cookie (`ADMIN_API_URL` overrides the API base URL).
+
+Site content (products, sectors, navigation menus) is read on the server by `src/lib/content.ts` from proposed API endpoints (`/products`, `/industries`, `/menus/products`, `/menus/sectors`) and cached for 5 minutes. When an endpoint is missing, fails, or returns null/empty data, the local data in `src/lib/data.ts` and `src/lib/menu.ts` is used, and null fields on matching items are filled from the local copy. `CONTENT_API_URL` overrides the base URL.
 
 This is an English website. It does not connect to the original site's order placement or order tracking systems, and does not include a CMS, authentication, payment processing, or vacancy management. Those require separate integrations. No production deployment has been made. Search indexing is disabled in `src/app/layout.tsx` for this preview; review branding/content and configure production metadata before publishing.
 
