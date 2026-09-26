@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { ArrowUpRight, Mail, MapPin, Phone } from "lucide-react";
-import { ContactForm } from "../../components/contact-form";
-import { PageIntro } from "../../components/page-intro";
+import { ContactForm } from "@/components/contact-form";
+import { PageIntro } from "@/components/page-intro";
+import { resolveEnquiryPrefill } from "@/lib/enquiry";
+import { getProducts } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -11,9 +13,11 @@ export const metadata: Metadata = {
 export default async function ContactPage({
   searchParams,
 }: {
-  searchParams: Promise<{ product?: string }>;
+  searchParams: Promise<{ type?: string; product?: string; topic?: string }>;
 }) {
-  const { product } = await searchParams;
+  const params = await searchParams;
+  const text = (value: unknown) => (typeof value === "string" ? value : undefined);
+  const prefill = resolveEnquiryPrefill(await getProducts(), { type: text(params.type), product: text(params.product), topic: text(params.topic) });
 
   return (
     <>
@@ -27,7 +31,7 @@ export default async function ContactPage({
           <div className="contact-details">
             <p className="eyebrow">THE RIGHT CONNECTION</p>
             <h2>Good things start<br />with a conversation.</h2>
-            <p>Reach us directly, or prepare an enquiry with the form. We look forward to hearing about your requirements.</p>
+            <p>Reach us directly, or send an enquiry with the form. We look forward to hearing about your requirements.</p>
 
             <div className="contact-detail">
               <Mail size={22} aria-hidden="true" />
@@ -69,7 +73,7 @@ export default async function ContactPage({
 
           <div>
             <p className="eyebrow">TELL US WHAT YOU NEED</p>
-            <ContactForm key={typeof product === "string" ? product : ""} initialProduct={typeof product === "string" ? product : ""} />
+            <ContactForm key={`${prefill.type}:${prefill.productSlug}:${prefill.topic}`} type={prefill.type} productSlug={prefill.productSlug} initialTopic={prefill.topic} />
           </div>
         </div>
       </section>

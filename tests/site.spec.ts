@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test, type Page } from "@playwright/test";
 
 test("home navigation, highlight controls, and category preview", async ({ page, isMobile }) => {
   const errors: string[] = [];
@@ -39,22 +39,64 @@ test("catalogue filters, grade search, empty state, and product enquiry", async 
   await expect(page.getByRole("status")).toHaveText("9 product families");
 });
 
-test("enquiry prepares an encoded draft and invalidates it on edits", async ({ page }) => {
-  await page.goto("/contact?product=Refractory%20castables");
-  await page.getByRole("button", { name: "Prepare enquiry" }).click();
-  await expect(page.getByRole("link", { name: "Open email draft" })).toHaveCount(0);
+const API = "https://project2.gfoura.com/api/v1/enquiries";
+const cors = { "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Headers": "content-type, accept, idempotency-key", "Access-Control-Allow-Methods": "POST, OPTIONS", "Access-Control-Expose-Headers": "Retry-After" };
+
+async function fillEnquiry(page: Page, message = "Please advise on castables for our kiln & installation.") {
   await page.getByRole("textbox", { name: "Full name" }).fill("Test Buyer");
   await page.getByRole("textbox", { name: "Company", exact: true }).fill("Example Industries");
   await page.getByRole("textbox", { name: "Work email" }).fill("buyer@example.com");
-  await page.getByRole("textbox", { name: "How can we help?" }).fill("Please advise on castables for our kiln & installation.");
-  await page.getByRole("button", { name: "Prepare enquiry" }).click();
-  await expect(page.getByText("Your enquiry is ready. Open your email app to send it.")).toBeVisible();
-  const href = await page.getByRole("link", { name: "Open email draft" }).getAttribute("href");
-  expect(href).toContain("mailto:sales@asfourmr.com?");
-  expect(decodeURIComponent(href!)).toContain("kiln & installation.");
-  expect(decodeURIComponent(href!)).toContain("Product of interest: Refractory castables");
-  await page.getByRole("textbox", { name: "How can we help?" }).fill("Updated requirements");
-  await expect(page.getByRole("link", { name: "Open email draft" })).toHaveCount(0);
+  await page.getByRole("textbox", { name: "How can we help?" }).fill(message);
+}
+
+test("enquiry submits to the API, retries with the same key, and shows the reference", async ({ page }) => {
+  const requests: { body: Record<string, unknown>; key: string | null }[] = [];
+  let attempt = 0;
+  await page.route(API, async route => {
+    const request = route.request();
+    if (request.method() === "OPTIONS") return route.fulfill({ status: 204, headers: cors });
+    requests.push({ body: request.postDataJSON(), key: request.headers()["idempotency-key"] ?? null });
+    attempt += 1;
+    if (attempt === 1) return route.fulfill({ status: 503, headers: cors, json: { error: { code: "SERVICE_UNAVAILABLE", message: "Your enquiry could not be saved. Please try again shortly." } } });
+    return route.fulfill({ status: 201, headers: cors, json: { reference: "ENQ-TEST123", status: "received" } });
+  });
+
+  await page.goto("/contact?product=castables");
+  await expect(page.getByRole("textbox", { name: /Product of interest/ })).toHaveValue("Refractory castables");
+  await page.getByRole("button", { name: "Send enquiry" }).click();
+  expect(requests).toHaveLength(0);
+  await fillEnquiry(page);
+  await page.getByRole("button", { name: "Send enquiry" }).click();
+  await expect(page.locator(".inquiry-form").getByRole("alert")).toContainText("could not be saved");
+  await expect(page.getByRole("textbox", { name: "How can we help?" })).toHaveValue("Please advise on castables for our kiln & installation.");
+  await page.getByRole("button", { name: "Send enquiry" }).click();
+  await expect(page.getByText("ENQ-TEST123")).toBeVisible();
+
+  expect(requests).toHaveLength(2);
+  expect(requests[0].key).toMatch(/^[0-9a-f-]{36}$/);
+  expect(requests[1].key).toBe(requests[0].key);
+  expect(requests[0].body).toEqual({ type: "sales", name: "Test Buyer", email: "buyer@example.com", company: "Example Industries", phone: null, productSlug: "castables", topic: "Refractory castables", message: "Please advise on castables for our kiln & installation.", website: null });
+});
+
+test("enquiry shows field errors from the API and routes career enquiries", async ({ page }) => {
+  const bodies: Record<string, unknown>[] = [];
+  await page.route(API, async route => {
+    if (route.request().method() === "OPTIONS") return route.fulfill({ status: 204, headers: cors });
+    bodies.push(route.request().postDataJSON());
+    return route.fulfill({ status: 422, headers: cors, json: { message: "The email field must be a valid email address.", errors: { email: ["The email field must be a valid email address."] } } });
+  });
+
+  await page.goto("/careers");
+  await page.getByRole("link", { name: "Introduce yourself" }).click();
+  await expect(page).toHaveURL(/type=career/);
+  await page.getByRole("textbox", { name: "Full name" }).fill("Test Applicant");
+  await page.getByRole("textbox", { name: "Email", exact: true }).fill("applicant@example.com");
+  await page.getByRole("textbox", { name: "How can we help?" }).fill("Engineering experience.");
+  await page.getByRole("button", { name: "Send enquiry" }).click();
+  await expect(page.locator(".inquiry-form").getByRole("alert")).toHaveText("Check the highlighted fields.");
+  await expect(page.getByRole("textbox", { name: "Email", exact: true })).toHaveAttribute("aria-invalid", "true");
+  await expect(page.getByText("The email field must be a valid email address.")).toBeVisible();
+  expect(bodies[0]).toMatchObject({ type: "career", company: null, productSlug: null });
 });
 
 test("pages render without overflow and missing products return 404", async ({ page }) => {
@@ -67,4 +109,15 @@ test("pages render without overflow and missing products return 404", async ({ p
   const response = await page.goto("/products/not-a-product");
   expect(response?.status()).toBe(404);
   await expect(page.getByRole("heading", { name: "THIS PAGE IS OUT OF RANGE." })).toBeVisible();
+});
+
+test("unknown URLs keep the site navigation and the admin area requires sign-in", async ({ page }) => {
+  const response = await page.goto("/does-not-exist");
+  expect(response?.status()).toBe(404);
+  await expect(page.getByRole("heading", { name: "THIS PAGE IS OUT OF RANGE." })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Asfour home" })).toBeVisible();
+  await page.goto("/admin");
+  await expect(page).toHaveURL(/\/admin\/login$/);
+  await expect(page.getByRole("heading", { name: "Sign in" })).toBeVisible();
+  await expect(page.getByRole("navigation", { name: "Main navigation" })).toHaveCount(0);
 });

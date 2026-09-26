@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import { PageIntro } from "../../components/page-intro";
-import { ContactBanner } from "../../components/site-footer";
+import { PageIntro } from "@/components/page-intro";
+import { ContactBanner } from "@/components/site-footer";
 
 export const metadata: Metadata = {
   title: "Research & Development",
@@ -34,7 +34,7 @@ export default function ResearchPage() {
             <h2>A closer look.<br />A better starting point.</h2>
             <p>Every application begins with its own requirements. Our research and development facility helps us develop products to meet customer specifications.</p>
             <p>By sharing your technical needs with our team, you give us the starting point for a focused conversation about your product requirements.</p>
-            <Link href="/contact?product=Technical%20enquiry" className="text-link">
+            <Link href="/contact?type=technical&topic=Technical%20enquiry" className="text-link">
               Discuss your requirements <ArrowUpRight size={18} aria-hidden="true" />
             </Link>
           </div>
@@ -51,7 +51,7 @@ export default function ResearchPage() {
               <li>Your operating conditions and performance requirements.</li>
               <li>Any technical specifications you can share.</li>
             </ul>
-            <Link href="/contact?product=Research%20and%20development%20enquiry" className="button button-blue">
+            <Link href="/contact?type=technical&topic=Research%20and%20development%20enquiry" className="button button-blue">
               Start a technical conversation <ArrowUpRight size={18} aria-hidden="true" />
             </Link>
           </div>

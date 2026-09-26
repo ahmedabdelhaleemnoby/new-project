@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import { PageIntro } from "../../components/page-intro";
-import { ContactBanner } from "../../components/site-footer";
+import { PageIntro } from "@/components/page-intro";
+import { ContactBanner } from "@/components/site-footer";
 
 export const metadata: Metadata = {
   title: "Careers",
@@ -24,7 +24,7 @@ export default function CareersPage() {
             <h2>Great work begins<br />with people.</h2>
             <p>Interested in joining Asfour M&R? We welcome introductions from people who would like to contribute their skills and experience to our business.</p>
             <p>There are no specific vacancies listed on this page. You can still make a speculative enquiry about future opportunities.</p>
-            <Link href="/contact?product=Career%20enquiry" className="button button-blue">
+            <Link href="/contact?type=career" className="button button-blue">
               Introduce yourself <ArrowUpRight size={18} aria-hidden="true" />
             </Link>
           </div>
@@ -37,7 +37,7 @@ export default function CareersPage() {
               <li>The kind of role or work you are interested in.</li>
               <li>Your contact details and location.</li>
             </ul>
-            <p>The contact form prepares an email draft for you to review and send. You can attach your CV in your email app before sending it.</p>
+            <p>Send your introduction with the contact form. Our team will reply by email if there is a suitable opportunity and let you know how to share your CV.</p>
           </div>
         </div>
       </section>

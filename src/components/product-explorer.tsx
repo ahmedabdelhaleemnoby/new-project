@@ -3,13 +3,13 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, ArrowRight, Search, X } from "lucide-react";
-import { products } from "@/lib/data";
+import type { Product } from "@/lib/data";
 
-export function ProductPreview() {
+export function ProductPreview({ products }: { products: Product[] }) {
   const [category, setCategory] = useState<"Shaped" | "Unshaped">("Shaped");
   return <div className="product-preview"><div className="product-preview-image"><Image src={category === "Shaped" ? "/images/production.jpg" : "/images/bricks.jpg"} alt={category === "Shaped" ? "Asfour refractory production" : "Asfour bulk refractory materials ready for delivery"} fill sizes="(max-width: 760px) 100vw, 45vw" /><span className="image-tag">MATERIALS THAT MAKE A DIFFERENCE</span></div><div className="product-preview-content"><div className="product-tabs" role="group" aria-label="Product category">{(["Shaped", "Unshaped"] as const).map(item => <button key={item} aria-pressed={category === item} className={category === item ? "selected" : ""} onClick={() => setCategory(item)}>{item} products <span>0{item === "Shaped" ? 5 : 4}</span></button>)}</div><div className="product-rows">{products.filter(p => p.category === category).slice(0, 3).map((product, i) => <Link key={product.slug} href={`/products/${product.slug}`} className="product-row"><span className="row-number">0{i + 1}</span><div><h3>{product.name}</h3><p>{product.short}</p></div><ArrowUpRight size={24} /></Link>)}</div><Link href={`/products?category=${category}`} className="text-link">View all {category.toLowerCase()} products <ArrowRight size={18} /></Link></div></div>;
 }
-export function ProductCatalogue({ initialCategory = "All" }: { initialCategory?: string }) {
+export function ProductCatalogue({ products, initialCategory = "All" }: { products: Product[]; initialCategory?: string }) {
   const [category, setCategory] = useState(["Shaped", "Unshaped"].includes(initialCategory) ? initialCategory : "All");
   const [query, setQuery] = useState("");
   const filtered = products.filter(p => (category === "All" || p.category === category) && `${p.name} ${p.short} ${p.grades.join(" ")}`.toLowerCase().includes(query.toLowerCase()));
