@@ -4,7 +4,7 @@ import { LoginForm } from "@/components/admin/login-form";
 import { Logo } from "@/components/logo";
 import { localePath } from "@/i18n/config";
 import { getLocale } from "@/i18n/dictionaries";
-import { getToken } from "@/lib/admin-api";
+import { adminBrandName, getToken } from "@/lib/admin-api";
 
 export async function generateMetadata({ params }: PageProps<"/[lang]/admin/login">): Promise<Metadata> {
   const { t } = await getLocale(params);
@@ -17,7 +17,7 @@ export default async function LoginPage({ params, searchParams }: PageProps<"/[l
   if (token && !expired) redirect(localePath(lang, "/admin"));
   return <main className="admin-login">
     <div className="admin-login-card">
-      <Logo lang={lang} className="admin-login-logo" />
+      <Logo alt={adminBrandName(lang)} className="admin-login-logo" />
       <p className="eyebrow"><span className="small-square" />{t.admin.staffArea}</p>
       <h1>{t.admin.signIn}</h1>
       {expired && <p className="admin-notice" role="status">{t.admin.expired}</p>}

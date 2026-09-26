@@ -8,6 +8,7 @@ import { AdminApiError, adminErrorMessage, adminFetch, type Enquiry, type Notifi
 import { EnquiryUpdateForm } from "@/components/admin/enquiry-update-form";
 import { RetryButton } from "@/components/admin/retry-button";
 import { formatDate } from "@/components/admin/format";
+import { adminLoad } from "@/lib/admin-load";
 
 export async function generateMetadata({ params }: PageProps<"/[lang]/admin/enquiries/[id]">): Promise<Metadata> {
   const { t } = await getLocale(params);
@@ -40,6 +41,8 @@ export default async function EnquiryPage({ params }: PageProps<"/[lang]/admin/e
     notificationError = adminErrorMessage(e, lang, t);
   }
 
+  const staffOptions = await adminLoad<{ id: number; name: string }[]>(lang, "/admin/staff/options");
+
   return <>
     {back}
     <div className="admin-heading">
@@ -66,7 +69,7 @@ export default async function EnquiryPage({ params }: PageProps<"/[lang]/admin/e
 
       <aside className="admin-card" aria-labelledby="enquiry-follow-up">
         <h2 id="enquiry-follow-up">{t.followUp}</h2>
-        <EnquiryUpdateForm lang={lang} t={t} id={id} status={enquiry.workflow_status} assignedTo={enquiry.assigned_to} />
+        <EnquiryUpdateForm lang={lang} t={t} assignLabel={dict.cms.assignTo} staff={"data" in staffOptions ? staffOptions.data : null} id={id} status={enquiry.workflow_status} assignedTo={enquiry.assigned_to} />
       </aside>
     </div>
 

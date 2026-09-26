@@ -6,11 +6,10 @@ import { useEffect, useRef, useState } from "react";
 import { localePath, type Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries/en";
 
-// TODO: replace these placeholder photos with Ajyad's own photography.
-const images = ["/images/hero.jpg", "/images/production.jpg", "/images/about.jpg"];
 const SLIDE_MS = 7000;
 
-export function Hero({ lang, t }: { lang: Locale; t: Dictionary["hero"] }) {
+/** `images` holds one photo per slide (company settings `hero_1`–`hero_3`). */
+export function Hero({ lang, t, images }: { lang: Locale; t: Dictionary["hero"]; images: string[] }) {
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const [autoplay, setAutoplay] = useState(false);

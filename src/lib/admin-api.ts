@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { localePath, type Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries/en";
 import type { Staff } from "@/lib/admin-shared";
+import { site } from "@/lib/site";
 
 export * from "@/lib/admin-shared";
 
@@ -15,6 +16,12 @@ export const TOKEN_COOKIE = "ajyad_admin_token";
 export class AdminApiError extends Error {
   constructor(public status: number, public apiMessage: string | null = null, public fields: Record<string, string> = {}) { super(apiMessage ?? `Admin API error ${status}`); }
 }
+
+/** The endpoint doesn't exist yet on the backend (see docs/BACKEND_CMS_SPEC.md). */
+export const isNotReady = (error: unknown) => error instanceof AdminApiError && (error.status === 404 || error.status === 405 || error.status === 501);
+
+/** Local company name for dashboard chrome (the logo alt text). */
+export const adminBrandName = (lang: Locale) => site.fullName[lang];
 
 /** User-facing message for an admin API error: the API's English message on English pages, otherwise a localized one. */
 export function adminErrorMessage(error: AdminApiError, lang: Locale, t: Dictionary["admin"]) {
@@ -37,25 +44,45 @@ export async function getToken() {
   return (await cookies()).get(TOKEN_COOKIE)?.value ?? null;
 }
 
-/** Authenticated request. A missing or rejected token sends the user to the login page for `lang`. */
+/** Authenticated JSON request. A missing or rejected token sends the user to the login page for `lang`. */
 export async function adminFetch<T>(lang: Locale, path: string, init: { method?: string; body?: unknown } = {}): Promise<T> {
+  return (await adminSend(lang, path, { method: init.method ?? "GET", body: init.body })) as T;
+}
+
+/** Multipart upload (media library). The file passes through the Next server, so no browser CORS is involved. */
+export async function adminUpload<T>(lang: Locale, path: string, body: FormData): Promise<T> {
   const token = await getToken();
   if (!token) redirect(localePath(lang, "/admin/login"));
   let response: Response;
   try {
-    response = await fetch(`${ADMIN_API_URL}${path}`, {
-      method: init.method ?? "GET",
-      headers: { Accept: "application/json", Authorization: `Bearer ${token}`, ...(init.body ? { "Content-Type": "application/json" } : {}) },
-      body: init.body ? JSON.stringify(init.body) : undefined,
-      cache: "no-store",
-      signal: AbortSignal.timeout(10000),
-    });
+    response = await fetch(`${ADMIN_API_URL}${path}`, { method: "POST", headers: { Accept: "application/json", Authorization: `Bearer ${token}` }, body, cache: "no-store", signal: AbortSignal.timeout(60000) });
   } catch {
     throw new AdminApiError(0);
   }
   if (response.status === 401) redirect(localePath(lang, "/admin/login?expired=1"));
   if (!response.ok) throw await errorFrom(response);
   return response.json() as Promise<T>;
+}
+
+/** Requests that may return 204 No Content (deletes). */
+export async function adminSend(lang: Locale, path: string, init: { method: string; body?: unknown }): Promise<unknown> {
+  const token = await getToken();
+  if (!token) redirect(localePath(lang, "/admin/login"));
+  let response: Response;
+  try {
+    response = await fetch(`${ADMIN_API_URL}${path}`, {
+      method: init.method,
+      headers: { Accept: "application/json", Authorization: `Bearer ${token}`, ...(init.body ? { "Content-Type": "application/json" } : {}) },
+      body: init.body ? JSON.stringify(init.body) : undefined,
+      cache: "no-store",
+      signal: AbortSignal.timeout(15000),
+    });
+  } catch {
+    throw new AdminApiError(0);
+  }
+  if (response.status === 401) redirect(localePath(lang, "/admin/login?expired=1"));
+  if (!response.ok) throw await errorFrom(response);
+  return response.status === 204 ? null : response.json().catch(() => null);
 }
 
 export async function login(email: string, password: string): Promise<{ token: string; staff: Staff }> {

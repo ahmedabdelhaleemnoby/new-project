@@ -4,15 +4,21 @@
 //   /industries       → Industry[]     (src/lib/data.ts)
 //   /menus/products   → MenuFamily[]   (src/lib/menu.ts; locally derived from the products, without datasheets)
 //   /menus/sectors    → Datasheet[]    (src/lib/menu.ts; locally empty, so the header links to the sectors page)
+//   /settings         → company details and page photos (src/lib/settings.ts)
+//   /content          → page-text overrides, a flat { "dictionary.key": "text" } map (src/i18n/dictionaries.ts)
+// Full contract: docs/BACKEND_CMS_SPEC.md.
 // A null, empty, invalid, or failed response uses the local list. Items that match a local item
 // (by slug, or by URL for sector brochures) get null or missing fields filled from the local copy.
 // Server-only: call from Server Components and pass the results to Client Components as props.
 import type { Locale } from "@/i18n/config";
 import { localIndustries, localProducts, type Industry, type Product } from "@/lib/data";
 import type { Datasheet, MenuFamily } from "@/lib/menu";
+import { imageKeys, localSettings, type SiteSettings } from "@/lib/settings";
 
 const CONTENT_API_URL = (process.env.CONTENT_API_URL ?? process.env.NEXT_PUBLIC_ENQUIRY_API_URL ?? "https://project2.gfoura.com/api/v1").replace(/\/$/, "");
 const REVALIDATE_SECONDS = 300;
+/** Cache tag for every content request; the dashboard expires it after each save. */
+export const CONTENT_TAG = "content";
 
 type Row = Record<string, unknown>;
 const isRecord = (value: unknown): value is Row => typeof value === "object" && value !== null && !Array.isArray(value);
@@ -27,20 +33,25 @@ const isMenuFamily = (f: Row): boolean =>
   isText(f.slug) && isText(f.name) && (f.category === "Shaped" || f.category === "Unshaped") && Array.isArray(f.groups)
   && f.groups.every(g => isRecord(g) && (g.name === null || isText(g.name)) && Array.isArray(g.sheets) && g.sheets.every(isSheet));
 
-async function fetchRows(path: string, lang: Locale): Promise<unknown[] | null> {
+async function fetchJson(path: string, lang: Locale): Promise<unknown> {
   try {
     const response = await fetch(`${CONTENT_API_URL}${path}?locale=${lang}`, {
       headers: { Accept: "application/json" },
-      next: { revalidate: REVALIDATE_SECONDS, tags: ["content"] },
+      next: { revalidate: REVALIDATE_SECONDS, tags: [CONTENT_TAG] },
       signal: AbortSignal.timeout(5000),
     });
     if (!response.ok) return null;
     const body: unknown = await response.json();
-    const rows = isRecord(body) ? body.data : body;
-    return Array.isArray(rows) ? rows : null;
+    // Accept Laravel-style `{ "data": … }` envelopes or bare payloads.
+    return isRecord(body) && "data" in body ? body.data : body;
   } catch {
     return null;
   }
+}
+
+async function fetchRows(path: string, lang: Locale): Promise<unknown[] | null> {
+  const rows = await fetchJson(path, lang);
+  return Array.isArray(rows) ? rows : null;
 }
 
 async function load<T extends object>(path: string, lang: Locale, local: T[], key: keyof T & string, isValid: (row: Row) => boolean): Promise<T[]> {
@@ -62,3 +73,37 @@ export async function getProductMenu(lang: Locale) {
   return load<MenuFamily>("/menus/products", lang, local, "slug", isMenuFamily);
 }
 export const getSectorMenu = (lang: Locale) => load<Datasheet>("/menus/sectors", lang, [], "url", isSheet);
+
+const isUrl = (value: unknown): value is string => isText(value) && (/^https?:\/\//.test(value) || value.startsWith("/"));
+
+/** Company details and photos: each valid field from the API replaces the local default. */
+export async function getSettings(lang: Locale): Promise<SiteSettings> {
+  const local = localSettings(lang);
+  const api = await fetchJson("/settings", lang);
+  if (!isRecord(api)) return local;
+  const legal = isRecord(api.legal) ? api.legal : {};
+  const images = isRecord(api.images) ? api.images : {};
+  const address = api.address;
+  const secondary = api.secondary_email;
+  return {
+    name: isText(api.name) ? api.name : local.name,
+    fullName: isText(api.full_name) ? api.full_name : local.fullName,
+    email: isText(api.email) ? api.email : local.email,
+    secondaryEmail: secondary === null ? null : isRecord(secondary) && isText(secondary.email) && isText(secondary.label) ? { email: secondary.email, label: secondary.label } : local.secondaryEmail,
+    phone: api.phone === null ? null : isText(api.phone) ? api.phone : local.phone,
+    address: address === null ? null : isRecord(address) && Array.isArray(address.lines) && address.lines.every(isText) && isUrl(address.map_url) ? { lines: address.lines, mapUrl: address.map_url } : local.address,
+    legal: {
+      form: isText(legal.form) ? legal.form : local.legal.form,
+      commercialRegister: isText(legal.commercial_register) ? legal.commercial_register : local.legal.commercialRegister,
+      taxCard: isText(legal.tax_card) ? legal.tax_card : local.legal.taxCard,
+    },
+    images: Object.fromEntries(imageKeys.map(key => [key, isUrl(images[key]) ? images[key] : local.images[key]])) as SiteSettings["images"],
+  };
+}
+
+/** Page-text overrides edited in the dashboard: `{ "home.introLead": "…" }`. */
+export async function getContentOverrides(lang: Locale): Promise<Record<string, string>> {
+  const api = await fetchJson("/content", lang);
+  if (!isRecord(api)) return {};
+  return Object.fromEntries(Object.entries(api).filter((entry): entry is [string, string] => typeof entry[1] === "string"));
+}

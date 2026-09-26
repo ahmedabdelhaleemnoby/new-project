@@ -5,12 +5,11 @@ import { ArrowUpRight, Check, LoaderCircle } from "lucide-react";
 import { fill, type Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries/en";
 import { submitEnquiry, type EnquiryResult, type EnquiryType } from "@/lib/enquiry";
-import { site } from "@/lib/site";
 
 type Failure = Exclude<EnquiryResult, { ok: true }>;
 type Status = { state: "idle" } | { state: "sending" } | { state: "sent"; reference: string } | { state: "error"; result: Failure };
 
-export function ContactForm({ lang, t, type = "sales", productSlug = null, initialTopic = "" }: { lang: Locale; t: Dictionary["form"]; type?: EnquiryType; productSlug?: string | null; initialTopic?: string }) {
+export function ContactForm({ lang, t, email, type = "sales", productSlug = null, initialTopic = "" }: { lang: Locale; t: Dictionary["form"]; email: string; type?: EnquiryType; productSlug?: string | null; initialTopic?: string }) {
   const id = useId();
   const isCareerEnquiry = type === "career";
   const [status, setStatus] = useState<Status>({ state: "idle" });
@@ -20,7 +19,6 @@ export function ContactForm({ lang, t, type = "sales", productSlug = null, initi
   const fieldErrors = status.state === "error" && status.result.kind === "validation" ? status.result.fields : {};
 
   function errorMessage(result: Failure) {
-    const email = site.salesEmail;
     switch (result.kind) {
       case "validation": return t.checkFields;
       case "network": return fill(t.network, { email });
@@ -151,7 +149,7 @@ export function ContactForm({ lang, t, type = "sales", productSlug = null, initi
       {status.state === "error" && (
         <div className="form-error" role="alert" tabIndex={-1} ref={errorRef}>
           <p>{errorMessage(status.result)}</p>
-          {status.result.kind !== "validation" && <a href={`mailto:${site.salesEmail}`}>{fill(t.emailInstead, { email: site.salesEmail })} <ArrowUpRight size={14} aria-hidden="true" /></a>}
+          {status.result.kind !== "validation" && <a href={`mailto:${email}`}>{fill(t.emailInstead, { email })} <ArrowUpRight size={14} aria-hidden="true" /></a>}
         </div>
       )}
 

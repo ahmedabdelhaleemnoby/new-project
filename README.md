@@ -40,7 +40,13 @@ The Playwright checks exercise desktop and mobile navigation, catalogue filters 
 - `/research` — research and development.
 - `/contact` — sales details and enquiry form connected to the enquiry API; accepts `?type=`, `?product=` (slug) and `?topic=`.
 - `/careers` — speculative career enquiry route.
-- `/admin` — staff area: sign in, enquiry list with filters/search/pagination, enquiry detail with status, assignment and notification retry. Uses the API's `/admin/*` endpoints.
+- `/admin` — staff dashboard (also `/ar/admin`), with sections shown by staff role:
+  - Enquiries: list with filters, search and pagination; detail with status, assignment and notification retry.
+  - Products and sectors: create, edit, hide or delete, in both languages, with photos, grades and datasheet PDFs for the menus.
+  - Page text: every piece of site copy in English and Arabic, with search and reset to the built-in text.
+  - Media: upload and manage images and PDFs, and pick them from any photo or PDF field.
+  - Company: name, emails, phone, address, legal details and the page photos.
+  - Staff: accounts, roles and deactivation.
 
 ## Customize
 
@@ -69,6 +75,15 @@ This is an English website. It does not connect to the original site's order pla
 - All routes live under `src/app/[lang]/`. Copy is in `src/i18n/dictionaries/en.ts` and `ar.ts` (the Arabic dictionary is type-checked against the English one). Product and sector text for both languages is in `src/lib/data.ts`.
 - The staff area is bilingual too: `/admin` and `/ar/admin`.
 - Arabic uses IBM Plex Sans Arabic (body) and Cairo (headings) via `next/font/google`.
+
+## Dashboard content management
+
+The dashboard edits content stored by the backend API. The endpoints it needs are specified in [docs/BACKEND_CMS_SPEC.md](docs/BACKEND_CMS_SPEC.md), with seed data from the current site in [docs/cms-seed.json](docs/cms-seed.json). Until an endpoint exists, its section shows "Not available yet" and the public site keeps using the built-in content in `src/lib/data.ts`, `src/lib/site.ts`, `src/lib/settings.ts`, and `src/i18n/dictionaries/`.
+
+- The site reads `/settings`, `/content`, `/products`, `/industries`, `/menus/products`, and `/menus/sectors` on the server (`src/lib/content.ts`), cached for 5 minutes under the `content` tag. Page-text overrides are merged over the dictionaries in `src/i18n/dictionaries.ts`.
+- Dashboard saves run as server actions (`src/app/[lang]/admin/cms-actions.ts`) and expire the `content` tag, so the site updates on the next page load.
+- `POST /api/revalidate` with header `X-Revalidate-Secret: $REVALIDATE_SECRET` refreshes the cache after changes made outside the dashboard.
+- Media uploads pass through the Next server (server action body limit 21 MB). Images from hosts other than the API need to be listed in `MEDIA_HOSTS`.
 
 ## First-visit intro
 
