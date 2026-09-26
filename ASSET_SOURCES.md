@@ -1,5 +1,7 @@
 # Asset sources
 
+> **Placeholders:** the photos below come from the Asfour M&R website and are used only as layout placeholders. Replace them with Ajyad Thermotech photography before publishing. Asfour's logo and client logos have been removed.
+
 Brand and photographs are from the user-supplied reference website, https://asfourmr.com.
 
 | Local file | Source |

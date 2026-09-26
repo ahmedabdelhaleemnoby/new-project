@@ -19,19 +19,9 @@ export type EnquiryPayload = {
 
 export type EnquiryResult =
   | { ok: true; reference: string }
-  | { ok: false; kind: "validation"; message: string; fields: Record<string, string> }
-  | { ok: false; kind: "conflict" | "rate-limit" | "unavailable" | "network" | "request"; message: string };
-
-const fallback = "Your enquiry could not be sent. Please try again, or email sales@asfourmr.com.";
-
-async function errorMessage(response: Response) {
-  try {
-    const body = await response.json();
-    return (typeof body?.error?.message === "string" && body.error.message) || (typeof body?.message === "string" && body.message) || null;
-  } catch {
-    return null;
-  }
-}
+  | { ok: false; kind: "validation"; fields: Record<string, string> }
+  | { ok: false; kind: "rate-limit"; retryAfter: number | null }
+  | { ok: false; kind: "conflict" | "too-large" | "unavailable" | "network" | "request" };
 
 export async function submitEnquiry(payload: EnquiryPayload, idempotencyKey: string): Promise<EnquiryResult> {
   let response: Response;
@@ -42,7 +32,7 @@ export async function submitEnquiry(payload: EnquiryPayload, idempotencyKey: str
       body: JSON.stringify(payload),
     });
   } catch {
-    return { ok: false, kind: "network", message: "We couldn’t reach our enquiry service. Check your connection and try again, or email sales@asfourmr.com." };
+    return { ok: false, kind: "network" };
   }
 
   if (response.ok) {
@@ -50,24 +40,21 @@ export async function submitEnquiry(payload: EnquiryPayload, idempotencyKey: str
       const body = await response.json();
       if (typeof body?.reference === "string") return { ok: true, reference: body.reference };
     } catch {}
-    return { ok: false, kind: "unavailable", message: fallback };
+    return { ok: false, kind: "unavailable" };
   }
-
   if (response.status === 422) {
-    let body: { message?: string; errors?: Record<string, string[]> } = {};
+    let body: { errors?: Record<string, string[]> } = {};
     try { body = await response.json(); } catch {}
-    const fields = Object.fromEntries(Object.entries(body.errors ?? {}).map(([key, messages]) => [key, messages[0] ?? "Check this field."]));
-    return { ok: false, kind: "validation", message: "Check the highlighted fields.", fields };
+    return { ok: false, kind: "validation", fields: Object.fromEntries(Object.entries(body.errors ?? {}).map(([key, messages]) => [key, messages[0] ?? ""])) };
   }
-  if (response.status === 409) return { ok: false, kind: "conflict", message: "This enquiry changed after it was first sent. Send it again to submit it as a new enquiry." };
+  if (response.status === 409) return { ok: false, kind: "conflict" };
   if (response.status === 429) {
     const seconds = Number(response.headers.get("Retry-After"));
-    const wait = Number.isFinite(seconds) && seconds > 0 ? (seconds < 90 ? `${Math.ceil(seconds)} seconds` : `${Math.ceil(seconds / 60)} minutes`) : "a few minutes";
-    return { ok: false, kind: "rate-limit", message: `Too many enquiries were sent from this connection. Please try again in ${wait}.` };
+    return { ok: false, kind: "rate-limit", retryAfter: Number.isFinite(seconds) && seconds > 0 ? seconds : null };
   }
-  if (response.status === 413) return { ok: false, kind: "request", message: "Your enquiry is too long. Shorten the message and try again." };
-  if (response.status >= 500) return { ok: false, kind: "unavailable", message: (await errorMessage(response)) ?? fallback };
-  return { ok: false, kind: "request", message: fallback };
+  if (response.status === 413) return { ok: false, kind: "too-large" };
+  if (response.status >= 500) return { ok: false, kind: "unavailable" };
+  return { ok: false, kind: "request" };
 }
 
 /** Resolves the `/contact` query string into an explicit enquiry type, a known product slug, and topic text. */

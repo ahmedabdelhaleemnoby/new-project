@@ -1,4 +1,8 @@
 import Link from "next/link";
-export function PageIntro({ eyebrow, title, description }: { eyebrow: string; title: string; description: string }) {
-  return <section className="page-intro"><div className="container"><div className="breadcrumb"><Link href="/">Home</Link><span>/</span><span>{eyebrow}</span></div><div className="page-intro-grid"><div><p className="eyebrow">{eyebrow}</p><h1>{title}</h1></div><p className="page-intro-description">{description}</p></div></div></section>;
+import { localePath, type Locale } from "@/i18n/config";
+import { getDictionary } from "@/i18n/dictionaries";
+
+export function PageIntro({ lang, eyebrow, title, description }: { lang: Locale; eyebrow: string; title: string; description: string }) {
+  const t = getDictionary(lang);
+  return <section className="page-intro"><div className="container"><div className="breadcrumb"><Link href={localePath(lang, "/")}>{t.nav.home}</Link><span>/</span><span>{eyebrow}</span></div><div className="page-intro-grid"><div><p className="eyebrow">{eyebrow}</p><h1>{title}</h1></div><p className="page-intro-description">{description}</p></div></div></section>;
 }

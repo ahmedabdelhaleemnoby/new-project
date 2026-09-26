@@ -1,10 +1,10 @@
-# Asfour M&R — Next.js website
+# Ajyad Thermotech — Next.js website
 
-A refreshed industrial website based on https://asfourmr.com, built with Next.js 16, React 19, TypeScript, and the App Router. Photography and fonts are stored locally. Images use Next.js image optimization.
+Bilingual (English/Arabic) industrial website for Ajyad Thermotech, built with Next.js 16, React 19, TypeScript, and the App Router. It started as a redesign of the Asfour M&R site and was rebranded; see "Placeholders before launch" below. Fonts are stored locally or self-hosted by `next/font`.
 
 ## Run locally
 
-The active project is `/Users/ahmedabuzyad/Developer/asfour-next`. Use this copy for development. The earlier copy in `/Users/ahmedabuzyad/Documents/New project` may be iCloud-offloaded, which can stall file reads and development commands.
+The active project is `/Users/ahmedabuzyad/Developer/asfour-next` (the folder keeps its original name). Use this copy for development. The earlier copy in `/Users/ahmedabuzyad/Documents/New project` may be iCloud-offloaded, which can stall file reads and development commands.
 
 Requires Node.js 20.9 or newer. Install dependencies once with `npm install` if needed, then start the development server from the active project:
 
@@ -57,25 +57,29 @@ See [BACKEND_REQUIREMENTS.md](BACKEND_REQUIREMENTS.md) for the proposed enquiry 
 
 ## Current integration scope
 
-The enquiry form submits directly from the browser to the Asfour M&R enquiry API (`POST /enquiries`, Laravel, docs at https://project2.gfoura.com/docs/api). Set the base URL with `NEXT_PUBLIC_ENQUIRY_API_URL` (see `.env.example`; defaults to `https://project2.gfoura.com/api/v1`). The API must allow the site origin through CORS; it currently allows `https://project1.gfoura.com`, so submissions from `localhost` fail until that origin is added. Enquiry type comes from the link (`/contact?type=sales|technical|career`), products are sent by slug (`?product=<slug>`), and `?topic=` prefills the topic. Each submission sends an `Idempotency-Key` that is reused on retries of unchanged content. The staff area under `/admin` calls the API from the Next.js server with a bearer token kept in an httpOnly cookie (`ADMIN_API_URL` overrides the API base URL).
+The enquiry form submits directly from the browser to the enquiry API (`POST /enquiries`, Laravel, docs at https://project2.gfoura.com/docs/api). Set the base URL with `NEXT_PUBLIC_ENQUIRY_API_URL` (see `.env.example`; defaults to `https://project2.gfoura.com/api/v1`). The API must allow the site origin through CORS; it currently allows `https://project1.gfoura.com`, so submissions from `localhost` fail until that origin is added. Enquiry type comes from the link (`/contact?type=sales|technical|career`), products are sent by slug (`?product=<slug>`), and `?topic=` prefills the topic. Each submission sends an `Idempotency-Key` that is reused on retries of unchanged content. The staff area under `/admin` calls the API from the Next.js server with a bearer token kept in an httpOnly cookie (`ADMIN_API_URL` overrides the API base URL).
 
 Site content (products, sectors, navigation menus) is read on the server by `src/lib/content.ts` from proposed API endpoints (`/products`, `/industries`, `/menus/products`, `/menus/sectors`) and cached for 5 minutes. When an endpoint is missing, fails, or returns null/empty data, the local data in `src/lib/data.ts` and `src/lib/menu.ts` is used, and null fields on matching items are filled from the local copy. `CONTENT_API_URL` overrides the base URL.
 
 This is an English website. It does not connect to the original site's order placement or order tracking systems, and does not include a CMS, authentication, payment processing, or vacancy management. Those require separate integrations. No production deployment has been made. Search indexing is disabled in `src/app/layout.tsx` for this preview; review branding/content and configure production metadata before publishing.
 
-## Reference and asset sources
+## Languages
 
-The user supplied the Asfour website and chose a refreshed design using its branding/content. Copy has been rewritten and reorganized. Product names and source imagery are retained for this reference-based project.
+- English is served on unprefixed URLs (`/products`); Arabic under `/ar` (`/ar/products`) with `dir="rtl"`. `src/proxy.ts` rewrites English requests to the internal `/en` segment and redirects `/en/...` to the unprefixed URL.
+- All routes live under `src/app/[lang]/`. Copy is in `src/i18n/dictionaries/en.ts` and `ar.ts` (the Arabic dictionary is type-checked against the English one). Product and sector text for both languages is in `src/lib/data.ts`.
+- The staff area is bilingual too: `/admin` and `/ar/admin`.
+- Arabic uses IBM Plex Sans Arabic (body) and Cairo (headings) via `next/font/google`.
 
-- Company information and reported scale: https://asfourmr.com/about-us/ (1982, 2007, 500+ people, 100,000+ tons/year, 30+ countries).
-- Product and sector navigation, client logos, homepage photography: https://asfourmr.com/.
-- Contact details: https://asfourmr.com/contact-us/.
-- R&D information/images: https://asfourmr.com/rd/.
-- Technical PDFs link to the original Asfour documents rather than reproducing unverified specifications.
-- Downloaded source image URLs are listed in `ASSET_SOURCES.md`.
-- Typeface families: Barlow Condensed and Manrope, downloaded from Google Fonts (SIL Open Font License; included under `public/fonts`).
+## Placeholders before launch
 
-The original homepage reports 27+ countries while the About page reports 30+; this project uses the About page figure. Product suitability and current specifications are referred to the sales team.
+Company details live in `src/lib/site.ts`. Before publishing, replace:
+
+- `salesEmail` (currently the non-delivering placeholder `sales@ajyad.example`), and optionally `secondaryEmail`, `phone`, and `address` (hidden while null).
+- Photography in `public/images/*.jpg`: these are placeholder photos from the original Asfour site (see `ASSET_SOURCES.md`) and must be replaced with Ajyad's own.
+- Grade names and datasheet links per product in `src/lib/data.ts`, or serve them from the content API. Product pages hide these sections while empty.
+- The logo (`public/images/ajyad-logo.png`, favicon `src/app/icon.png`) was rendered from the supplied `AJYAD LOOG.eps`, which is black-only, and recoloured to match the brand mockup. Swap in official colour artwork when available.
+
+Asfour-specific content was removed: company history and figures, address and phone, client logos, product grade codes, and links to Asfour datasheets and sector brochures.
 
 ## Verification
 

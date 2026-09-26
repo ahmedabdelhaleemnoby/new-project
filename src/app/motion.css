@@ -1,0 +1,189 @@
+/* Motion system. Transform/opacity only, ease-out curves, reading-direction aware (--dir flips in RTL).
+   Reveal styles only apply once `html.motion` is set (inline script in the root layout), so content
+   stays visible without JavaScript. Everything is disabled under prefers-reduced-motion. */
+:root{--ease-out:cubic-bezier(.22,1,.36,1);--ease-expo:cubic-bezier(.16,1,.3,1);--dir:1;--flame:#f7941d;--flame-red:#e3261c}
+[dir=rtl]{--dir:-1}
+
+/* ---------- Scroll reveals (see src/components/motion.tsx) ---------- */
+.motion [data-reveal]{opacity:0;transform:translate3d(0,28px,0);transition:opacity .8s var(--ease-out),transform .9s var(--ease-expo);transition-delay:calc(var(--i,0) * 90ms + var(--delay,0ms))}
+.motion [data-reveal=start]{transform:translate3d(calc(var(--dir) * -40px),0,0)}
+.motion [data-reveal=end]{transform:translate3d(calc(var(--dir) * 40px),0,0)}
+.motion [data-reveal=zoom]{transform:scale(.94)}
+.motion [data-reveal=fade]{transform:none}
+.motion [data-reveal].is-visible{opacity:1;transform:none}
+/* Staggered children: the observer sets --i on each child. */
+.motion [data-stagger]>*{opacity:0;transform:translate3d(0,24px,0);transition:opacity .7s var(--ease-out),transform .8s var(--ease-expo);transition-delay:calc(var(--i,0) * 80ms)}
+.motion [data-stagger].is-visible>*{opacity:1;transform:none}
+/* Image wipe: a panel slides away in the reading direction while the photo settles from a slight zoom. */
+.motion [data-wipe]{position:relative;overflow:hidden}
+.motion [data-wipe]::after{content:"";position:absolute;inset:0;background:var(--blue);transform-origin:right;transform:scaleX(1);transition:transform 1.1s var(--ease-expo);z-index:2;pointer-events:none}
+[dir=rtl].motion [data-wipe]::after,.motion[dir=rtl] [data-wipe]::after{transform-origin:left}
+.motion [data-wipe].is-visible::after{transform:scaleX(0)}
+.motion [data-wipe] img{transform:scale(1.15);transition:transform 1.6s var(--ease-expo)}
+.motion [data-wipe].is-visible img{transform:scale(1)}
+/* Headings get an accent rule that draws in from the start edge. */
+.motion .section-heading h2,.motion .editorial-copy h2,.motion .research-copy h2{position:relative}
+.motion .eyebrow .small-square{transition:transform .6s var(--ease-expo) .2s}
+.motion [data-reveal]:not(.is-visible) .small-square{transform:rotate(-90deg) scale(0)}
+
+/* ---------- Scroll progress (CSS scroll-driven; ignored where unsupported) ---------- */
+.scroll-progress{position:fixed;inset-inline:0;top:0;height:3px;z-index:60;background:linear-gradient(90deg,var(--flame-red),var(--flame),var(--blue));transform-origin:left;transform:scaleX(0);pointer-events:none}
+[dir=rtl] .scroll-progress{transform-origin:right;background:linear-gradient(270deg,var(--flame-red),var(--flame),var(--blue))}
+@supports (animation-timeline: scroll()){.scroll-progress{animation:progress linear both;animation-timeline:scroll(root)}}
+@supports not (animation-timeline: scroll()){.scroll-progress{display:none}}
+@keyframes progress{to{transform:scaleX(1)}}
+
+/* ---------- Parallax on large photos (scroll-driven, progressive enhancement) ---------- */
+@supports (animation-timeline: view()){
+  .research-visual>img,.editorial-image img,.product-detail-image img{animation:parallax linear both;animation-timeline:view();animation-range:cover}
+  .motion [data-wipe] img{transition:none}
+}
+@keyframes parallax{from{transform:scale(1.14) translateY(-4%)}to{transform:scale(1.14) translateY(4%)}}
+
+/* ---------- Header ---------- */
+.site-header{transition:box-shadow .35s var(--ease-out),background-color .35s var(--ease-out)}
+.site-header.scrolled{box-shadow:0 10px 30px #1721261a;background:color-mix(in srgb,var(--paper) 94%,transparent);backdrop-filter:saturate(1.2) blur(8px)}
+.brand .logo{transition:transform .45s var(--ease-expo)}
+.site-header.scrolled .brand .logo{transform:scale(.88)}
+.brand:hover .logo{transform:scale(1.04)}
+.site-header.scrolled .brand:hover .logo{transform:scale(.92)}
+.nav-top{transition:color .2s}
+.nav-top::after,.nav-top.active::after{content:"";position:absolute;bottom:0;inset-inline:0;height:3px;background:var(--blue);transform:scaleX(0);transform-origin:var(--nav-origin,left);transition:transform .35s var(--ease-expo)}
+[dir=rtl] .nav-top::after{--nav-origin:right}
+.nav-top:hover::after,.nav-top.active::after,.nav-item.open>.nav-top::after{transform:scaleX(1)}
+.nav-caret svg{transition:transform .3s var(--ease-expo)}
+.lang-switch svg{transition:transform .6s var(--ease-expo)}
+.lang-switch:hover svg{transform:rotate(180deg)}
+/* Menus: panel drops in, then its items follow. */
+.nav-panel{animation:drop .3s var(--ease-expo)}
+.nav-panel-list>a,.mega-families a{animation:item-in .45s var(--ease-expo) both}.mega-families a:nth-of-type(2){animation-delay:35ms}.mega-families a:nth-of-type(3){animation-delay:70ms}.mega-families a:nth-of-type(4){animation-delay:105ms}.mega-families a:nth-of-type(5){animation-delay:140ms}.mega-families a:nth-of-type(6){animation-delay:175ms}
+.nav-panel-list>a:nth-child(2){animation-delay:25ms}.nav-panel-list>a:nth-child(3){animation-delay:50ms}.nav-panel-list>a:nth-child(4){animation-delay:75ms}.nav-panel-list>a:nth-child(5){animation-delay:100ms}.nav-panel-list>a:nth-child(6){animation-delay:125ms}.nav-panel-list>a:nth-child(7){animation-delay:150ms}.nav-panel-list>a:nth-child(8){animation-delay:175ms}.nav-panel-list>a:nth-child(9){animation-delay:200ms}.nav-panel-list>a:nth-child(10){animation-delay:225ms}.nav-panel-list>a:nth-child(11){animation-delay:250ms}.nav-panel-list>a:nth-child(12){animation-delay:275ms}.nav-panel-list>a:nth-child(13){animation-delay:300ms}.nav-panel-list>a:nth-child(14){animation-delay:325ms}.nav-panel-list>a:nth-child(15){animation-delay:350ms}.nav-panel-list>a:nth-child(16){animation-delay:375ms}
+.mega-sheets-head,.mega-empty,.sheet-group{animation:item-in .5s var(--ease-expo) both .08s}
+.sheet-link{transition:border-color .2s,color .2s,transform .25s var(--ease-out),box-shadow .25s}
+.sheet-link:hover{transform:translateY(-2px);box-shadow:0 6px 14px #1721261a}
+.mobile-nav{animation:drop .35s var(--ease-expo)}
+.mobile-nav>*{animation:item-in .45s var(--ease-expo) both}
+.mobile-sub{animation:drop .3s var(--ease-expo)}
+@keyframes drop{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+@keyframes item-in{from{opacity:0;transform:translate3d(calc(var(--dir) * -12px),0,0)}to{opacity:1;transform:none}}
+
+/* ---------- Hero ---------- */
+.hero-image img{animation:hero-zoom 9s var(--ease-out) both,fade-in .9s var(--ease-out) both}
+.hero-image{animation:fade-in 1.2s var(--ease-out) both}
+@keyframes hero-zoom{from{transform:scale(1.14)}to{transform:scale(1.02)}}
+@keyframes fade-in{from{opacity:0}to{opacity:1}}
+.hero-content{animation:none}
+.hero-content>*{animation:rise .9s var(--ease-expo) both}
+.hero-content>:nth-child(1){animation-delay:.1s}
+.hero-content>:nth-child(2){animation-delay:.2s}
+.hero-content>:nth-child(3){animation-delay:.38s}
+.hero-content>:nth-child(4){animation-delay:.5s}
+.hero h1 .line{display:block;overflow:hidden;padding-bottom:.04em}
+.hero h1 .line>span{display:block;animation:line-up 1s var(--ease-expo) both}
+.hero h1 .line:nth-child(2)>span{animation-delay:.12s}
+@keyframes line-up{from{transform:translateY(105%)}to{transform:none}}
+@keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+.hero-content .small-square{animation:flicker 2.8s ease-in-out infinite}
+@keyframes flicker{0%,100%{background:var(--orange);box-shadow:0 0 0 0 #f7941d00}50%{background:var(--flame);box-shadow:0 0 12px 2px #f7941d99}}
+.hero-bottom{animation:fade-in 1s var(--ease-out) .8s both}
+.scroll-link svg{animation:nudge 2.2s var(--ease-out) infinite}
+@keyframes nudge{0%,100%{transform:none}50%{transform:translateY(5px)}}
+.slide-progress{display:block;height:2px;width:100%;background:#ffffff33;margin-top:8px;overflow:hidden}
+.slide-progress>i{display:block;height:100%;background:linear-gradient(90deg,var(--flame-red),var(--flame));transform-origin:var(--nav-origin,left);animation:slide-timer var(--slide-ms,7000ms) linear both}
+[dir=rtl] .slide-progress>i{--nav-origin:right}
+.hero:hover .slide-progress>i,.hero:focus-within .slide-progress>i{animation-play-state:paused}
+@keyframes slide-timer{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.slide-controls>span{display:flex;flex-direction:column}
+
+/* ---------- Buttons & links ---------- */
+.button{position:relative;overflow:hidden;transition:background .25s,color .25s,transform .25s var(--ease-out),box-shadow .25s;isolation:isolate}
+.button:hover{transform:translateY(-2px);box-shadow:0 10px 22px #17212622}
+.button:active{transform:translateY(0) scale(.97);transition-duration:.1s}
+.button svg{transition:transform .3s var(--ease-expo)}
+.button:hover svg,.text-link:hover svg,.product-row:hover>svg,.catalogue-item:hover .catalogue-item-title svg,.industry-home-item:hover .industry-bottom svg{transform:translateX(calc(var(--dir) * 4px))}
+[dir=rtl] .button:hover .lucide-arrow-right,[dir=rtl] .button:hover .lucide-arrow-up-right,[dir=rtl] .text-link:hover .lucide-arrow-right,[dir=rtl] .text-link:hover .lucide-arrow-up-right,[dir=rtl] .product-row:hover>.lucide-arrow-up-right,[dir=rtl] .catalogue-item:hover .catalogue-item-title .lucide-arrow-up-right,[dir=rtl] .industry-home-item:hover .industry-bottom .lucide-arrow-up-right{transform:scaleX(-1) translateX(4px)}
+/* Light sweep across primary buttons. */
+.button-blue::before,.button-light::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(110deg,transparent 30%,#ffffff40 50%,transparent 70%);transform:translateX(calc(var(--dir) * -120%));transition:transform .8s var(--ease-out)}
+.button-blue:hover::before,.button-light:hover::before{transform:translateX(calc(var(--dir) * 120%))}
+.button:disabled:hover{transform:none;box-shadow:none}
+.text-link{position:relative;transition:color .2s,border-color .2s}
+.text-link svg{transition:transform .3s var(--ease-expo)}
+.spin{animation:spin 1s linear infinite}
+
+/* ---------- Cards & lists ---------- */
+.catalogue-item{display:block;transition:transform .45s var(--ease-expo)}
+.catalogue-item:hover{transform:translateY(-6px)}
+.catalogue-image img{transition:transform .9s var(--ease-expo)}
+.catalogue-item:hover img{transform:scale(1.07)}
+.catalogue-image>span{transition:background .3s,color .3s}
+.catalogue-item:hover .catalogue-image>span{background:var(--blue);color:#fff}
+.catalogue-item-title svg{transition:transform .35s var(--ease-expo)}
+.industry-home-item{position:relative;overflow:hidden;transition:background .3s}
+.industry-home-item::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent,#1b4f9640);transform:translateY(100%);transition:transform .6s var(--ease-expo);pointer-events:none}
+.industry-home-item:hover::before{transform:none}
+.industry-top svg{transition:transform .6s var(--ease-expo),color .3s}
+.industry-home-item:hover .industry-top svg{transform:translateY(-6px) rotate(-6deg);color:var(--flame)}
+.industry-bottom svg{transition:transform .35s var(--ease-expo)}
+.industry-detail>svg{transition:transform .6s var(--ease-expo),color .3s}
+.industry-detail:hover>svg{transform:translateY(-4px) scale(1.08);color:var(--orange)}
+.product-row{position:relative}
+.product-row::before{content:"";position:absolute;inset-block:0;inset-inline-start:0;width:3px;background:var(--orange);transform:scaleY(0);transform-origin:bottom;transition:transform .35s var(--ease-expo)}
+.product-row:hover::before{transform:scaleY(1)}
+.product-row>svg{transition:transform .35s var(--ease-expo)}
+.product-rows{animation:fade-swap .5s var(--ease-out)}
+.product-preview-image img{animation:fade-swap .7s var(--ease-out)}
+@keyframes fade-swap{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.product-tabs button{transition:color .25s}
+.product-tabs button::after{content:"";position:absolute;height:3px;background:var(--blue);bottom:-1px;inset-inline:0;transform:scaleX(0);transition:transform .4s var(--ease-expo)}
+.product-tabs button.selected::after{transform:scaleX(1)}
+.filter-buttons button{transition:background .25s,color .25s,border-color .25s,transform .2s var(--ease-out)}
+.filter-buttons button:active{transform:scale(.96)}
+.catalogue-grid>*{animation:rise .6s var(--ease-expo) both}
+.catalogue-grid>:nth-child(1){animation-delay:.02s}.catalogue-grid>:nth-child(2){animation-delay:.08s}.catalogue-grid>:nth-child(3){animation-delay:.14s}.catalogue-grid>:nth-child(4){animation-delay:.2s}.catalogue-grid>:nth-child(5){animation-delay:.26s}.catalogue-grid>:nth-child(6){animation-delay:.32s}.catalogue-grid>:nth-child(n+7){animation-delay:.38s}
+.grade-list span{transition:transform .25s var(--ease-out),border-color .25s}
+.grade-list span:hover{transform:translateY(-2px);border-color:var(--blue)}
+
+/* ---------- Page intro (runs on every route change as the page mounts) ---------- */
+.page-intro .breadcrumb{animation:rise .6s var(--ease-expo) both}
+.page-intro .eyebrow{animation:rise .7s var(--ease-expo) .08s both}
+.page-intro h1{animation:rise .9s var(--ease-expo) .15s both}
+.page-intro-description{animation:rise .9s var(--ease-expo) .3s both}
+.page-intro{position:relative;overflow:hidden}
+.page-intro::after{content:"";position:absolute;inset-inline-end:-10%;bottom:-60%;width:45%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,#f7941d22,transparent 65%);animation:glow 8s ease-in-out infinite alternate;pointer-events:none}
+@keyframes glow{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(calc(var(--dir) * -40px),-30px,0) scale(1.15)}}
+
+/* ---------- Contact banner: slow heat drift ---------- */
+.contact-banner::before{content:"";position:absolute;inset:-50%;background:radial-gradient(circle at 30% 50%,#f7941d33,transparent 40%),radial-gradient(circle at 70% 40%,#2f86cf40,transparent 45%);animation:drift 14s ease-in-out infinite alternate;pointer-events:none}
+.contact-banner::after{animation:sweep 10s ease-in-out infinite alternate}
+@keyframes drift{from{transform:translate3d(-4%,0,0) rotate(0)}to{transform:translate3d(4%,3%,0) rotate(6deg)}}
+@keyframes sweep{from{transform:rotate(30deg) translateX(0)}to{transform:rotate(30deg) translateX(calc(var(--dir) * -120px))}}
+
+/* ---------- Forms ---------- */
+.field input,.field select,.field textarea{transition:border-color .2s,box-shadow .25s var(--ease-out)}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--blue);box-shadow:0 0 0 4px #1b4f9622;outline:none}
+.field-error{animation:rise .35s var(--ease-expo) both}
+.form-error{animation:shake .45s var(--ease-out)}
+@keyframes shake{0%,100%{transform:none}20%{transform:translateX(-7px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(2px)}}
+.form-success{animation:rise .6s var(--ease-expo) both}
+.form-success-title svg{border-radius:50%;background:#2e5b31;color:#fff;padding:3px;animation:pop .5s var(--ease-expo) .15s both}
+@keyframes pop{from{transform:scale(0) rotate(-45deg)}to{transform:none}}
+.admin-notice{animation:rise .4s var(--ease-expo) both}
+
+/* ---------- 404 ---------- */
+.not-found h1{animation:heat 3s ease-in-out infinite alternate}
+@keyframes heat{from{color:var(--blue)}to{color:var(--orange)}}
+
+/* ---------- Admin ---------- */
+.admin-table tbody tr{animation:rise .5s var(--ease-expo) both;transition:background .2s}
+.admin-table tbody tr:nth-child(2){animation-delay:30ms}.admin-table tbody tr:nth-child(3){animation-delay:60ms}.admin-table tbody tr:nth-child(4){animation-delay:90ms}.admin-table tbody tr:nth-child(5){animation-delay:120ms}.admin-table tbody tr:nth-child(6){animation-delay:150ms}.admin-table tbody tr:nth-child(7){animation-delay:180ms}.admin-table tbody tr:nth-child(8){animation-delay:210ms}.admin-table tbody tr:nth-child(9){animation-delay:240ms}.admin-table tbody tr:nth-child(10){animation-delay:270ms}.admin-table tbody tr:nth-child(11){animation-delay:300ms}.admin-table tbody tr:nth-child(12){animation-delay:330ms}
+.admin-card,.admin-filters,.admin-empty{animation:rise .6s var(--ease-expo) both}
+.admin-status{transition:background .3s,color .3s}
+.admin-login-card{animation:rise .8s var(--ease-expo) both}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;animation-delay:0s!important;transition-duration:.01ms!important;transition-delay:0s!important;scroll-behavior:auto!important}
+  .motion [data-reveal],.motion [data-stagger]>*{opacity:1!important;transform:none!important}
+  .motion [data-wipe]::after{display:none}
+  .scroll-progress,.page-intro::after,.contact-banner::before{display:none}
+}
