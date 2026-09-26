@@ -1,0 +1,1645 @@
+{
+  "settings": {
+    "name": {
+      "en": "Ajyad",
+      "ar": "أجياد"
+    },
+    "full_name": {
+      "en": "Ajyad Thermotech",
+      "ar": "أجياد ثيرموتك"
+    },
+    "email": "info@ajyad.online",
+    "secondary_email": null,
+    "phone": null,
+    "address": {
+      "en": [
+        "Arab Abu Saad Industrial Zone, 670",
+        "Giza, Egypt"
+      ],
+      "ar": [
+        "المنطقة الصناعية بعرب أبو ساعد، 670",
+        "الجيزة، مصر"
+      ],
+      "map_url": "https://www.google.com/maps/search/?api=1&query=Arab%20Abu%20Saad%20Industrial%20Zone%2C%20Giza%2C%20Egypt"
+    },
+    "legal": {
+      "form": {
+        "en": "Limited liability company",
+        "ar": "شركة ذات مسؤولية محدودة"
+      },
+      "commercial_register": "295803",
+      "tax_card": "774-139-552"
+    },
+    "images": {
+      "hero_1": "/images/hero.jpg",
+      "hero_2": "/images/production.jpg",
+      "hero_3": "/images/about.jpg",
+      "about": "/images/factory.jpg",
+      "research": "/images/research.jpg",
+      "laboratory": "/images/laboratory.jpg",
+      "installation": "/images/kiln.jpg",
+      "preview_shaped": "/images/production.jpg",
+      "preview_unshaped": "/images/about.jpg"
+    }
+  },
+  "products": [
+    {
+      "slug": "lightweight-bricks",
+      "category": "Shaped",
+      "sort_order": 1,
+      "published": true,
+      "image": "/images/production.jpg",
+      "name": {
+        "en": "Lightweight bricks",
+        "ar": "الطوب العازل خفيف الوزن"
+      },
+      "short": {
+        "en": "Insulation for demanding thermal environments.",
+        "ar": "عزل حراري لأكثر البيئات الحرارية تطلبًا."
+      },
+      "description": {
+        "en": "A range of insulating refractory bricks for applications where thermal insulation and low weight are priorities. Discuss your operating conditions with our team to select the appropriate grade.",
+        "ar": "مجموعة من الطوب الحراري العازل للتطبيقات التي يُعدّ فيها العزل الحراري وخفة الوزن أولوية. ناقش ظروف التشغيل مع فريقنا لاختيار الدرجة المناسبة."
+      },
+      "grades": [],
+      "datasheet_groups": []
+    },
+    {
+      "slug": "dense-alumina-bricks",
+      "category": "Shaped",
+      "sort_order": 2,
+      "published": true,
+      "image": "/images/production.jpg",
+      "name": {
+        "en": "Dense alumina bricks",
+        "ar": "طوب الألومينا الكثيف"
+      },
+      "short": {
+        "en": "Fireclay and high-alumina refractory solutions.",
+        "ar": "حلول حرارية من الطين الناري والألومينا العالية."
+      },
+      "description": {
+        "en": "Our dense brick range includes fireclay and high-alumina products in a selection of grades. Share your furnace design and process requirements for guidance on material selection.",
+        "ar": "تضم مجموعة الطوب الكثيف لدينا منتجات من الطين الناري والألومينا العالية بدرجات متعددة. شاركنا تصميم الفرن ومتطلبات العملية لنساعدك في اختيار المادة."
+      },
+      "grades": [],
+      "datasheet_groups": []
+    },
+    {
+      "slug": "cordierite-mullite-bricks",
+      "category": "Shaped",
+      "sort_order": 3,
+      "published": true,
+      "image": "/images/kiln.jpg",
+      "name": {
+        "en": "Cordierite–mullite bricks",
+        "ar": "طوب الكورديريت–موليت"
+      },
+      "short": {
+        "en": "Specialist compositions for your thermal process.",
+        "ar": "تركيبات متخصصة لعمليتك الحرارية."
+      },
+      "description": {
+        "en": "Cordierite–mullite refractory bricks are available in a range of compositions. Our team can help match your application to a suitable product specification.",
+        "ar": "يتوفر طوب الكورديريت–موليت الحراري بتركيبات متعددة، ويمكن لفريقنا مساعدتك في مطابقة تطبيقك مع المواصفات المناسبة."
+      },
+      "grades": [],
+      "datasheet_groups": []
+    },
+    {
+      "slug": "chemical-bond-bricks",
+      "category": "Shaped",
+      "sort_order": 4,
+      "published": true,
+      "image": "/images/production.jpg",
+      "name": {
+        "en": "Chemically bonded bricks",
+        "ar": "الطوب المترابط كيميائيًا"
+      },
+      "short": {
+        "en": "Alternative bonding systems for specific requirements.",
+        "ar": "أنظمة ربط بديلة لمتطلبات محددة."
+      },
+      "description": {
+        "en": "Chemically bonded refractory bricks offer additional options within the shaped range. Contact our specialists to discuss process compatibility and grade selection.",
+        "ar": "يوفّر الطوب الحراري المترابط كيميائيًا خيارات إضافية ضمن مجموعة المنتجات المشكّلة. تواصل مع متخصصينا لمناقشة توافقه مع عمليتك واختيار الدرجة."
+      },
+      "grades": [],
+      "datasheet_groups": []
+    },
+    {
+      "slug": "acid-resistant-bricks",
+      "category": "Shaped",
+      "sort_order": 5,
+      "published": true,
+      "image": "/images/kiln.jpg",
+      "name": {
+        "en": "Acid-resistant bricks",
+        "ar": "الطوب المقاوم للأحماض"
+      },
+      "short": {
+        "en": "Materials selected for chemically demanding conditions.",
+        "ar": "مواد مختارة للظروف الكيميائية القاسية."
+      },
+      "description": {
+        "en": "Acid-resistant bricks are available in multiple grades for specialist applications. Provide details of the chemical environment and operating conditions to establish suitability.",
+        "ar": "يتوفر الطوب المقاوم للأحماض بدرجات متعددة للتطبيقات المتخصصة. زوّدنا بتفاصيل البيئة الكيميائية وظروف التشغيل لتحديد مدى الملاءمة."
+      },
+      "grades": [],
+      "datasheet_groups": []
+    },
+    {
+      "slug": "castables",
+      "category": "Unshaped",
+      "sort_order": 6,
+      "published": true,
+      "image": "/images/about.jpg",
+      "name": {
+        "en": "Refractory castables",
+        "ar": "الخرسانات الحرارية"
+      },
+      "short": {
+        "en": "Versatile materials. Application-led specifications.",
+        "ar": "مواد متعددة الاستخدامات بمواصفات تناسب التطبيق."
+      },
+      "description": {
+        "en": "Choose from lightweight, low-cement, traditional alumina, and cordierite castables. Our team supports material selection around the requirements of your installation.",
+        "ar": "اختر من بين الخرسانات الحرارية خفيفة الوزن، ومنخفضة الأسمنت، والألومينية التقليدية، وخرسانات الكورديريت. يدعمك فريقنا في اختيار المادة وفق متطلبات التركيب."
+      },
+      "grades": [],
+      "datasheet_groups": []
+    },
+    {
+      "slug": "mortars",
+      "category": "Unshaped",
+      "sort_order": 7,
+      "published": true,
+      "image": "/images/about.jpg",
+      "name": {
+        "en": "Refractory mortars",
+        "ar": "المونة الحرارية"
+      },
+      "short": {
+        "en": "The right connection between refractory components.",
+        "ar": "الرابط الصحيح بين المكوّنات الحرارية."
+      },
+      "description": {
+        "en": "Our mortar range includes heat-setting, air-setting, acid-resistant, and phosphate-bonded materials. Discuss the brick grade and installation requirements with our team.",
+        "ar": "تشمل مجموعة المونة لدينا مواد تتصلّب بالحرارة، وأخرى تتصلّب بالهواء، ومونة مقاومة للأحماض، ومونة مترابطة بالفوسفات. ناقش درجة الطوب ومتطلبات التركيب مع فريقنا."
+      },
+      "grades": [],
+      "datasheet_groups": []
+    },
+    {
+      "slug": "chamotte",
+      "category": "Unshaped",
+      "sort_order": 8,
+      "published": true,
+      "image": "/images/hero.jpg",
+      "name": {
+        "en": "Chamotte",
+        "ar": "الشاموت"
+      },
+      "short": {
+        "en": "Raw materials for refractory and ceramic production.",
+        "ar": "مواد خام لإنتاج المواد الحرارية والسيراميك."
+      },
+      "description": {
+        "en": "Chamotte is supplied across refractory, lightweight, and sanitary-ware ranges. Ask our sales team about available particle sizes and compositions for your production process.",
+        "ar": "يتوفر الشاموت بأنواع حرارية وخفيفة الوزن ولصناعة الأدوات الصحية. اسأل فريق المبيعات عن أحجام الحبيبات والتركيبات المتاحة لعملية الإنتاج لديك."
+      },
+      "grades": [],
+      "datasheet_groups": []
+    },
+    {
+      "slug": "calcined-bauxite",
+      "category": "Unshaped",
+      "sort_order": 9,
+      "published": true,
+      "image": "/images/about.jpg",
+      "name": {
+        "en": "Calcined bauxite",
+        "ar": "البوكسيت المكلسن"
+      },
+      "short": {
+        "en": "A selection of particle sizes for your process.",
+        "ar": "مجموعة من أحجام الحبيبات لعمليتك."
+      },
+      "description": {
+        "en": "Calcined bauxite is offered in fine and aggregate sizes to meet a range of production requirements. Request current technical specifications and availability from our team.",
+        "ar": "يتوفر البوكسيت المكلسن بأحجام ناعمة وحبيبية لتلبية مجموعة من متطلبات الإنتاج. اطلب المواصفات الفنية الحالية والتوافر من فريقنا."
+      },
+      "grades": [],
+      "datasheet_groups": []
+    }
+  ],
+  "industries": [
+    {
+      "slug": "iron-steel",
+      "icon": "steel",
+      "sort_order": 1,
+      "published": true,
+      "name": {
+        "en": "Iron & steel",
+        "ar": "الحديد والصلب"
+      },
+      "text": {
+        "en": "Refractory and insulation solutions for steel production and casting.",
+        "ar": "حلول حرارية وعازلة لإنتاج الصلب وعمليات الصب."
+      },
+      "brochure_url": null
+    },
+    {
+      "slug": "cement-lime",
+      "icon": "cement",
+      "sort_order": 2,
+      "published": true,
+      "name": {
+        "en": "Cement & lime",
+        "ar": "الأسمنت والجير"
+      },
+      "text": {
+        "en": "Refractory material selection for demanding kiln operations.",
+        "ar": "اختيار المواد الحرارية لعمليات الأفران الأكثر تطلبًا."
+      },
+      "brochure_url": null
+    },
+    {
+      "slug": "glass-ceramics",
+      "icon": "glass",
+      "sort_order": 3,
+      "published": true,
+      "name": {
+        "en": "Glass & ceramics",
+        "ar": "الزجاج والسيراميك"
+      },
+      "text": {
+        "en": "Materials for thermal processes in glass and ceramic manufacturing.",
+        "ar": "مواد للعمليات الحرارية في صناعة الزجاج والسيراميك."
+      },
+      "brochure_url": null
+    },
+    {
+      "slug": "aluminium",
+      "icon": "aluminium",
+      "sort_order": 4,
+      "published": true,
+      "name": {
+        "en": "Aluminium & non-ferrous",
+        "ar": "الألومنيوم والمعادن غير الحديدية"
+      },
+      "text": {
+        "en": "Refractory solutions developed around metal processing requirements.",
+        "ar": "حلول حرارية مطوّرة وفق متطلبات معالجة المعادن."
+      },
+      "brochure_url": null
+    },
+    {
+      "slug": "chemicals",
+      "icon": "chemical",
+      "sort_order": 5,
+      "published": true,
+      "name": {
+        "en": "Chemicals & petrochemicals",
+        "ar": "الكيماويات والبتروكيماويات"
+      },
+      "text": {
+        "en": "Application-led solutions for industrial processing environments.",
+        "ar": "حلول تناسب التطبيق لبيئات المعالجة الصناعية."
+      },
+      "brochure_url": null
+    },
+    {
+      "slug": "power",
+      "icon": "power",
+      "sort_order": 6,
+      "published": true,
+      "name": {
+        "en": "Power & other industries",
+        "ar": "الطاقة وصناعات أخرى"
+      },
+      "text": {
+        "en": "Serving power generation, sugar, coke ovens, and refractory manufacturing.",
+        "ar": "نخدم توليد الطاقة وصناعة السكر وأفران الكوك وصناعة المواد الحرارية."
+      },
+      "brochure_url": null
+    }
+  ],
+  "content": [
+    {
+      "key": "meta.title",
+      "en": "Ajyad — Built for the Extreme",
+      "ar": "أجياد — صُنعت لأقسى الظروف"
+    },
+    {
+      "key": "meta.titleTemplate",
+      "en": "%s | Ajyad",
+      "ar": "%s | أجياد"
+    },
+    {
+      "key": "meta.description",
+      "en": "Explore Ajyad's refractory products and industrial solutions. Shaped and unshaped refractories for demanding industries.",
+      "ar": "تعرّف على منتجات أجياد الحرارية وحلولها الصناعية: منتجات حرارية مشكّلة وغير مشكّلة للصناعات الأكثر تطلبًا."
+    },
+    {
+      "key": "nav.home",
+      "en": "Home",
+      "ar": "الرئيسية"
+    },
+    {
+      "key": "nav.about",
+      "en": "About us",
+      "ar": "من نحن"
+    },
+    {
+      "key": "nav.products",
+      "en": "Products",
+      "ar": "المنتجات"
+    },
+    {
+      "key": "nav.sectors",
+      "en": "Sectors",
+      "ar": "القطاعات"
+    },
+    {
+      "key": "nav.research",
+      "en": "R&D",
+      "ar": "البحث والتطوير"
+    },
+    {
+      "key": "nav.contact",
+      "en": "Contact",
+      "ar": "تواصل معنا"
+    },
+    {
+      "key": "nav.cta",
+      "en": "Let’s talk",
+      "ar": "لنتحدث"
+    },
+    {
+      "key": "nav.mobileCta",
+      "en": "Discuss your project",
+      "ar": "ناقش مشروعك معنا"
+    },
+    {
+      "key": "nav.openNavigation",
+      "en": "Open navigation",
+      "ar": "فتح القائمة"
+    },
+    {
+      "key": "nav.closeNavigation",
+      "en": "Close navigation",
+      "ar": "إغلاق القائمة"
+    },
+    {
+      "key": "nav.mainNavigation",
+      "en": "Main navigation",
+      "ar": "القائمة الرئيسية"
+    },
+    {
+      "key": "nav.mobileNavigation",
+      "en": "Mobile navigation",
+      "ar": "قائمة الجوال"
+    },
+    {
+      "key": "nav.menu",
+      "en": "{title} menu",
+      "ar": "قائمة {title}"
+    },
+    {
+      "key": "nav.skip",
+      "en": "Skip to content",
+      "ar": "انتقل إلى المحتوى"
+    },
+    {
+      "key": "nav.home_aria",
+      "en": "Ajyad home",
+      "ar": "الصفحة الرئيسية لأجياد"
+    },
+    {
+      "key": "nav.switchLanguage",
+      "en": "العربية",
+      "ar": "English"
+    },
+    {
+      "key": "nav.switchLanguageLabel",
+      "en": "عرض الموقع باللغة العربية",
+      "ar": "View this page in English"
+    },
+    {
+      "key": "nav.shaped",
+      "en": "Shaped",
+      "ar": "منتجات مشكّلة"
+    },
+    {
+      "key": "nav.unshaped",
+      "en": "Unshaped",
+      "ar": "منتجات غير مشكّلة"
+    },
+    {
+      "key": "nav.datasheets",
+      "en": "Technical datasheets · PDF",
+      "ar": "النشرات الفنية · PDF"
+    },
+    {
+      "key": "nav.datasheetsOnRequest",
+      "en": "Datasheets and specifications for this range are available from our team.",
+      "ar": "يمكنك الحصول على النشرات الفنية والمواصفات لهذه المجموعة من فريقنا."
+    },
+    {
+      "key": "nav.requestDatasheet",
+      "en": "Request specifications",
+      "ar": "اطلب المواصفات"
+    },
+    {
+      "key": "nav.viewProductPage",
+      "en": "View product page",
+      "ar": "صفحة المنتج"
+    },
+    {
+      "key": "nav.sectorBrochures",
+      "en": "Sector brochures · PDF",
+      "ar": "كتيبات القطاعات · PDF"
+    },
+    {
+      "key": "nav.sectorsList",
+      "en": "Sectors we serve",
+      "ar": "القطاعات التي نخدمها"
+    },
+    {
+      "key": "nav.pdfNewTab",
+      "en": "{label} (PDF, opens in new tab)",
+      "ar": "{label} (ملف PDF، يفتح في نافذة جديدة)"
+    },
+    {
+      "key": "categories.Shaped",
+      "en": "Shaped",
+      "ar": "مشكّلة"
+    },
+    {
+      "key": "categories.Unshaped",
+      "en": "Unshaped",
+      "ar": "غير مشكّلة"
+    },
+    {
+      "key": "intro.skip",
+      "en": "Skip intro",
+      "ar": "تخطي المقدمة"
+    },
+    {
+      "key": "hero.carousel",
+      "en": "Ajyad highlights",
+      "ar": "أبرز ما في أجياد"
+    },
+    {
+      "key": "hero.imageAlt",
+      "en": "Refractory manufacturing facility",
+      "ar": "منشأة لتصنيع المواد الحرارية"
+    },
+    {
+      "key": "hero.explore",
+      "en": "Explore our products",
+      "ar": "استكشف منتجاتنا"
+    },
+    {
+      "key": "hero.discover",
+      "en": "Discover Ajyad",
+      "ar": "تعرّف على أجياد"
+    },
+    {
+      "key": "hero.scroll",
+      "en": "SCROLL TO EXPLORE",
+      "ar": "مرّر للاستكشاف"
+    },
+    {
+      "key": "hero.previous",
+      "en": "Previous highlight",
+      "ar": "الشريحة السابقة"
+    },
+    {
+      "key": "hero.next",
+      "en": "Next highlight",
+      "ar": "الشريحة التالية"
+    },
+    {
+      "key": "hero.slides.0.label",
+      "en": "ENGINEERED TO ENDURE.",
+      "ar": "مصمَّمة لتدوم."
+    },
+    {
+      "key": "hero.slides.0.title.0",
+      "en": "BUILT FOR",
+      "ar": "صُنعت لأقسى"
+    },
+    {
+      "key": "hero.slides.0.title.1",
+      "en": "THE EXTREME.",
+      "ar": "الظروف."
+    },
+    {
+      "key": "hero.slides.0.text",
+      "en": "Refractory solutions that keep your industry moving, in the world’s most demanding environments.",
+      "ar": "حلول حرارية تُبقي صناعتك في حركة مستمرة، في أكثر بيئات العمل تطلبًا."
+    },
+    {
+      "key": "hero.slides.1.label",
+      "en": "MATERIAL EXPERTISE. INDUSTRIAL STRENGTH.",
+      "ar": "خبرة في المواد. قوة صناعية."
+    },
+    {
+      "key": "hero.slides.1.title.0",
+      "en": "PRECISION IN",
+      "ar": "دقة في"
+    },
+    {
+      "key": "hero.slides.1.title.1",
+      "en": "EVERY PRODUCT.",
+      "ar": "كل منتج."
+    },
+    {
+      "key": "hero.slides.1.text",
+      "en": "Shaped and unshaped refractories. A wide range of materials, with the expertise to find the right fit for your process.",
+      "ar": "منتجات حرارية مشكّلة وغير مشكّلة، ومجموعة واسعة من المواد، مع الخبرة اللازمة لاختيار الأنسب لعمليتك."
+    },
+    {
+      "key": "hero.slides.2.label",
+      "en": "BUILT ON PARTNERSHIP.",
+      "ar": "شراكة قبل كل شيء."
+    },
+    {
+      "key": "hero.slides.2.title.0",
+      "en": "CLOSE TO YOU.",
+      "ar": "قريبون منك."
+    },
+    {
+      "key": "hero.slides.2.title.1",
+      "en": "READY TO DELIVER.",
+      "ar": "جاهزون للتوريد."
+    },
+    {
+      "key": "hero.slides.2.text",
+      "en": "Refractory materials backed by a commitment to responsive service and long-term partnerships.",
+      "ar": "مواد حرارية تدعمها خدمة سريعة الاستجابة والتزام بشراكات طويلة الأمد."
+    },
+    {
+      "key": "home.introEyebrow",
+      "en": "THE AJYAD DIFFERENCE",
+      "ar": "ما يميّز أجياد"
+    },
+    {
+      "key": "home.introTitle.0",
+      "en": "STRONG FOUNDATIONS.",
+      "ar": "أسس متينة."
+    },
+    {
+      "key": "home.introTitle.1",
+      "en": "GREATER POSSIBILITIES.",
+      "ar": "آفاق أوسع."
+    },
+    {
+      "key": "home.introLead",
+      "en": "Behind every great industry are materials that can take the heat. We supply them.",
+      "ar": "وراء كل صناعة عظيمة مواد تتحمّل الحرارة. ونحن نوفّرها."
+    },
+    {
+      "key": "home.introText",
+      "en": "Ajyad brings together materials expertise and a deep understanding of industrial needs to deliver refractory solutions that go further.",
+      "ar": "تجمع أجياد بين الخبرة في المواد والفهم العميق لاحتياجات الصناعة، لتقدّم حلولًا حرارية تذهب أبعد."
+    },
+    {
+      "key": "home.introLink",
+      "en": "Get to know Ajyad",
+      "ar": "تعرّف على أجياد"
+    },
+    {
+      "key": "home.productsEyebrow",
+      "en": "OUR PRODUCTS",
+      "ar": "منتجاتنا"
+    },
+    {
+      "key": "home.productsTitle.0",
+      "en": "THE RIGHT MATERIAL.",
+      "ar": "المادة المناسبة."
+    },
+    {
+      "key": "home.productsTitle.1",
+      "en": "FOR EVERY CHALLENGE.",
+      "ar": "لكل تحدٍّ."
+    },
+    {
+      "key": "home.productsLink",
+      "en": "Explore the range",
+      "ar": "استكشف المجموعة"
+    },
+    {
+      "key": "home.sectorsEyebrow",
+      "en": "SECTORS WE SERVE",
+      "ar": "القطاعات التي نخدمها"
+    },
+    {
+      "key": "home.sectorsTitle.0",
+      "en": "WHERE INDUSTRY WORKS,",
+      "ar": "حيث تعمل الصناعة،"
+    },
+    {
+      "key": "home.sectorsTitle.1",
+      "en": "WE WORK.",
+      "ar": "نعمل نحن."
+    },
+    {
+      "key": "home.sectorsAside.0",
+      "en": "Different processes. Different pressures.",
+      "ar": "عمليات مختلفة. وضغوط مختلفة."
+    },
+    {
+      "key": "home.sectorsAside.1",
+      "en": "One partner who understands your industry.",
+      "ar": "وشريك واحد يفهم صناعتك."
+    },
+    {
+      "key": "home.sectorsItemLink",
+      "en": "Explore solutions",
+      "ar": "استكشف الحلول"
+    },
+    {
+      "key": "home.sectorsLink",
+      "en": "Discover all sectors",
+      "ar": "اكتشف جميع القطاعات"
+    },
+    {
+      "key": "home.researchEyebrow",
+      "en": "RESEARCH & DEVELOPMENT",
+      "ar": "البحث والتطوير"
+    },
+    {
+      "key": "home.researchTitle.0",
+      "en": "TODAY’S EXPERTISE.",
+      "ar": "خبرة اليوم."
+    },
+    {
+      "key": "home.researchTitle.1",
+      "en": "TOMORROW’S",
+      "ar": "حلول"
+    },
+    {
+      "key": "home.researchTitle.2",
+      "en": "SOLUTIONS.",
+      "ar": "الغد."
+    },
+    {
+      "key": "home.researchCorner.0",
+      "en": "CONSTANTLY DEVELOPING.",
+      "ar": "تطوير مستمر."
+    },
+    {
+      "key": "home.researchCorner.1",
+      "en": "ALWAYS MOVING FORWARD.",
+      "ar": "وتقدّم دائم."
+    },
+    {
+      "key": "home.researchText",
+      "en": "Better materials start with better questions. Research and development helps us evolve our products around the changing needs of your industry.",
+      "ar": "المواد الأفضل تبدأ بأسئلة أفضل. يساعدنا البحث والتطوير على تطوير منتجاتنا وفق الاحتياجات المتغيرة لصناعتك."
+    },
+    {
+      "key": "home.researchLink",
+      "en": "Inside our approach",
+      "ar": "تعرّف على منهجنا"
+    },
+    {
+      "key": "home.researchImageAlt",
+      "en": "Research and development laboratory",
+      "ar": "مختبر البحث والتطوير"
+    },
+    {
+      "key": "productPreview.imageShaped",
+      "en": "Refractory production",
+      "ar": "إنتاج المواد الحرارية"
+    },
+    {
+      "key": "productPreview.imageUnshaped",
+      "en": "Bulk refractory materials ready for delivery",
+      "ar": "مواد حرارية سائبة جاهزة للتوريد"
+    },
+    {
+      "key": "productPreview.tag",
+      "en": "MATERIALS THAT MAKE A DIFFERENCE",
+      "ar": "مواد تصنع الفرق"
+    },
+    {
+      "key": "productPreview.tabs",
+      "en": "Product category",
+      "ar": "فئة المنتجات"
+    },
+    {
+      "key": "productPreview.tab.Shaped",
+      "en": "Shaped products",
+      "ar": "المنتجات المشكّلة"
+    },
+    {
+      "key": "productPreview.tab.Unshaped",
+      "en": "Unshaped products",
+      "ar": "المنتجات غير المشكّلة"
+    },
+    {
+      "key": "productPreview.viewAll.Shaped",
+      "en": "View all shaped products",
+      "ar": "عرض جميع المنتجات المشكّلة"
+    },
+    {
+      "key": "productPreview.viewAll.Unshaped",
+      "en": "View all unshaped products",
+      "ar": "عرض جميع المنتجات غير المشكّلة"
+    },
+    {
+      "key": "catalogue.filter",
+      "en": "Filter products",
+      "ar": "تصفية المنتجات"
+    },
+    {
+      "key": "catalogue.all",
+      "en": "All products",
+      "ar": "جميع المنتجات"
+    },
+    {
+      "key": "catalogue.search",
+      "en": "Search products",
+      "ar": "ابحث في المنتجات"
+    },
+    {
+      "key": "catalogue.searchPlaceholder",
+      "en": "Search products…",
+      "ar": "ابحث في المنتجات…"
+    },
+    {
+      "key": "catalogue.clearSearch",
+      "en": "Clear search",
+      "ar": "مسح البحث"
+    },
+    {
+      "key": "catalogue.count",
+      "en": "{count} product families",
+      "ar": "{count} مجموعات منتجات"
+    },
+    {
+      "key": "catalogue.countOne",
+      "en": "1 product family",
+      "ar": "مجموعة منتجات واحدة"
+    },
+    {
+      "key": "catalogue.imageAlt",
+      "en": "{category} refractory products",
+      "ar": "منتجات حرارية {category}"
+    },
+    {
+      "key": "catalogue.emptyTitle",
+      "en": "No matching products",
+      "ar": "لا توجد منتجات مطابقة"
+    },
+    {
+      "key": "catalogue.emptyText",
+      "en": "Try a product family such as “bricks” or “castables”.",
+      "ar": "جرّب البحث عن مجموعة مثل «طوب» أو «خرسانة»."
+    },
+    {
+      "key": "catalogue.clear",
+      "en": "Clear filters",
+      "ar": "مسح عوامل التصفية"
+    },
+    {
+      "key": "banner.eyebrow",
+      "en": "YOUR NEXT CHALLENGE. OUR SHARED AMBITION.",
+      "ar": "تحديك القادم. طموحنا المشترك."
+    },
+    {
+      "key": "banner.title.0",
+      "en": "LET’S BUILD SOMETHING",
+      "ar": "لنبنِ معًا شيئًا"
+    },
+    {
+      "key": "banner.title.1",
+      "en": "THAT LASTS.",
+      "ar": "يدوم."
+    },
+    {
+      "key": "banner.button",
+      "en": "Talk to our team",
+      "ar": "تحدّث إلى فريقنا"
+    },
+    {
+      "key": "footer.tagline.0",
+      "en": "Refractory expertise.",
+      "ar": "خبرة في المواد الحرارية."
+    },
+    {
+      "key": "footer.tagline.1",
+      "en": "Trusted by industry.",
+      "ar": "موثوقة لدى الصناعة."
+    },
+    {
+      "key": "footer.explore",
+      "en": "Explore",
+      "ar": "استكشف"
+    },
+    {
+      "key": "footer.about",
+      "en": "About Ajyad",
+      "ar": "عن أجياد"
+    },
+    {
+      "key": "footer.products",
+      "en": "Our products",
+      "ar": "منتجاتنا"
+    },
+    {
+      "key": "footer.sectors",
+      "en": "Sectors we serve",
+      "ar": "القطاعات التي نخدمها"
+    },
+    {
+      "key": "footer.research",
+      "en": "Research & development",
+      "ar": "البحث والتطوير"
+    },
+    {
+      "key": "footer.careers",
+      "en": "Careers",
+      "ar": "الوظائف"
+    },
+    {
+      "key": "footer.contact",
+      "en": "Get in touch",
+      "ar": "تواصل معنا"
+    },
+    {
+      "key": "footer.noteEyebrow",
+      "en": "FROM OUR TEAM TO YOURS",
+      "ar": "من فريقنا إلى فريقك"
+    },
+    {
+      "key": "footer.note.0",
+      "en": "Materials expertise.",
+      "ar": "خبرة في المواد."
+    },
+    {
+      "key": "footer.note.1",
+      "en": "A partner you can rely on.",
+      "ar": "وشريك يمكنك الاعتماد عليه."
+    },
+    {
+      "key": "footer.noteLink",
+      "en": "Find your solution",
+      "ar": "اعثر على الحل المناسب"
+    },
+    {
+      "key": "footer.rights",
+      "en": "© {year} {name}. All rights reserved.",
+      "ar": "© {year} {name}. جميع الحقوق محفوظة."
+    },
+    {
+      "key": "footer.registration",
+      "en": "Commercial Register No. {cr} · Tax Card No. {tax}",
+      "ar": "سجل تجاري رقم {cr} · بطاقة ضريبية رقم {tax}"
+    },
+    {
+      "key": "footer.motto",
+      "en": "MATERIALS. EXPERTISE. POSSIBILITIES.",
+      "ar": "مواد. خبرة. آفاق."
+    },
+    {
+      "key": "footer.top",
+      "en": "Back to top ↑",
+      "ar": "العودة إلى الأعلى ↑"
+    },
+    {
+      "key": "about.title",
+      "en": "About us",
+      "ar": "من نحن"
+    },
+    {
+      "key": "about.eyebrow",
+      "en": "About Ajyad",
+      "ar": "عن أجياد"
+    },
+    {
+      "key": "about.heading",
+      "en": "Built on experience. Driven by possibility.",
+      "ar": "مبنية على الخبرة. مدفوعة بالطموح."
+    },
+    {
+      "key": "about.description",
+      "en": "We bring refractory expertise and practical support to every industrial challenge.",
+      "ar": "نقدّم خبرتنا في المواد الحرارية ودعمًا عمليًا لكل تحدٍّ صناعي."
+    },
+    {
+      "key": "about.imageAlt",
+      "en": "Inside a refractory manufacturing plant",
+      "ar": "داخل مصنع للمواد الحرارية"
+    },
+    {
+      "key": "about.storyEyebrow",
+      "en": "OUR STORY",
+      "ar": "قصتنا"
+    },
+    {
+      "key": "about.storyTitle.0",
+      "en": "MATERIALS EXPERTISE.",
+      "ar": "خبرة في المواد."
+    },
+    {
+      "key": "about.storyTitle.1",
+      "en": "PRACTICAL PARTNERSHIP.",
+      "ar": "وشراكة عملية."
+    },
+    {
+      "key": "about.story.0",
+      "en": "Ajyad supplies refractory products and solutions for industries where heat, wear, and chemical attack are part of everyday operation.",
+      "ar": "توفّر أجياد منتجات وحلولًا حرارية للصناعات التي تُعدّ فيها الحرارة والتآكل والهجوم الكيميائي جزءًا من التشغيل اليومي."
+    },
+    {
+      "key": "about.story.1",
+      "en": "Our strength lies in bringing materials expertise and an understanding of each customer’s process together, from the first enquiry to installation support.",
+      "ar": "تكمن قوتنا في الجمع بين الخبرة في المواد وفهم عملية كل عميل، من الاستفسار الأول وحتى دعم التركيب."
+    },
+    {
+      "key": "about.storyLink",
+      "en": "Discover our products",
+      "ar": "اكتشف منتجاتنا"
+    },
+    {
+      "key": "about.commitmentEyebrow",
+      "en": "OUR COMMITMENT",
+      "ar": "التزامنا"
+    },
+    {
+      "key": "about.commitmentTitle.0",
+      "en": "QUALITY IN THE MATERIAL.",
+      "ar": "جودة في المادة."
+    },
+    {
+      "key": "about.commitmentTitle.1",
+      "en": "CARE IN THE PARTNERSHIP.",
+      "ar": "واهتمام في الشراكة."
+    },
+    {
+      "key": "about.commitment.0",
+      "en": "Our aim is to provide high-quality refractory products and practical solutions to our customers.",
+      "ar": "هدفنا أن نقدّم لعملائنا منتجات حرارية عالية الجودة وحلولًا عملية."
+    },
+    {
+      "key": "about.commitment.1",
+      "en": "From material selection to installation support, we work to understand what your operation needs and help you move forward with confidence.",
+      "ar": "من اختيار المادة إلى دعم التركيب، نعمل على فهم احتياجات منشأتك ونساعدك على المضيّ قدمًا بثقة."
+    },
+    {
+      "key": "about.commitmentLink",
+      "en": "Meet your next partner",
+      "ar": "تعرّف على شريكك القادم"
+    },
+    {
+      "key": "productsPage.title",
+      "en": "Refractory products",
+      "ar": "المنتجات الحرارية"
+    },
+    {
+      "key": "productsPage.eyebrow",
+      "en": "Our products",
+      "ar": "منتجاتنا"
+    },
+    {
+      "key": "productsPage.heading",
+      "en": "Materials made for the challenge.",
+      "ar": "مواد صُنعت للتحدي."
+    },
+    {
+      "key": "productsPage.description",
+      "en": "Explore shaped and unshaped refractory products. Find a product family, or speak to our team about your specific requirements.",
+      "ar": "استكشف المنتجات الحرارية المشكّلة وغير المشكّلة. اعثر على مجموعة المنتجات المناسبة، أو تحدّث إلى فريقنا عن متطلباتك."
+    },
+    {
+      "key": "product.notFound",
+      "en": "Product not found",
+      "ar": "المنتج غير موجود"
+    },
+    {
+      "key": "product.eyebrow",
+      "en": "{category} refractories",
+      "ar": "منتجات حرارية {category}"
+    },
+    {
+      "key": "product.imageAlt",
+      "en": "Refractory production and materials",
+      "ar": "إنتاج المواد الحرارية"
+    },
+    {
+      "key": "product.heading.0",
+      "en": "THE MATERIAL.",
+      "ar": "المادة."
+    },
+    {
+      "key": "product.heading.1",
+      "en": "THE POSSIBILITIES.",
+      "ar": "والإمكانات."
+    },
+    {
+      "key": "product.grades",
+      "en": "Available grades & ranges",
+      "ar": "الدرجات والمجموعات المتاحة"
+    },
+    {
+      "key": "product.enquire",
+      "en": "Enquire about this product",
+      "ar": "استفسر عن هذا المنتج"
+    },
+    {
+      "key": "product.datasheet",
+      "en": "Technical datasheet",
+      "ar": "النشرة الفنية"
+    },
+    {
+      "key": "product.note",
+      "en": "Ask our team for current specifications, availability, and guidance on the right grade for your process.",
+      "ar": "تواصل مع فريقنا لمعرفة المواصفات الحالية والتوافر، وللمساعدة في اختيار الدرجة المناسبة لعمليتك."
+    },
+    {
+      "key": "product.back",
+      "en": "All products",
+      "ar": "جميع المنتجات"
+    },
+    {
+      "key": "sectorsPage.title",
+      "en": "Sectors we serve",
+      "ar": "القطاعات التي نخدمها"
+    },
+    {
+      "key": "sectorsPage.eyebrow",
+      "en": "Sectors we serve",
+      "ar": "القطاعات التي نخدمها"
+    },
+    {
+      "key": "sectorsPage.heading",
+      "en": "Your industry. Our expertise.",
+      "ar": "صناعتك. وخبرتنا."
+    },
+    {
+      "key": "sectorsPage.description",
+      "en": "Every operation brings a different set of demands. We work with you to understand the process and identify a suitable refractory solution.",
+      "ar": "لكل منشأة متطلباتها الخاصة. نعمل معك لفهم العملية وتحديد الحل الحراري المناسب."
+    },
+    {
+      "key": "sectorsPage.discuss",
+      "en": "Discuss your application",
+      "ar": "ناقش تطبيقك معنا"
+    },
+    {
+      "key": "sectorsPage.topic",
+      "en": "{name} industry enquiry",
+      "ar": "استفسار عن قطاع {name}"
+    },
+    {
+      "key": "sectorsPage.installEyebrow",
+      "en": "BEYOND THE PRODUCT",
+      "ar": "ما بعد المنتج"
+    },
+    {
+      "key": "sectorsPage.installTitle.0",
+      "en": "EXPERTISE THAT",
+      "ar": "خبرة ترافقك"
+    },
+    {
+      "key": "sectorsPage.installTitle.1",
+      "en": "FOLLOWS THROUGH.",
+      "ar": "حتى النهاية."
+    },
+    {
+      "key": "sectorsPage.installText",
+      "en": "Our installation services support the operational process of refractory material installation. Talk to us about the scope of your project and the support your team needs.",
+      "ar": "تدعم خدمات التركيب لدينا مراحل تركيب المواد الحرارية. تحدّث إلينا عن نطاق مشروعك والدعم الذي يحتاجه فريقك."
+    },
+    {
+      "key": "sectorsPage.installLink",
+      "en": "Discuss installation",
+      "ar": "ناقش خدمات التركيب"
+    },
+    {
+      "key": "sectorsPage.installTopic",
+      "en": "Installation services",
+      "ar": "خدمات التركيب"
+    },
+    {
+      "key": "sectorsPage.installImageAlt",
+      "en": "Industrial kiln equipment",
+      "ar": "معدات فرن صناعي"
+    },
+    {
+      "key": "research.title",
+      "en": "Research & Development",
+      "ar": "البحث والتطوير"
+    },
+    {
+      "key": "research.description",
+      "en": "Research and development supporting product development to customer specifications.",
+      "ar": "بحث وتطوير يدعم تطوير المنتجات وفق مواصفات العملاء."
+    },
+    {
+      "key": "research.eyebrow",
+      "en": "Research & development",
+      "ar": "البحث والتطوير"
+    },
+    {
+      "key": "research.heading",
+      "en": "BUILT AROUND YOUR REQUIREMENTS.",
+      "ar": "مصمَّم حول متطلباتك."
+    },
+    {
+      "key": "research.intro",
+      "en": "Our research and development work supports a clear purpose: developing products to customer specifications.",
+      "ar": "يخدم عملنا في البحث والتطوير هدفًا واضحًا: تطوير المنتجات وفق مواصفات العملاء."
+    },
+    {
+      "key": "research.imageAlt",
+      "en": "Research and development laboratory",
+      "ar": "مختبر البحث والتطوير"
+    },
+    {
+      "key": "research.labAlt",
+      "en": "Laboratory testing equipment",
+      "ar": "معدات الاختبار في المختبر"
+    },
+    {
+      "key": "research.s1Eyebrow",
+      "en": "FROM REQUIREMENT TO PRODUCT",
+      "ar": "من المتطلبات إلى المنتج"
+    },
+    {
+      "key": "research.s1Title.0",
+      "en": "A closer look.",
+      "ar": "نظرة أقرب."
+    },
+    {
+      "key": "research.s1Title.1",
+      "en": "A better starting point.",
+      "ar": "ونقطة انطلاق أفضل."
+    },
+    {
+      "key": "research.s1.0",
+      "en": "Every application begins with its own requirements. Research and development helps us develop products to meet customer specifications.",
+      "ar": "لكل تطبيق متطلباته الخاصة. يساعدنا البحث والتطوير على تطوير منتجات تلبي مواصفات العملاء."
+    },
+    {
+      "key": "research.s1.1",
+      "en": "By sharing your technical needs with our team, you give us the starting point for a focused conversation about your product requirements.",
+      "ar": "عندما تشارك احتياجاتك الفنية مع فريقنا، تمنحنا نقطة البداية لحوار مركّز حول متطلبات منتجك."
+    },
+    {
+      "key": "research.s1Link",
+      "en": "Discuss your requirements",
+      "ar": "ناقش متطلباتك"
+    },
+    {
+      "key": "research.s1Topic",
+      "en": "Technical enquiry",
+      "ar": "استفسار فني"
+    },
+    {
+      "key": "research.s2Eyebrow",
+      "en": "START WITH THE DETAILS",
+      "ar": "ابدأ بالتفاصيل"
+    },
+    {
+      "key": "research.s2Title.0",
+      "en": "Your specifications.",
+      "ar": "مواصفاتك."
+    },
+    {
+      "key": "research.s2Title.1",
+      "en": "Our shared focus.",
+      "ar": "واهتمامنا المشترك."
+    },
+    {
+      "key": "research.s2Intro",
+      "en": "Help us understand what your application needs. When you contact our team, useful details include:",
+      "ar": "ساعدنا على فهم ما يحتاجه تطبيقك. عند التواصل مع فريقنا، من المفيد أن تذكر:"
+    },
+    {
+      "key": "research.s2List.0",
+      "en": "The product and its intended application.",
+      "ar": "المنتج والتطبيق المقصود منه."
+    },
+    {
+      "key": "research.s2List.1",
+      "en": "Your operating conditions and performance requirements.",
+      "ar": "ظروف التشغيل ومتطلبات الأداء."
+    },
+    {
+      "key": "research.s2List.2",
+      "en": "Any technical specifications you can share.",
+      "ar": "أي مواصفات فنية يمكنك مشاركتها."
+    },
+    {
+      "key": "research.s2Link",
+      "en": "Start a technical conversation",
+      "ar": "ابدأ حوارًا فنيًا"
+    },
+    {
+      "key": "research.s2Topic",
+      "en": "Research and development enquiry",
+      "ar": "استفسار بحث وتطوير"
+    },
+    {
+      "key": "careers.title",
+      "en": "Careers",
+      "ar": "الوظائف"
+    },
+    {
+      "key": "careers.description",
+      "en": "Introduce yourself to Ajyad and express your interest in future career opportunities.",
+      "ar": "عرّفنا بنفسك وأبدِ اهتمامك بفرص العمل المستقبلية في أجياد."
+    },
+    {
+      "key": "careers.eyebrow",
+      "en": "Careers",
+      "ar": "الوظائف"
+    },
+    {
+      "key": "careers.heading",
+      "en": "YOUR NEXT CHAPTER.",
+      "ar": "فصلك القادم."
+    },
+    {
+      "key": "careers.intro",
+      "en": "Bring your experience, your curiosity, and your interest in the materials that shape industry. Start a conversation about a future with Ajyad.",
+      "ar": "شاركنا خبرتك وشغفك واهتمامك بالمواد التي تُشكّل الصناعة. ابدأ حوارًا حول مستقبلك مع أجياد."
+    },
+    {
+      "key": "careers.s1Eyebrow",
+      "en": "LET’S GET TO KNOW YOU",
+      "ar": "دعنا نتعرّف عليك"
+    },
+    {
+      "key": "careers.s1Title.0",
+      "en": "Great work begins",
+      "ar": "العمل العظيم يبدأ"
+    },
+    {
+      "key": "careers.s1Title.1",
+      "en": "with people.",
+      "ar": "بالناس."
+    },
+    {
+      "key": "careers.s1.0",
+      "en": "Interested in joining Ajyad? We welcome introductions from people who would like to contribute their skills and experience to our business.",
+      "ar": "هل ترغب في الانضمام إلى أجياد؟ نرحّب بتعارف الأشخاص الراغبين في المساهمة بمهاراتهم وخبراتهم في أعمالنا."
+    },
+    {
+      "key": "careers.s1.1",
+      "en": "There are no specific vacancies listed on this page. You can still make a speculative enquiry about future opportunities.",
+      "ar": "لا توجد وظائف شاغرة محددة في هذه الصفحة، لكن يمكنك إرسال طلب مبدئي للفرص المستقبلية."
+    },
+    {
+      "key": "careers.s1Link",
+      "en": "Introduce yourself",
+      "ar": "عرّفنا بنفسك"
+    },
+    {
+      "key": "careers.s2Eyebrow",
+      "en": "MAKE AN INTRODUCTION",
+      "ar": "قدّم نفسك"
+    },
+    {
+      "key": "careers.s2Title.0",
+      "en": "Tell us where",
+      "ar": "أخبرنا إلى أين"
+    },
+    {
+      "key": "careers.s2Title.1",
+      "en": "you want to go.",
+      "ar": "تريد أن تصل."
+    },
+    {
+      "key": "careers.s2Intro",
+      "en": "A few details will help our team understand your interests. In your enquiry, tell us about:",
+      "ar": "بعض التفاصيل ستساعد فريقنا على فهم اهتماماتك. في رسالتك، أخبرنا عن:"
+    },
+    {
+      "key": "careers.s2List.0",
+      "en": "Your area of expertise and relevant experience.",
+      "ar": "مجال خبرتك وخبراتك ذات الصلة."
+    },
+    {
+      "key": "careers.s2List.1",
+      "en": "The kind of role or work you are interested in.",
+      "ar": "نوع الدور أو العمل الذي يهمك."
+    },
+    {
+      "key": "careers.s2List.2",
+      "en": "Your contact details and location.",
+      "ar": "بيانات التواصل ومكان إقامتك."
+    },
+    {
+      "key": "careers.s2Outro",
+      "en": "Send your introduction with the contact form. Our team will reply by email if there is a suitable opportunity and let you know how to share your CV.",
+      "ar": "أرسل تعريفك بنفسك عبر نموذج التواصل. سيرد فريقنا عليك بالبريد الإلكتروني عند توفر فرصة مناسبة، ويخبرك بكيفية إرسال سيرتك الذاتية."
+    },
+    {
+      "key": "contact.title",
+      "en": "Contact",
+      "ar": "تواصل معنا"
+    },
+    {
+      "key": "contact.description",
+      "en": "Contact Ajyad for product enquiries and project requirements.",
+      "ar": "تواصل مع أجياد بخصوص استفسارات المنتجات ومتطلبات المشاريع."
+    },
+    {
+      "key": "contact.eyebrow",
+      "en": "Contact us",
+      "ar": "تواصل معنا"
+    },
+    {
+      "key": "contact.heading",
+      "en": "LET’S TALK MATERIALS.",
+      "ar": "لنتحدث عن المواد."
+    },
+    {
+      "key": "contact.intro",
+      "en": "A product enquiry. A technical requirement. A new possibility. Tell us what you have in mind, and start a conversation with our team.",
+      "ar": "استفسار عن منتج. متطلب فني. فكرة جديدة. أخبرنا بما تفكر فيه، وابدأ حوارًا مع فريقنا."
+    },
+    {
+      "key": "contact.detailsEyebrow",
+      "en": "THE RIGHT CONNECTION",
+      "ar": "التواصل الصحيح"
+    },
+    {
+      "key": "contact.detailsTitle.0",
+      "en": "Good things start",
+      "ar": "الأشياء الجيدة تبدأ"
+    },
+    {
+      "key": "contact.detailsTitle.1",
+      "en": "with a conversation.",
+      "ar": "بحوار."
+    },
+    {
+      "key": "contact.detailsText",
+      "en": "Reach us directly, or send an enquiry with the form. We look forward to hearing about your requirements.",
+      "ar": "تواصل معنا مباشرة، أو أرسل استفسارك عبر النموذج. يسعدنا التعرّف على متطلباتك."
+    },
+    {
+      "key": "contact.sales",
+      "en": "Sales enquiries",
+      "ar": "استفسارات المبيعات"
+    },
+    {
+      "key": "contact.call",
+      "en": "Call our team",
+      "ar": "اتصل بفريقنا"
+    },
+    {
+      "key": "contact.findUs",
+      "en": "Find us",
+      "ar": "موقعنا"
+    },
+    {
+      "key": "contact.company",
+      "en": "Company details",
+      "ar": "بيانات الشركة"
+    },
+    {
+      "key": "contact.commercialRegister",
+      "en": "Commercial Register No.",
+      "ar": "رقم السجل التجاري"
+    },
+    {
+      "key": "contact.taxCard",
+      "en": "Tax Card No.",
+      "ar": "رقم البطاقة الضريبية"
+    },
+    {
+      "key": "contact.map",
+      "en": "View on Google Maps",
+      "ar": "عرض على خرائط Google"
+    },
+    {
+      "key": "contact.formEyebrow",
+      "en": "TELL US WHAT YOU NEED",
+      "ar": "أخبرنا بما تحتاجه"
+    },
+    {
+      "key": "form.labelSales",
+      "en": "Product enquiry",
+      "ar": "استفسار عن منتج"
+    },
+    {
+      "key": "form.labelTechnical",
+      "en": "Technical enquiry",
+      "ar": "استفسار فني"
+    },
+    {
+      "key": "form.labelCareer",
+      "en": "Career enquiry",
+      "ar": "طلب وظيفة"
+    },
+    {
+      "key": "form.name",
+      "en": "Full name",
+      "ar": "الاسم الكامل"
+    },
+    {
+      "key": "form.namePlaceholder",
+      "en": "Your full name",
+      "ar": "اسمك الكامل"
+    },
+    {
+      "key": "form.company",
+      "en": "Company",
+      "ar": "الشركة"
+    },
+    {
+      "key": "form.companyPlaceholder",
+      "en": "Company name",
+      "ar": "اسم الشركة"
+    },
+    {
+      "key": "form.optional",
+      "en": "(optional)",
+      "ar": "(اختياري)"
+    },
+    {
+      "key": "form.email",
+      "en": "Email",
+      "ar": "البريد الإلكتروني"
+    },
+    {
+      "key": "form.workEmail",
+      "en": "Work email",
+      "ar": "البريد الإلكتروني للعمل"
+    },
+    {
+      "key": "form.emailPlaceholder",
+      "en": "you@company.com",
+      "ar": "you@company.com"
+    },
+    {
+      "key": "form.emailPlaceholderCareer",
+      "en": "you@example.com",
+      "ar": "you@example.com"
+    },
+    {
+      "key": "form.phone",
+      "en": "Phone",
+      "ar": "الهاتف"
+    },
+    {
+      "key": "form.phonePlaceholder",
+      "en": "Include country code",
+      "ar": "مع رمز الدولة"
+    },
+    {
+      "key": "form.topic",
+      "en": "Product of interest",
+      "ar": "المنتج المطلوب"
+    },
+    {
+      "key": "form.topicCareer",
+      "en": "Area of interest",
+      "ar": "مجال الاهتمام"
+    },
+    {
+      "key": "form.topicPlaceholder",
+      "en": "Tell us what you’re looking for",
+      "ar": "أخبرنا بما تبحث عنه"
+    },
+    {
+      "key": "form.topicPlaceholderCareer",
+      "en": "For example, production or engineering",
+      "ar": "مثلًا: الإنتاج أو الهندسة"
+    },
+    {
+      "key": "form.message",
+      "en": "How can we help?",
+      "ar": "كيف يمكننا مساعدتك؟"
+    },
+    {
+      "key": "form.messagePlaceholder",
+      "en": "Share your application, quantity, or project requirements…",
+      "ar": "اذكر التطبيق أو الكمية أو متطلبات المشروع…"
+    },
+    {
+      "key": "form.messagePlaceholderCareer",
+      "en": "Tell us about your experience, the type of role you’re interested in, and your location…",
+      "ar": "أخبرنا عن خبرتك ونوع الدور الذي يهمك ومكان إقامتك…"
+    },
+    {
+      "key": "form.honeypot",
+      "en": "Leave this field empty",
+      "ar": "اترك هذا الحقل فارغًا"
+    },
+    {
+      "key": "form.send",
+      "en": "Send enquiry",
+      "ar": "إرسال الاستفسار"
+    },
+    {
+      "key": "form.sending",
+      "en": "Sending…",
+      "ar": "جارٍ الإرسال…"
+    },
+    {
+      "key": "form.note",
+      "en": "Fields marked * are required. We use your details only to respond to this enquiry.",
+      "ar": "الحقول المميزة بعلامة * مطلوبة. نستخدم بياناتك فقط للرد على هذا الاستفسار."
+    },
+    {
+      "key": "form.noteCareer",
+      "en": "Fields marked * are required. We use your details only to respond to this enquiry and consider you for future opportunities.",
+      "ar": "الحقول المميزة بعلامة * مطلوبة. نستخدم بياناتك فقط للرد على هذا الطلب وللنظر في ترشيحك للفرص المستقبلية."
+    },
+    {
+      "key": "form.sentTitle",
+      "en": "Thank you — your enquiry has been received.",
+      "ar": "شكرًا لك — تم استلام استفسارك."
+    },
+    {
+      "key": "form.sentReference",
+      "en": "Your reference is {reference}. Our team will reply by email.",
+      "ar": "الرقم المرجعي لاستفسارك هو {reference}. سيرد فريقنا عليك بالبريد الإلكتروني."
+    },
+    {
+      "key": "form.sendAnother",
+      "en": "Send another enquiry",
+      "ar": "إرسال استفسار آخر"
+    },
+    {
+      "key": "form.emailInstead",
+      "en": "Email {email} instead",
+      "ar": "أو راسلنا على {email}"
+    },
+    {
+      "key": "form.checkFields",
+      "en": "Check the highlighted fields.",
+      "ar": "يرجى مراجعة الحقول المميزة."
+    },
+    {
+      "key": "form.invalidField",
+      "en": "Check this field.",
+      "ar": "يرجى مراجعة هذا الحقل."
+    },
+    {
+      "key": "form.network",
+      "en": "We couldn’t reach our enquiry service. Check your connection and try again, or email {email}.",
+      "ar": "تعذّر الوصول إلى خدمة الاستفسارات. تحقق من اتصالك وحاول مرة أخرى، أو راسلنا على {email}."
+    },
+    {
+      "key": "form.conflict",
+      "en": "This enquiry changed after it was first sent. Send it again to submit it as a new enquiry.",
+      "ar": "تغيّر هذا الاستفسار بعد إرساله أول مرة. أرسله مرة أخرى لتقديمه كاستفسار جديد."
+    },
+    {
+      "key": "form.rateLimit",
+      "en": "Too many enquiries were sent from this connection. Please try again in {wait}.",
+      "ar": "تم إرسال عدد كبير من الاستفسارات من هذا الاتصال. يرجى المحاولة مرة أخرى بعد {wait}."
+    },
+    {
+      "key": "form.seconds",
+      "en": "{count} seconds",
+      "ar": "{count} ثانية"
+    },
+    {
+      "key": "form.minutes",
+      "en": "{count} minutes",
+      "ar": "{count} دقيقة"
+    },
+    {
+      "key": "form.fewMinutes",
+      "en": "a few minutes",
+      "ar": "بضع دقائق"
+    },
+    {
+      "key": "form.tooLarge",
+      "en": "Your enquiry is too long. Shorten the message and try again.",
+      "ar": "استفسارك طويل جدًا. اختصر الرسالة وحاول مرة أخرى."
+    },
+    {
+      "key": "form.unavailable",
+      "en": "Your enquiry could not be sent. Please try again, or email {email}.",
+      "ar": "تعذّر إرسال استفسارك. حاول مرة أخرى، أو راسلنا على {email}."
+    },
+    {
+      "key": "notFound.title",
+      "en": "THIS PAGE IS OUT OF RANGE.",
+      "ar": "هذه الصفحة خارج النطاق."
+    },
+    {
+      "key": "notFound.text",
+      "en": "The page you’re looking for may have moved. Let’s get you back to our products.",
+      "ar": "ربما نُقلت الصفحة التي تبحث عنها. دعنا نعيدك إلى منتجاتنا."
+    },
+    {
+      "key": "notFound.link",
+      "en": "Explore products",
+      "ar": "استكشف المنتجات"
+    }
+  ]
+}

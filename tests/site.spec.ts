@@ -163,3 +163,10 @@ test("unknown URLs keep the site navigation and the admin area requires sign-in"
   await expect(page.getByRole("heading", { name: "Sign in" })).toBeVisible();
   await expect(page.getByRole("navigation", { name: "Main navigation" })).toHaveCount(0);
 });
+
+test("dashboard content sections require sign-in", async ({ page }) => {
+  for (const route of ["/admin/products", "/admin/sectors", "/admin/content", "/admin/media", "/admin/settings", "/admin/staff", "/ar/admin/products"]) {
+    await page.goto(route);
+    await expect(page).toHaveURL(/\/admin\/login$/);
+  }
+});

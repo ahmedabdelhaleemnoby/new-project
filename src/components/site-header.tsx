@@ -8,7 +8,6 @@ import { Logo } from "@/components/logo";
 import { fill, localePath, stripLocale, type Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries/en";
 import type { Datasheet, MenuFamily } from "@/lib/menu";
-import { site } from "@/lib/site";
 
 type Nav = Dictionary["nav"];
 type MenuKey = "products" | "sectors";
@@ -47,7 +46,7 @@ function SectorsPanel({ t, sectors, close }: { t: Nav; sectors: SectorLink[]; cl
     : <Link key={s.href} href={s.href} onClick={close}>{s.label}<ArrowUpRight size={14} /></Link>)}</div>;
 }
 
-export function SiteHeader({ lang, t, productMenu, sectors }: { lang: Locale; t: Nav; productMenu: MenuFamily[]; sectors: SectorLink[] }) {
+export function SiteHeader({ lang, t, company, productMenu, sectors }: { lang: Locale; t: Nav; company: { fullName: string; email: string }; productMenu: MenuFamily[]; sectors: SectorLink[] }) {
   const pathname = usePathname();
   const path = stripLocale(pathname);
   const [open, setOpen] = useState(false);
@@ -84,10 +83,10 @@ export function SiteHeader({ lang, t, productMenu, sectors }: { lang: Locale; t:
   const switcher = <Link href={localePath(otherLang, path)} className="lang-switch" hrefLang={otherLang} lang={otherLang} aria-label={t.switchLanguageLabel} onClick={() => setOpen(false)}><Globe size={15} aria-hidden="true" />{t.switchLanguage}</Link>;
 
   return <>
-    <div className="utility-bar"><div className="container utility-inner"><span>{site.fullName[lang].toUpperCase()}</span><div className="utility-links">{switcher}<a href={`mailto:${site.salesEmail}`}>{site.salesEmail} <ArrowUpRight size={12} /></a></div></div></div>
+    <div className="utility-bar"><div className="container utility-inner"><span>{company.fullName.toUpperCase()}</span><div className="utility-links">{switcher}<a href={`mailto:${company.email}`}>{company.email} <ArrowUpRight size={12} /></a></div></div></div>
     <header className={`site-header${scrolled ? " scrolled" : ""}`}>
       <div className="container header-inner">
-        <Link href={href("/")} className="brand" aria-label={t.home_aria} onClick={() => setOpen(false)}><Logo lang={lang} priority /></Link>
+        <Link href={href("/")} className="brand" aria-label={t.home_aria} onClick={() => setOpen(false)}><Logo alt={company.fullName} priority /></Link>
         <nav ref={navRef} className="desktop-nav" aria-label={t.mainNavigation}>{links.map(([p, title, key]) => {
           const top = <Link key={p} href={href(p)} className={`nav-top${isActive(p) ? " active" : ""}`} aria-current={path === p ? "page" : undefined}>{title}</Link>;
           if (!key) return top;
