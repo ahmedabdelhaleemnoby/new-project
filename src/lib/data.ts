@@ -16,10 +16,10 @@ const productBase: Omit<Product, keyof ProductText>[] = [
   { slug: "cordierite-mullite-bricks", category: "Shaped", grades: [], image: "/images/kiln.jpg" },
   { slug: "chemical-bond-bricks", category: "Shaped", grades: [], image: "/images/production.jpg" },
   { slug: "acid-resistant-bricks", category: "Shaped", grades: [], image: "/images/kiln.jpg" },
-  { slug: "castables", category: "Unshaped", grades: [], image: "/images/bricks.jpg" },
-  { slug: "mortars", category: "Unshaped", grades: [], image: "/images/bricks.jpg" },
+  { slug: "castables", category: "Unshaped", grades: [], image: "/images/about.jpg" },
+  { slug: "mortars", category: "Unshaped", grades: [], image: "/images/about.jpg" },
   { slug: "chamotte", category: "Unshaped", grades: [], image: "/images/hero.jpg" },
-  { slug: "calcined-bauxite", category: "Unshaped", grades: [], image: "/images/bricks.jpg" },
+  { slug: "calcined-bauxite", category: "Unshaped", grades: [], image: "/images/about.jpg" },
 ];
 
 const productText: Record<Locale, Record<string, ProductText>> = {

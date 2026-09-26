@@ -70,12 +70,16 @@ This is an English website. It does not connect to the original site's order pla
 - The staff area is bilingual too: `/admin` and `/ar/admin`.
 - Arabic uses IBM Plex Sans Arabic (body) and Cairo (headings) via `next/font/google`.
 
+## First-visit intro
+
+A Three.js kiln-arch intro (`src/components/intro/`) plays once per browser session on any public page, then lifts to reveal the page. It can be skipped (button, click, Esc/Enter/Space), is not shown with `prefers-reduced-motion`, and Three.js is loaded only while it plays.
+
 ## Placeholders before launch
 
 Company details live in `src/lib/site.ts`. Before publishing, replace:
 
 - `salesEmail` (currently the non-delivering placeholder `sales@ajyad.example`), and optionally `secondaryEmail`, `phone`, and `address` (hidden while null).
-- Photography in `public/images/*.jpg`: these are placeholder photos from the original Asfour site (see `ASSET_SOURCES.md`) and must be replaced with Ajyad's own.
+- Photography in `public/images/*.jpg`: these are placeholder photos from the original Asfour site (see `ASSET_SOURCES.md`) and must be replaced with Ajyad's own. `kiln.jpg`, `laboratory.jpg`, and `research.jpg` show a small Asfour logo on uniforms.
 - Grade names and datasheet links per product in `src/lib/data.ts`, or serve them from the content API. Product pages hide these sections while empty.
 - The logo (`public/images/ajyad-logo.png`, favicon `src/app/icon.png`) was rendered from the supplied `AJYAD LOOG.eps`, which is black-only, and recoloured to match the brand mockup. Swap in official colour artwork when available.
 
