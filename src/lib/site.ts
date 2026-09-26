@@ -2,8 +2,8 @@
 export const site = {
   name: { en: "Ajyad", ar: "أجياد" },
   fullName: { en: "Ajyad Thermotech", ar: "أجياد ثيرموتك" },
-  /** TODO: replace with Ajyad's sales address. `.example` is a reserved domain, so this never delivers mail. */
-  salesEmail: "sales@ajyad.example",
+  /** Main contact address, used for sales enquiries and email fallbacks across the site. */
+  salesEmail: "info@ajyad.online",
   /** TODO: optional second sales address (for example a regional team); null hides it. */
   secondaryEmail: null as { email: string; label: { en: string; ar: string } } | null,
   /** TODO: international format, e.g. "+20 100 000 0000"; null hides it. */
