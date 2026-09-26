@@ -85,7 +85,7 @@ Use a consistent error shape such as `{ "error": { "code": "VALIDATION_ERROR", "
 - [ ] Create versioned database migrations and durable enquiry storage.
 - [ ] Store the enquiry and a notification job in one transaction, or use an equivalent durable queue arrangement that cannot lose accepted submissions.
 - [ ] Send notifications using a verified business sender. Put the validated visitor address in `Reply-To`; do not let visitors set the sender or recipients.
-- [ ] Configure sales/technical and HR destinations separately. Both current email drafts target `sales@asfourmr.com`; an HR recipient still needs confirmation.
+- [ ] Configure sales/technical and HR destinations separately. The site's contact address is `info@ajyad.online`; an HR recipient still needs confirmation.
 - [ ] Process delivery jobs through a persistent worker or scheduled runner. Do not rely on unawaited work after a server request finishes.
 - [ ] Track attempts and retry temporary failures with bounded backoff. Surface exhausted retries to staff and provide a controlled retry action.
 - [ ] Deduplicate job execution and use provider idempotency support where available. Distinguish provider acceptance from actual email delivery.
