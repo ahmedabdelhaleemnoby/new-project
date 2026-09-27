@@ -2,14 +2,17 @@
 // Proposed public endpoints (GET, `?locale=en|ar`, JSON array or Laravel-style `{ "data": [...] }`):
 //   /products         → Product[]      (src/lib/data.ts)
 //   /industries       → Industry[]     (src/lib/data.ts)
-//   /menus/products   → MenuFamily[]   (src/lib/menu.ts; locally derived from the products, without datasheets)
+//   /menus/products   → MenuFamily[]   (src/lib/menu.ts; locally derived from the products and their datasheet PDFs)
 //   /menus/sectors    → Datasheet[]    (src/lib/menu.ts; locally empty, so the header links to the sectors page)
 //   /settings         → company details and page photos (src/lib/settings.ts)
 //   /content          → page-text overrides, a flat { "dictionary.key": "text" } map (src/i18n/dictionaries.ts)
 // Full contract: docs/BACKEND_CMS_SPEC.md.
 // A null, empty, invalid, or failed response uses the local list. Items that match a local item
-// (by slug, or by URL for sector brochures) get null or missing fields filled from the local copy.
+// (by slug, or by URL for sector brochures) get null, missing or empty-list fields filled from the local copy,
+// and site-relative image paths that don't exist in /public fall back to local photos.
 // Server-only: call from Server Components and pass the results to Client Components as props.
+import { existsSync } from "node:fs";
+import path from "node:path";
 import type { Locale } from "@/i18n/config";
 import { localIndustries, localProducts, type Industry, type Product } from "@/lib/data";
 import type { Datasheet, MenuFamily } from "@/lib/menu";
@@ -25,9 +28,14 @@ const isRecord = (value: unknown): value is Row => typeof value === "object" && 
 const isText = (value: unknown): value is string => typeof value === "string" && value.trim() !== "";
 const isSheet = (value: unknown): value is Datasheet => isRecord(value) && isText(value.label) && isText(value.url);
 
+const isSpecs = (s: unknown) => isRecord(s) && isText(s.title) && Array.isArray(s.sections)
+  && s.sections.every(section => isRecord(section) && isText(section.name) && Array.isArray(section.rows)
+    && section.rows.every(row => Array.isArray(row) && row.length === 2 && row.every(cell => typeof cell === "string")));
 const isProduct = (p: Row): boolean =>
   isText(p.slug) && isText(p.name) && (p.category === "Shaped" || p.category === "Unshaped") && isText(p.short) && isText(p.description) && isText(p.image)
-  && Array.isArray(p.grades) && p.grades.every(isText) && (p.datasheet === undefined || isSheet(p.datasheet));
+  && Array.isArray(p.grades) && p.grades.every(isText) && (p.datasheet === undefined || isSheet(p.datasheet))
+  && (p.applications === undefined || (Array.isArray(p.applications) && p.applications.every(isText)))
+  && (p.specs === undefined || isSpecs(p.specs));
 const isIndustry = (i: Row): boolean => isText(i.slug) && isText(i.name) && isText(i.text) && isText(i.icon);
 const isMenuFamily = (f: Row): boolean =>
   isText(f.slug) && isText(f.name) && (f.category === "Shaped" || f.category === "Unshaped") && Array.isArray(f.groups)
@@ -54,13 +62,26 @@ async function fetchRows(path: string, lang: Locale): Promise<unknown[] | null> 
   return Array.isArray(rows) ? rows : null;
 }
 
-async function load<T extends object>(path: string, lang: Locale, local: T[], key: keyof T & string, isValid: (row: Row) => boolean): Promise<T[]> {
-  const rows = await fetchRows(path, lang);
+/** Site-relative paths ("/images/…") must exist in /public; absolute URLs are trusted. Results are cached. */
+const fileCache = new Map<string, boolean>();
+function isServable(url: string) {
+  if (!url.startsWith("/")) return true;
+  if (!fileCache.has(url)) fileCache.set(url, existsSync(path.join(process.cwd(), "public", decodeURIComponent(url.split("?")[0]))));
+  return fileCache.get(url)!;
+}
+/** Used when an API product's photo is missing and no local product matches its slug. */
+const DEFAULT_PRODUCT_IMAGE = "/images/catalogue/backfill.jpg";
+
+async function load<T extends object>(apiPath: string, lang: Locale, local: T[], key: keyof T & string, isValid: (row: Row) => boolean): Promise<T[]> {
+  const rows = await fetchRows(apiPath, lang);
   if (!rows?.length) return local;
   const merged = rows.filter(isRecord).map(row => {
-    const fallback = local.find(item => (item as Row)[key] === row[key]) ?? {};
-    const present = Object.fromEntries(Object.entries(row).filter(([, value]) => value !== null && value !== undefined));
-    return { ...fallback, ...present } as Row;
+    const fallback: Row = local.find(item => (item as Row)[key] === row[key]) ?? {};
+    const present = Object.fromEntries(Object.entries(row).filter(([field, value]) =>
+      value !== null && value !== undefined && !(Array.isArray(value) && value.length === 0 && Array.isArray(fallback[field]) && (fallback[field] as unknown[]).length > 0)));
+    const item = { ...fallback, ...present } as Row;
+    if (typeof item.image === "string" && !isServable(item.image)) item.image = typeof fallback.image === "string" ? fallback.image : DEFAULT_PRODUCT_IMAGE;
+    return item;
   });
   const valid = merged.filter(isValid) as T[];
   return valid.length ? valid : local;
@@ -69,7 +90,10 @@ async function load<T extends object>(path: string, lang: Locale, local: T[], ke
 export const getProducts = (lang: Locale) => load<Product>("/products", lang, localProducts(lang), "slug", isProduct);
 export const getIndustries = (lang: Locale) => load<Industry>("/industries", lang, localIndustries(lang), "slug", isIndustry);
 export async function getProductMenu(lang: Locale) {
-  const local: MenuFamily[] = (await getProducts(lang)).map(({ slug, name, category }) => ({ slug, name, category, groups: [] }));
+  const local: MenuFamily[] = (await getProducts(lang)).map(({ slug, name, category, grades, datasheet }) => ({
+    slug, name, category,
+    groups: datasheet ? [{ name: null, sheets: [{ label: grades[0] ?? name, url: datasheet.url }] }] : [],
+  }));
   return load<MenuFamily>("/menus/products", lang, local, "slug", isMenuFamily);
 }
 export const getSectorMenu = (lang: Locale) => load<Datasheet>("/menus/sectors", lang, [], "url", isSheet);
@@ -90,14 +114,16 @@ export async function getSettings(lang: Locale): Promise<SiteSettings> {
     fullName: isText(api.full_name) ? api.full_name : local.fullName,
     email: isText(api.email) ? api.email : local.email,
     secondaryEmail: secondary === null ? null : isRecord(secondary) && isText(secondary.email) && isText(secondary.label) ? { email: secondary.email, label: secondary.label } : local.secondaryEmail,
-    phone: api.phone === null ? null : isText(api.phone) ? api.phone : local.phone,
+    // `phone` may hold several numbers separated by commas.
+    phones: api.phone === null ? [] : isText(api.phone) ? api.phone.split(/[,;]/).map(p => p.trim()).filter(Boolean) : local.phones,
+    catalogueUrl: isUrl(api.catalogue_url) && isServable(api.catalogue_url) ? api.catalogue_url : local.catalogueUrl,
     address: address === null ? null : isRecord(address) && Array.isArray(address.lines) && address.lines.every(isText) && isUrl(address.map_url) ? { lines: address.lines, mapUrl: address.map_url } : local.address,
     legal: {
       form: isText(legal.form) ? legal.form : local.legal.form,
       commercialRegister: isText(legal.commercial_register) ? legal.commercial_register : local.legal.commercialRegister,
       taxCard: isText(legal.tax_card) ? legal.tax_card : local.legal.taxCard,
     },
-    images: Object.fromEntries(imageKeys.map(key => [key, isUrl(images[key]) ? images[key] : local.images[key]])) as SiteSettings["images"],
+    images: Object.fromEntries(imageKeys.map(key => [key, isUrl(images[key]) && isServable(images[key]) ? images[key] : local.images[key]])) as SiteSettings["images"],
   };
 }
 

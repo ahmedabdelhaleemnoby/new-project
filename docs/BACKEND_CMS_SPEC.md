@@ -6,7 +6,7 @@
 
 The dashboard screens are already built against the contract below. Until an endpoint exists, the matching screen shows "not available yet", and the public site keeps using its built-in content. Nothing breaks while this is being implemented.
 
-Seed data with the current site content (products, sectors, company settings, and all 263 text entries in both languages) is in [`cms-seed.json`](cms-seed.json).
+Seed data with the current site content (the 9 products from the Ajyad catalogue with their technical data, sectors, company settings, and all page-text entries in both languages) is in [`cms-seed.json`](cms-seed.json). The catalogue PDF, per-product datasheet PDFs and product photos are in the website's `public/catalogue/` and `public/images/catalogue/` folders.
 
 ---
 
@@ -69,9 +69,10 @@ The site already calls these, with `?locale=en|ar`, and caches responses for 5 m
     "full_name": "Ajyad Thermotech",
     "email": "info@ajyad.online",
     "secondary_email": { "email": "export@ajyad.online", "label": "Export sales" },
-    "phone": "+20 100 000 0000",
+    "phone": "+20 102 946 6668, +20 100 945 1944",
     "address": { "lines": ["Arab Abu Saad Industrial Zone, 670", "Giza, Egypt"], "map_url": "https://www.google.com/maps/…" },
     "legal": { "form": "Limited liability company", "commercial_register": "295803", "tax_card": "774-139-552" },
+    "catalogue_url": "https://…/ajyad-catalogue.pdf",
     "images": {
       "hero_1": "https://…", "hero_2": "https://…", "hero_3": "https://…",
       "about": "https://…", "research": "https://…", "laboratory": "https://…", "installation": "https://…",
@@ -81,7 +82,7 @@ The site already calls these, with `?locale=en|ar`, and caches responses for 5 m
 }
 ```
 
-`secondary_email`, `phone`, and `address` may be `null` (the site hides them). Any `images.*` key may be `null` (the site uses its built-in photo).
+`secondary_email`, `phone`, and `address` may be `null` (the site hides them). `phone` may hold several numbers separated by commas. `catalogue_url` is the downloadable product catalogue (PDF). Any `images.*` key may be `null` (the site uses its built-in photo).
 
 ### `GET /content?locale=ar`
 
@@ -105,7 +106,15 @@ Strings may contain placeholders in braces, such as `{year}`, `{name}`, `{count}
     "description": "Choose from lightweight, low-cement …",
     "grades": ["LCC4001", "LCC4501"],
     "image": "https://project2.gfoura.com/storage/media/castables.jpg",
-    "datasheet": { "label": "LCC4001 technical datasheet", "url": "https://…/LCC4001.pdf" }
+    "datasheet": { "label": "LCC4001 technical datasheet", "url": "https://…/LCC4001.pdf" },
+    "applications": ["Filling the EBT taphole of electric arc furnaces", "Producing tundish cover"],
+    "specs": {
+      "title": "ProRam-G",
+      "sections": [
+        { "name": "Chemical properties", "rows": [["MgO", "80–85 %"], ["SiO₂", "1–2 %"]] },
+        { "name": "Physical properties", "rows": [["Grain size, mm", "0–8"], ["Max service temperature, °C", "1750"]] }
+      ]
+    }
   }
 ]
 ```
@@ -113,6 +122,7 @@ Strings may contain placeholders in braces, such as `{year}`, `{name}`, `{count}
 - `category` is exactly `"Shaped"` or `"Unshaped"`.
 - `grades` may be `[]`.
 - `datasheet` is optional: the product's featured PDF, or omit the key.
+- `applications` (list of strings) and `specs` (the technical data table: a title plus sections of `[label, value]` rows) are optional.
 
 ### `GET /industries?locale=en`
 
@@ -185,6 +195,13 @@ Return `[]` if no sector has a brochure; the site then links each sector to its 
   "datasheet_groups": [
     { "name": { "en": "Low-cement castables", "ar": "خرسانات منخفضة الأسمنت" }, "sheets": [{ "label": "LCC4001", "url": "https://…/LCC4001.pdf" }] }
   ],
+  "applications": [{ "en": "Filling the EBT taphole of electric arc furnaces", "ar": "ملء فتحة الصب EBT في أفران القوس الكهربائي" }],
+  "specs": {
+    "title": "ProRam-G",
+    "sections": [
+      { "name": { "en": "Chemical properties", "ar": "الخواص الكيميائية" }, "rows": [{ "label": { "en": "MgO", "ar": "MgO" }, "value": { "en": "80–85 %", "ar": "80–85 %" } }] }
+    ]
+  },
   "created_at": "…",
   "updated_at": "…"
 }
@@ -203,6 +220,8 @@ Return `[]` if no sector has a brochure; the site then links each sector to its 
 | `grades` | Array of strings, each max 60, max 60 items. |
 | `featured_datasheet` | Nullable. `url` must be an absolute URL to a PDF. |
 | `datasheet_groups` | Array (max 30). Each group has `name` (nullable `{en, ar}`) and `sheets` (max 60), and each sheet has `label` (max 80) and `url` (absolute PDF URL). Replace the whole array on write. |
+| `applications` | Array (max 20) of `{en, ar}`, each max 200. |
+| `specs` | Nullable. `title` max 80. `sections` (max 6) each has `name` `{en, ar}` and `rows` (max 30) of `{ label: {en, ar}, value: {en, ar} }`, each max 80. Public endpoints resolve it to one locale (see 2A). |
 | `sort_order` | Integer ≥ 0. |
 | `published` | Boolean. Unpublished products are hidden from public endpoints. |
 
@@ -263,7 +282,8 @@ The PUT response is the same shape as GET, after the update.
   "full_name": { "en": "Ajyad Thermotech", "ar": "أجياد ثيرموتك" },
   "email": "info@ajyad.online",
   "secondary_email": null,
-  "phone": null,
+  "phone": "+20 102 946 6668, +20 100 945 1944",
+  "catalogue_url": "https://…/ajyad-catalogue.pdf",
   "address": { "en": ["Arab Abu Saad Industrial Zone, 670", "Giza, Egypt"], "ar": ["المنطقة الصناعية بعرب أبو ساعد، 670", "الجيزة، مصر"], "map_url": "https://www.google.com/maps/…" },
   "legal": { "form": { "en": "Limited liability company", "ar": "شركة ذات مسؤولية محدودة" }, "commercial_register": "295803", "tax_card": "774-139-552" },
   "images": { "hero_1": null, "hero_2": null, "hero_3": null, "about": null, "research": null, "laboratory": null, "installation": null, "preview_shaped": null, "preview_unshaped": null },
@@ -274,7 +294,8 @@ The PUT response is the same shape as GET, after the update.
 **Validation:**
 - `email`: required, valid email.
 - `secondary_email`: nullable. When present it's `{ "email": "…", "label": { "en": "…", "ar": "…" } }`.
-- `phone`: nullable, max 50.
+- `phone`: nullable, max 120; several numbers are separated by commas.
+- `catalogue_url`: nullable absolute URL to the catalogue PDF (normally a media library URL).
 - `address`: nullable; each language has 1–4 lines, each max 120. `map_url` is an absolute URL.
 - `legal.*`: max 60 each.
 - `images.*`: nullable absolute URLs; the keys are fixed.

@@ -37,9 +37,9 @@ export default async function ContactPage({ params, searchParams }: PageProps<"/
               <Mail size={22} aria-hidden="true" />
               <div><h3>{site.secondaryEmail.label}</h3><a href={`mailto:${site.secondaryEmail.email}`}>{site.secondaryEmail.email}</a></div>
             </div>}
-            {site.phone && <div className="contact-detail">
+            {site.phones.length > 0 && <div className="contact-detail">
               <Phone size={22} aria-hidden="true" />
-              <div><h3>{c.call}</h3><a href={`tel:${site.phone.replace(/[^\d+]/g, "")}`} dir="ltr">{site.phone}</a></div>
+              <div><h3>{c.call}</h3>{site.phones.map(phone => <a key={phone} href={`tel:${phone.replace(/[^\d+]/g, "")}`} dir="ltr">{phone}</a>)}</div>
             </div>}
             {site.address && <div className="contact-detail">
               <MapPin size={22} aria-hidden="true" />

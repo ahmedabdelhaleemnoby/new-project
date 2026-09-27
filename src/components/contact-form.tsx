@@ -45,7 +45,7 @@ export function ContactForm({ lang, t, email, type = "sales", productSlug = null
     idempotencyKey.current ??= crypto.randomUUID();
     setStatus({ state: "sending" });
 
-    const result = await submitEnquiry({
+    const payload = {
       type,
       name: value("name"),
       email: value("email"),
@@ -55,7 +55,14 @@ export function ContactForm({ lang, t, email, type = "sales", productSlug = null
       topic: optional("topic"),
       message: value("message"),
       website: optional("website"),
-    }, idempotencyKey.current);
+    };
+    let result = await submitEnquiry(payload, idempotencyKey.current);
+    // If the API rejects only the product reference (an older product list), send again without it:
+    // the product name is still in the topic. The changed payload needs a new idempotency key.
+    if (!result.ok && result.kind === "validation" && payload.productSlug && Object.keys(result.fields).length > 0 && Object.keys(result.fields).every(key => key === "productSlug")) {
+      idempotencyKey.current = crypto.randomUUID();
+      result = await submitEnquiry({ ...payload, productSlug: null }, idempotencyKey.current);
+    }
 
     if (result.ok) {
       idempotencyKey.current = null;
