@@ -32,7 +32,7 @@ test("home navigation, highlight controls, and category preview", async ({ page,
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("PRECISION INEVERY PRODUCT.");
   await page.getByRole("button", { name: "Previous highlight" }).click();
   await page.getByRole("button", { name: "Unshaped products" }).click();
-  await expect(page.locator(".product-rows").getByRole("link", { name: /Refractory castables/ })).toBeVisible();
+  await expect(page.locator(".product-rows").getByRole("link", { name: /Dry backfill mixes/ })).toBeVisible();
   if (isMobile) {
     await page.getByRole("button", { name: "Open navigation" }).click();
     await page.getByRole("navigation", { name: "Mobile navigation" }).getByRole("link", { name: "Products", exact: true }).click();
@@ -46,14 +46,17 @@ test("home navigation, highlight controls, and category preview", async ({ page,
 
 test("catalogue filters, search, empty state, and product enquiry", async ({ page }) => {
   await page.goto("/products?category=Unshaped");
-  await expect(page.getByRole("status")).toHaveText("4 product families");
+  await expect(page.getByRole("status")).toHaveText("8 product families");
   await page.getByRole("button", { name: "All products", exact: true }).click();
-  await page.getByRole("textbox", { name: "Search products" }).fill("lightweight");
+  await page.getByRole("textbox", { name: "Search products" }).fill("proram");
   await expect(page.getByRole("status")).toHaveText("1 product family");
-  await page.getByRole("link", { name: /Lightweight bricks/ }).click();
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Lightweight bricks");
+  await page.getByRole("link", { name: /Hearth ramming mass/ }).click();
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Hearth ramming mass");
+  await expect(page.getByRole("link", { name: /Hearth ramming mass technical datasheet/ })).toHaveAttribute("href", "/catalogue/hearth-ramming-mass.pdf");
+  await expect(page.getByRole("table").first()).toContainText("MgO");
+  await expect(page.getByRole("heading", { name: "ProRam-G" })).toBeVisible();
   await page.getByRole("link", { name: "Enquire about this product" }).click();
-  await expect(page.getByRole("textbox", { name: /Product of interest/ })).toHaveValue("Lightweight bricks");
+  await expect(page.getByRole("textbox", { name: /Product of interest/ })).toHaveValue("Hearth ramming mass");
   await page.goto("/products");
   await page.getByRole("textbox", { name: "Search products" }).fill("nonexistent-product-xyz");
   await expect(page.getByRole("heading", { name: "No matching products" })).toBeVisible();
@@ -70,11 +73,11 @@ test("Arabic pages render right-to-left and the language switch keeps the page",
   await expect(page.locator("html")).toHaveAttribute("lang", "ar");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("مواد صُنعت للتحدي.");
   await expect(page.getByRole("status")).toHaveText("9 مجموعات منتجات");
-  await page.getByRole("link", { name: /الخرسانات الحرارية/ }).first().click();
-  await expect(page).toHaveURL(/\/ar\/products\/castables$/);
+  await page.getByRole("link", { name: /كتلة رش التنديش/ }).first().click();
+  await expect(page).toHaveURL(/\/ar\/products\/tundish-spray-mass$/);
   if (!isMobile) await page.getByRole("link", { name: "View this page in English" }).first().click();
-  else await page.goto("/ar/products/castables".replace("/ar", ""));
-  await expect(page).toHaveURL(/\/products\/castables$/);
+  else await page.goto("/products/tundish-spray-mass");
+  await expect(page).toHaveURL(/\/products\/tundish-spray-mass$/);
   await expect(page.locator("html")).toHaveAttribute("dir", "ltr");
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1)).toBe(true);
   const response = await page.goto("/en/about");
@@ -103,8 +106,8 @@ test("enquiry submits to the API, retries with the same key, and shows the refer
     return route.fulfill({ status: 201, headers: cors, json: { reference: "ENQ-TEST123", status: "received" } });
   });
 
-  await page.goto("/contact?product=castables");
-  await expect(page.getByRole("textbox", { name: /Product of interest/ })).toHaveValue("Refractory castables");
+  await page.goto("/contact?product=tundish-spray-mass");
+  await expect(page.getByRole("textbox", { name: /Product of interest/ })).toHaveValue("Tundish spray mass");
   await page.getByRole("button", { name: "Send enquiry" }).click();
   expect(requests).toHaveLength(0);
   await fillEnquiry(page);
@@ -117,7 +120,7 @@ test("enquiry submits to the API, retries with the same key, and shows the refer
   expect(requests).toHaveLength(2);
   expect(requests[0].key).toMatch(/^[0-9a-f-]{36}$/);
   expect(requests[1].key).toBe(requests[0].key);
-  expect(requests[0].body).toEqual({ type: "sales", name: "Test Buyer", email: "buyer@example.com", company: "Example Industries", phone: null, productSlug: "castables", topic: "Refractory castables", message: "Please advise on castables for our kiln & installation.", website: null });
+  expect(requests[0].body).toEqual({ type: "sales", name: "Test Buyer", email: "buyer@example.com", company: "Example Industries", phone: null, productSlug: "tundish-spray-mass", topic: "Tundish spray mass", message: "Please advise on castables for our kiln & installation.", website: null });
 });
 
 test("enquiry shows field errors from the API and routes career enquiries", async ({ page }) => {
@@ -169,4 +172,23 @@ test("dashboard content sections require sign-in", async ({ page }) => {
     await page.goto(route);
     await expect(page).toHaveURL(/\/admin\/login$/);
   }
+});
+
+test("enquiry is resent without the product reference when the API rejects only that field", async ({ page }) => {
+  const requests: { body: Record<string, unknown>; key: string | null }[] = [];
+  await page.route(API, async route => {
+    const request = route.request();
+    if (request.method() === "OPTIONS") return route.fulfill({ status: 204, headers: cors });
+    requests.push({ body: request.postDataJSON(), key: request.headers()["idempotency-key"] ?? null });
+    if (requests.length === 1) return route.fulfill({ status: 422, headers: cors, json: { message: "The selected product slug is invalid.", errors: { productSlug: ["The selected product slug is invalid."] } } });
+    return route.fulfill({ status: 201, headers: cors, json: { reference: "ENQ-SLUG1", status: "received" } });
+  });
+  await page.goto("/contact?product=hot-gunning-mass");
+  await fillEnquiry(page, "Gunning mix for EAF wall repair.");
+  await page.getByRole("button", { name: "Send enquiry" }).click();
+  await expect(page.getByText("ENQ-SLUG1")).toBeVisible();
+  expect(requests).toHaveLength(2);
+  expect(requests[0].body.productSlug).toBe("hot-gunning-mass");
+  expect(requests[1].body).toMatchObject({ productSlug: null, topic: "Hot gunning mass" });
+  expect(requests[1].key).not.toBe(requests[0].key);
 });

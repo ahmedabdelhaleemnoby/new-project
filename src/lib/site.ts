@@ -6,8 +6,8 @@ export const site = {
   salesEmail: "info@ajyad.online",
   /** TODO: optional second sales address (for example a regional team); null hides it. */
   secondaryEmail: null as { email: string; label: { en: string; ar: string } } | null,
-  /** TODO: international format, e.g. "+20 100 000 0000"; null hides it. */
-  phone: null as string | null,
+  /** Phone numbers in international format (from the catalogue); an empty list hides them. */
+  phones: ["+20 102 946 6668", "+20 100 945 1944"] as string[],
   /** Street address lines per language and a map link; null hides the location block. */
   address: {
     en: ["Arab Abu Saad Industrial Zone, 670", "Giza, Egypt"],

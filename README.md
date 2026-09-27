@@ -89,13 +89,18 @@ The dashboard edits content stored by the backend API. The endpoints it needs ar
 
 A Three.js kiln-arch intro (`src/components/intro/`) plays once per browser session on any public page, then lifts to reveal the page. It can be skipped (button, click, Esc/Enter/Space), is not shown with `prefers-reduced-motion`, and Three.js is loaded only while it plays.
 
+## Product catalogue
+
+The product range comes from the Ajyad Thermotech catalogue (`public/catalogue/ajyad-catalogue.pdf`, compressed from the supplied 38.5 MB file to 2 MB). Each product page links its own datasheet, a single catalogue page split into `public/catalogue/<slug>.pdf`, plus the full catalogue. The products dropdown and the products page also link them. Technical data tables and applications are in `src/lib/data.ts`, copied as printed in the catalogue.
+
+The CMS is the source of truth once it returns products. Loading the new catalogue into the backend is described in [docs/BACKEND_CATALOGUE_UPDATE.md](docs/BACKEND_CATALOGUE_UPDATE.md). Until that's done, the site shows the backend's older products. Tests always use the built-in content (`CONTENT_API_URL` points to an unreachable address in `playwright.config.ts`).
+
 ## Placeholders before launch
 
 Company details live in `src/lib/site.ts`. Before publishing, replace:
 
 - Optionally `secondaryEmail` and `phone` (hidden while null). The contact email is `info@ajyad.online`.
-- Photography in `public/images/*.jpg`: these are placeholder photos from the original Asfour site (see `ASSET_SOURCES.md`) and must be replaced with Ajyad's own. `kiln.jpg`, `laboratory.jpg`, and `research.jpg` show a small Asfour logo on uniforms.
-- Grade names and datasheet links per product in `src/lib/data.ts`, or serve them from the content API. Product pages hide these sections while empty.
+- Photos in `public/images/catalogue/` were cut from the Ajyad catalogue; replace them with higher-resolution originals when available (from the dashboard's company settings or the product pages).
 - The logo (`public/images/ajyad-logo.png`, favicon `src/app/icon.png`) was rendered from the supplied `AJYAD LOOG.eps`, which is black-only, and recoloured to match the brand mockup. Swap in official colour artwork when available.
 
 Asfour-specific content was removed: company history and figures, address and phone, client logos, product grade codes, and links to Asfour datasheets and sector brochures.

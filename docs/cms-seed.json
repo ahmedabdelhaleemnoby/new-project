@@ -1,4 +1,5 @@
 {
+  "note": "Relative paths (/images/…, /catalogue/…) are files in the website's public folder; upload them to the media library and use the returned absolute URLs.",
   "settings": {
     "name": {
       "en": "Ajyad",
@@ -10,7 +11,7 @@
     },
     "email": "info@ajyad.online",
     "secondary_email": null,
-    "phone": null,
+    "phone": "+20 102 946 6668, +20 100 945 1944",
     "address": {
       "en": [
         "Arab Abu Saad Industrial Zone, 670",
@@ -30,207 +31,1191 @@
       "commercial_register": "295803",
       "tax_card": "774-139-552"
     },
+    "catalogue_url": "/catalogue/ajyad-catalogue.pdf",
     "images": {
-      "hero_1": "/images/hero.jpg",
-      "hero_2": "/images/production.jpg",
-      "hero_3": "/images/about.jpg",
-      "about": "/images/factory.jpg",
-      "research": "/images/research.jpg",
-      "laboratory": "/images/laboratory.jpg",
-      "installation": "/images/kiln.jpg",
-      "preview_shaped": "/images/production.jpg",
-      "preview_unshaped": "/images/about.jpg"
+      "hero_1": "/images/catalogue/molten-pour.jpg",
+      "hero_2": "/images/catalogue/blast-furnace.jpg",
+      "hero_3": "/images/catalogue/furnace-slag.jpg",
+      "about": "/images/catalogue/ladle-glow.jpg",
+      "research": "/images/catalogue/olivine-rock.jpg",
+      "laboratory": "/images/catalogue/silica-ramming.jpg",
+      "installation": "/images/catalogue/preshaped-install.jpg",
+      "preview_shaped": "/images/catalogue/preshaped.jpg",
+      "preview_unshaped": "/images/catalogue/backfill.jpg"
     }
   },
   "products": [
     {
-      "slug": "lightweight-bricks",
-      "category": "Shaped",
+      "slug": "ebt-olivine-sand",
+      "category": "Unshaped",
       "sort_order": 1,
       "published": true,
-      "image": "/images/production.jpg",
+      "image": "/images/catalogue/olivine-sand.jpg",
       "name": {
-        "en": "Lightweight bricks",
-        "ar": "الطوب العازل خفيف الوزن"
+        "en": "EBT olivine sand",
+        "ar": "رمل الأوليفين لفتحة الصب EBT"
       },
       "short": {
-        "en": "Insulation for demanding thermal environments.",
-        "ar": "عزل حراري لأكثر البيئات الحرارية تطلبًا."
+        "en": "Olivine filling sand for eccentric bottom tapping.",
+        "ar": "رمل أوليفين لملء فتحة الصب السفلية اللامركزية."
       },
       "description": {
-        "en": "A range of insulating refractory bricks for applications where thermal insulation and low weight are priorities. Discuss your operating conditions with our team to select the appropriate grade.",
-        "ar": "مجموعة من الطوب الحراري العازل للتطبيقات التي يُعدّ فيها العزل الحراري وخفة الوزن أولوية. ناقش ظروف التشغيل مع فريقنا لاختيار الدرجة المناسبة."
+        "en": "Olivine sand combines a high melting point and sintering temperature with low heat loss and good resistance to thermal shock. It is used across refractory and steel production, most often to fill the EBT taphole of electric arc furnaces.",
+        "ar": "يجمع رمل الأوليفين بين ارتفاع درجة الانصهار والتلبيد وانخفاض الفقد الحراري ومقاومة جيدة للصدمات الحرارية، لذلك يُستخدم في صناعتي المواد الحرارية والصلب، وأكثر استخداماته ملء فتحة الصب EBT في أفران القوس الكهربائي."
       },
-      "grades": [],
-      "datasheet_groups": []
+      "grades": [
+        "EBT Olivine Sand"
+      ],
+      "applications": [
+        {
+          "en": "Filling the EBT taphole of electric arc furnaces",
+          "ar": "ملء فتحة الصب EBT في أفران القوس الكهربائي"
+        },
+        {
+          "en": "Producing tundish cover",
+          "ar": "إنتاج غطاء التنديش"
+        },
+        {
+          "en": "Producing magnesia-chrome and low-magnesia bricks",
+          "ar": "إنتاج طوب الماغنسيا-كروم والطوب منخفض الماغنسيا"
+        },
+        {
+          "en": "Covering the back wall of AOD converters",
+          "ar": "تغطية الجدار الخلفي في محولات AOD"
+        }
+      ],
+      "specs": {
+        "title": "EBT Olivine Sand",
+        "sections": [
+          {
+            "name": {
+              "en": "Chemical properties",
+              "ar": "الخواص الكيميائية"
+            },
+            "rows": [
+              {
+                "label": {
+                  "en": "MgO",
+                  "ar": "MgO"
+                },
+                "value": {
+                  "en": "47–50 %",
+                  "ar": "47–50 %"
+                }
+              },
+              {
+                "label": {
+                  "en": "CaO",
+                  "ar": "CaO"
+                },
+                "value": {
+                  "en": "0.5–1 %",
+                  "ar": "0.5–1 %"
+                }
+              },
+              {
+                "label": {
+                  "en": "SiO₂",
+                  "ar": "SiO₂"
+                },
+                "value": {
+                  "en": "39 %",
+                  "ar": "39 %"
+                }
+              },
+              {
+                "label": {
+                  "en": "Fe₂O₃",
+                  "ar": "Fe₂O₃"
+                },
+                "value": {
+                  "en": "6–10 %",
+                  "ar": "6–10 %"
+                }
+              }
+            ]
+          },
+          {
+            "name": {
+              "en": "Physical properties",
+              "ar": "الخواص الفيزيائية"
+            },
+            "rows": [
+              {
+                "label": {
+                  "en": "Type of bonding",
+                  "ar": "نوع الترابط"
+                },
+                "value": {
+                  "en": "Chemical",
+                  "ar": "كيميائي"
+                }
+              },
+              {
+                "label": {
+                  "en": "Grain size, mm",
+                  "ar": "حجم الحبيبات، مم"
+                },
+                "value": {
+                  "en": "2–6",
+                  "ar": "2–6"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "featured_datasheet": {
+        "label": {
+          "en": "EBT olivine sand technical datasheet",
+          "ar": "النشرة الفنية — رمل الأوليفين لفتحة الصب EBT"
+        },
+        "url": "/catalogue/ebt-olivine-sand.pdf"
+      },
+      "datasheet_groups": [
+        {
+          "name": null,
+          "sheets": [
+            {
+              "label": "EBT Olivine Sand",
+              "url": "/catalogue/ebt-olivine-sand.pdf"
+            }
+          ]
+        }
+      ]
     },
     {
-      "slug": "dense-alumina-bricks",
-      "category": "Shaped",
+      "slug": "dry-backfill-mixes",
+      "category": "Unshaped",
       "sort_order": 2,
       "published": true,
-      "image": "/images/production.jpg",
+      "image": "/images/catalogue/backfill.jpg",
       "name": {
-        "en": "Dense alumina bricks",
-        "ar": "طوب الألومينا الكثيف"
+        "en": "Dry backfill mixes",
+        "ar": "خلطات الردم الجافة"
       },
       "short": {
-        "en": "Fireclay and high-alumina refractory solutions.",
-        "ar": "حلول حرارية من الطين الناري والألومينا العالية."
+        "en": "Dry lining mixes that stop infiltration behind the safety lining.",
+        "ar": "خلطات تبطين جافة تمنع التسرب خلف بطانة الأمان."
       },
       "description": {
-        "en": "Our dense brick range includes fireclay and high-alumina products in a selection of grades. Share your furnace design and process requirements for guidance on material selection.",
-        "ar": "تضم مجموعة الطوب الكثيف لدينا منتجات من الطين الناري والألومينا العالية بدرجات متعددة. شاركنا تصميم الفرن ومتطلبات العملية لنساعدك في اختيار المادة."
+        "en": "High-quality magnesia- or alumina-based dry lining mixes with a ceramic bond. They are simply poured between the brick rings and the safety lining while the wall is bricked, with no further preparation, preventing metal infiltration and run-out behind the lining.",
+        "ar": "خلطات تبطين جافة عالية الجودة أساسها الماغنسيا أو الألومينا وتترابط سيراميكيًا. تُصب مباشرة بين حلقات الطوب وبطانة الأمان أثناء بناء الجدار دون أي تجهيز إضافي، فتمنع تسرب المعدن وجريانه خلف البطانة."
       },
-      "grades": [],
-      "datasheet_groups": []
+      "grades": [
+        "Dry Backfill Mix"
+      ],
+      "applications": [],
+      "specs": {
+        "title": "Dry Backfill Mix",
+        "sections": [
+          {
+            "name": {
+              "en": "Chemical properties",
+              "ar": "الخواص الكيميائية"
+            },
+            "rows": [
+              {
+                "label": {
+                  "en": "MgO",
+                  "ar": "MgO"
+                },
+                "value": {
+                  "en": "90 %",
+                  "ar": "90 %"
+                }
+              },
+              {
+                "label": {
+                  "en": "CaO",
+                  "ar": "CaO"
+                },
+                "value": {
+                  "en": "3–5 %",
+                  "ar": "3–5 %"
+                }
+              },
+              {
+                "label": {
+                  "en": "SiO₂",
+                  "ar": "SiO₂"
+                },
+                "value": {
+                  "en": "5 %",
+                  "ar": "5 %"
+                }
+              },
+              {
+                "label": {
+                  "en": "Fe₂O₃",
+                  "ar": "Fe₂O₃"
+                },
+                "value": {
+                  "en": "1–3 %",
+                  "ar": "1–3 %"
+                }
+              }
+            ]
+          },
+          {
+            "name": {
+              "en": "Physical properties",
+              "ar": "الخواص الفيزيائية"
+            },
+            "rows": [
+              {
+                "label": {
+                  "en": "Type of bonding",
+                  "ar": "نوع الترابط"
+                },
+                "value": {
+                  "en": "Chemical",
+                  "ar": "كيميائي"
+                }
+              },
+              {
+                "label": {
+                  "en": "Grain size, mm",
+                  "ar": "حجم الحبيبات، مم"
+                },
+                "value": {
+                  "en": "0–3",
+                  "ar": "0–3"
+                }
+              },
+              {
+                "label": {
+                  "en": "Refractoriness, °C",
+                  "ar": "مقاومة الحرارة، °م"
+                },
+                "value": {
+                  "en": "1610",
+                  "ar": "1610"
+                }
+              },
+              {
+                "label": {
+                  "en": "Max service temperature, °C",
+                  "ar": "أقصى درجة حرارة تشغيل، °م"
+                },
+                "value": {
+                  "en": "1560",
+                  "ar": "1560"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "featured_datasheet": {
+        "label": {
+          "en": "Dry backfill mixes technical datasheet",
+          "ar": "النشرة الفنية — خلطات الردم الجافة"
+        },
+        "url": "/catalogue/dry-backfill-mixes.pdf"
+      },
+      "datasheet_groups": [
+        {
+          "name": null,
+          "sheets": [
+            {
+              "label": "Dry Backfill Mix",
+              "url": "/catalogue/dry-backfill-mixes.pdf"
+            }
+          ]
+        }
+      ]
     },
     {
-      "slug": "cordierite-mullite-bricks",
-      "category": "Shaped",
+      "slug": "silica-ramming-mass",
+      "category": "Unshaped",
       "sort_order": 3,
       "published": true,
-      "image": "/images/kiln.jpg",
+      "image": "/images/catalogue/silica-ramming.jpg",
       "name": {
-        "en": "Cordierite–mullite bricks",
-        "ar": "طوب الكورديريت–موليت"
+        "en": "Silica ramming mass",
+        "ar": "كتلة الدك السيليكا"
       },
       "short": {
-        "en": "Specialist compositions for your thermal process.",
-        "ar": "تركيبات متخصصة لعمليتك الحرارية."
+        "en": "Acidic ramming mass for induction furnace linings.",
+        "ar": "كتلة دك حمضية لتبطين أفران الحث."
       },
       "description": {
-        "en": "Cordierite–mullite refractory bricks are available in a range of compositions. Our team can help match your application to a suitable product specification.",
-        "ar": "يتوفر طوب الكورديريت–موليت الحراري بتركيبات متعددة، ويمكن لفريقنا مساعدتك في مطابقة تطبيقك مع المواصفات المناسبة."
+        "en": "A high-purity silica mass for lining induction furnaces. Its grading is matched to each furnace’s make and capacity, and magnetic separation removes free iron. With fewer binders, less fireclay and less moisture than plastic masses, it gives a thermally stable, corrosion- and wear-resistant lining, reaching 17–18 heats per lining in typical operation.",
+        "ar": "كتلة سيليكا عالية النقاء لتبطين أفران الحث، يُضبط تدرج حبيباتها وفق طراز الفرن وسعته، ويُزال الحديد الحر منها بالفصل المغناطيسي. ولأنها تحتوي على مواد رابطة وطين ناري ورطوبة أقل من الكتل اللدنة، فهي تمنح بطانة مستقرة حراريًا ومقاومة للتآكل والبري، وتصل إلى 17–18 صبة للبطانة في التشغيل المعتاد."
       },
-      "grades": [],
-      "datasheet_groups": []
+      "grades": [
+        "Silica Ramming Mass"
+      ],
+      "applications": [],
+      "specs": {
+        "title": "Silica Ramming Mass",
+        "sections": [
+          {
+            "name": {
+              "en": "Chemical properties",
+              "ar": "الخواص الكيميائية"
+            },
+            "rows": [
+              {
+                "label": {
+                  "en": "Moisture",
+                  "ar": "الرطوبة"
+                },
+                "value": {
+                  "en": "≥ 0.10 %",
+                  "ar": "≥ 0.10 %"
+                }
+              },
+              {
+                "label": {
+                  "en": "SiO₂",
+                  "ar": "SiO₂"
+                },
+                "value": {
+                  "en": "98.00 %",
+                  "ar": "98.00 %"
+                }
+              },
+              {
+                "label": {
+                  "en": "Fe₂O₃",
+                  "ar": "Fe₂O₃"
+                },
+                "value": {
+                  "en": "≥ 0.01 %",
+                  "ar": "≥ 0.01 %"
+                }
+              },
+              {
+                "label": {
+                  "en": "H₃BO₃",
+                  "ar": "H₃BO₃"
+                },
+                "value": {
+                  "en": "≥ 1.30 %",
+                  "ar": "≥ 1.30 %"
+                }
+              }
+            ]
+          },
+          {
+            "name": {
+              "en": "Physical properties",
+              "ar": "الخواص الفيزيائية"
+            },
+            "rows": [
+              {
+                "label": {
+                  "en": "Application",
+                  "ar": "التطبيق"
+                },
+                "value": {
+                  "en": "Dry ramming",
+                  "ar": "دك جاف"
+                }
+              },
+              {
+                "label": {
+                  "en": "Method of application",
+                  "ar": "طريقة التطبيق"
+                },
+                "value": {
+                  "en": "Ramming",
+                  "ar": "دك"
+                }
+              },
+              {
+                "label": {
+                  "en": "Max service temperature, °C",
+                  "ar": "أقصى درجة حرارة تشغيل، °م"
+                },
+                "value": {
+                  "en": "1715",
+                  "ar": "1715"
+                }
+              },
+              {
+                "label": {
+                  "en": "Grain size, mm",
+                  "ar": "حجم الحبيبات، مم"
+                },
+                "value": {
+                  "en": "Any size",
+                  "ar": "أي حجم"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "featured_datasheet": {
+        "label": {
+          "en": "Silica ramming mass technical datasheet",
+          "ar": "النشرة الفنية — كتلة الدك السيليكا"
+        },
+        "url": "/catalogue/silica-ramming-mass.pdf"
+      },
+      "datasheet_groups": [
+        {
+          "name": null,
+          "sheets": [
+            {
+              "label": "Silica Ramming Mass",
+              "url": "/catalogue/silica-ramming-mass.pdf"
+            }
+          ]
+        }
+      ]
     },
     {
-      "slug": "chemical-bond-bricks",
-      "category": "Shaped",
+      "slug": "hearth-ramming-mass",
+      "category": "Unshaped",
       "sort_order": 4,
       "published": true,
-      "image": "/images/production.jpg",
+      "image": "/images/catalogue/hearth.jpg",
       "name": {
-        "en": "Chemically bonded bricks",
-        "ar": "الطوب المترابط كيميائيًا"
+        "en": "Hearth ramming mass",
+        "ar": "كتلة دك قاع الفرن"
       },
       "short": {
-        "en": "Alternative bonding systems for specific requirements.",
-        "ar": "أنظمة ربط بديلة لمتطلبات محددة."
+        "en": "Magnesia mass for the bottom of electric arc furnaces.",
+        "ar": "كتلة ماغنسيا لقاع أفران القوس الكهربائي."
       },
       "description": {
-        "en": "Chemically bonded refractory bricks offer additional options within the shaped range. Contact our specialists to discuss process compatibility and grade selection.",
-        "ar": "يوفّر الطوب الحراري المترابط كيميائيًا خيارات إضافية ضمن مجموعة المنتجات المشكّلة. تواصل مع متخصصينا لمناقشة توافقه مع عمليتك واختيار الدرجة."
+        "en": "A magnesia-based mass applied by cold ramming. On heating it forms a strong ceramic bond that withstands impact, wear and abrasion at the bottom of the electric arc furnace at temperatures up to 1750 °C.",
+        "ar": "كتلة أساسها الماغنسيا تُطبق بالدك على البارد، وعند التسخين تكوّن ترابطًا سيراميكيًا قويًا يتحمل الصدم والتآكل والبري في قاع فرن القوس الكهربائي حتى 1750 °م."
       },
-      "grades": [],
-      "datasheet_groups": []
+      "grades": [
+        "ProRam-G"
+      ],
+      "applications": [],
+      "specs": {
+        "title": "ProRam-G",
+        "sections": [
+          {
+            "name": {
+              "en": "Chemical properties",
+              "ar": "الخواص الكيميائية"
+            },
+            "rows": [
+              {
+                "label": {
+                  "en": "MgO",
+                  "ar": "MgO"
+                },
+                "value": {
+                  "en": "80–85 %",
+                  "ar": "80–85 %"
+                }
+              },
+              {
+                "label": {
+                  "en": "SiO₂",
+                  "ar": "SiO₂"
+                },
+                "value": {
+                  "en": "1–2 %",
+                  "ar": "1–2 %"
+                }
+              },
+              {
+                "label": {
+                  "en": "Fe₂O₃",
+                  "ar": "Fe₂O₃"
+                },
+                "value": {
+                  "en": "1.5 %",
+                  "ar": "1.5 %"
+                }
+              },
+              {
+                "label": {
+                  "en": "Al₂O₃",
+                  "ar": "Al₂O₃"
+                },
+                "value": {
+                  "en": "0.8 %",
+                  "ar": "0.8 %"
+                }
+              },
+              {
+                "label": {
+                  "en": "CaO",
+                  "ar": "CaO"
+                },
+                "value": {
+                  "en": "15 %",
+                  "ar": "15 %"
+                }
+              }
+            ]
+          },
+          {
+            "name": {
+              "en": "Physical properties",
+              "ar": "الخواص الفيزيائية"
+            },
+            "rows": [
+              {
+                "label": {
+                  "en": "Grain size, mm",
+                  "ar": "حجم الحبيبات، مم"
+                },
+                "value": {
+                  "en": "0–8",
+                  "ar": "0–8"
+                }
+              },
+              {
+                "label": {
+                  "en": "Method of application",
+                  "ar": "طريقة التطبيق"
+                },
+                "value": {
+                  "en": "Cold ramming",
+                  "ar": "دك على البارد"
+                }
+              },
+              {
+                "label": {
+                  "en": "Max service temperature, °C",
+                  "ar": "أقصى درجة حرارة تشغيل، °م"
+                },
+                "value": {
+                  "en": "1750",
+                  "ar": "1750"
+                }
+              },
+              {
+                "label": {
+                  "en": "Grain density, g/cm³",
+                  "ar": "كثافة الحبيبات، جم/سم³"
+                },
+                "value": {
+                  "en": "3.20",
+                  "ar": "3.20"
+                }
+              },
+              {
+                "label": {
+                  "en": "Type of bonding",
+                  "ar": "نوع الترابط"
+                },
+                "value": {
+                  "en": "Ceramic",
+                  "ar": "سيراميكي"
+                }
+              },
+              {
+                "label": {
+                  "en": "Expiration",
+                  "ar": "مدة الصلاحية"
+                },
+                "value": {
+                  "en": "12 months",
+                  "ar": "12 شهرًا"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "featured_datasheet": {
+        "label": {
+          "en": "Hearth ramming mass technical datasheet",
+          "ar": "النشرة الفنية — كتلة دك قاع الفرن"
+        },
+        "url": "/catalogue/hearth-ramming-mass.pdf"
+      },
+      "datasheet_groups": [
+        {
+          "name": null,
+          "sheets": [
+            {
+              "label": "ProRam-G",
+              "url": "/catalogue/hearth-ramming-mass.pdf"
+            }
+          ]
+        }
+      ]
     },
     {
-      "slug": "acid-resistant-bricks",
-      "category": "Shaped",
+      "slug": "hot-fettling-mass",
+      "category": "Unshaped",
       "sort_order": 5,
       "published": true,
-      "image": "/images/kiln.jpg",
+      "image": "/images/catalogue/ladle-glow.jpg",
       "name": {
-        "en": "Acid-resistant bricks",
-        "ar": "الطوب المقاوم للأحماض"
+        "en": "Hot fettling mass",
+        "ar": "كتلة الترميم على الساخن"
       },
       "short": {
-        "en": "Materials selected for chemically demanding conditions.",
-        "ar": "مواد مختارة للظروف الكيميائية القاسية."
+        "en": "Magnesia fettling for hot repair of the EAF hearth.",
+        "ar": "ماغنسيا لإصلاح قاع فرن القوس الكهربائي وهو ساخن."
       },
       "description": {
-        "en": "Acid-resistant bricks are available in multiple grades for specialist applications. Provide details of the chemical environment and operating conditions to establish suitability.",
-        "ar": "يتوفر الطوب المقاوم للأحماض بدرجات متعددة للتطبيقات المتخصصة. زوّدنا بتفاصيل البيئة الكيميائية وظروف التشغيل لتحديد مدى الملاءمة."
+        "en": "A magnesia-based monolithic applied hot with a fettling machine to cover the sloped banks and repair the hearth ramming mass at the bottom of the electric arc furnace. It is chemically adjusted to form a ceramic bond while heating up, and graded to spray easily.",
+        "ar": "مادة مونوليثية أساسها الماغنسيا تُرش على الساخن بماكينة الترميم لتغطية الجوانب المائلة وإصلاح كتلة دك القاع في فرن القوس الكهربائي. تركيبها معدّل كيميائيًا لتكوين ترابط سيراميكي أثناء التسخين، وتدرج حبيباتها يسهّل رشها."
       },
-      "grades": [],
-      "datasheet_groups": []
+      "grades": [
+        "PT1700-85L"
+      ],
+      "applications": [],
+      "specs": {
+        "title": "PT1700-85L",
+        "sections": [
+          {
+            "name": {
+              "en": "Chemical properties",
+              "ar": "الخواص الكيميائية"
+            },
+            "rows": [
+              {
+                "label": {
+                  "en": "MgO",
+                  "ar": "MgO"
+                },
+                "value": {
+                  "en": "80–85 %",
+                  "ar": "80–85 %"
+                }
+              },
+              {
+                "label": {
+                  "en": "SiO₂",
+                  "ar": "SiO₂"
+                },
+                "value": {
+                  "en": "1–2 %",
+                  "ar": "1–2 %"
+                }
+              },
+              {
+                "label": {
+                  "en": "Fe₂O₃",
+                  "ar": "Fe₂O₃"
+                },
+                "value": {
+                  "en": "1.5 %",
+                  "ar": "1.5 %"
+                }
+              },
+              {
+                "label": {
+                  "en": "Al₂O₃",
+                  "ar": "Al₂O₃"
+                },
+                "value": {
+                  "en": "0.8 %",
+                  "ar": "0.8 %"
+                }
+              },
+              {
+                "label": {
+                  "en": "CaO",
+                  "ar": "CaO"
+                },
+                "value": {
+                  "en": "5–10 %",
+                  "ar": "5–10 %"
+                }
+              }
+            ]
+          },
+          {
+            "name": {
+              "en": "Physical properties",
+              "ar": "الخواص الفيزيائية"
+            },
+            "rows": [
+              {
+                "label": {
+                  "en": "Grain size, mm",
+                  "ar": "حجم الحبيبات، مم"
+                },
+                "value": {
+                  "en": "0–8",
+                  "ar": "0–8"
+                }
+              },
+              {
+                "label": {
+                  "en": "Method of application",
+                  "ar": "طريقة التطبيق"
+                },
+                "value": {
+                  "en": "Hot repair",
+                  "ar": "إصلاح على الساخن"
+                }
+              },
+              {
+                "label": {
+                  "en": "Max service temperature, °C",
+                  "ar": "أقصى درجة حرارة تشغيل، °م"
+                },
+                "value": {
+                  "en": "1750",
+                  "ar": "1750"
+                }
+              },
+              {
+                "label": {
+                  "en": "Grain density, g/cm³",
+                  "ar": "كثافة الحبيبات، جم/سم³"
+                },
+                "value": {
+                  "en": "3.20",
+                  "ar": "3.20"
+                }
+              },
+              {
+                "label": {
+                  "en": "Type of bonding",
+                  "ar": "نوع الترابط"
+                },
+                "value": {
+                  "en": "Ceramic",
+                  "ar": "سيراميكي"
+                }
+              },
+              {
+                "label": {
+                  "en": "Expiration",
+                  "ar": "مدة الصلاحية"
+                },
+                "value": {
+                  "en": "12 months",
+                  "ar": "12 شهرًا"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "featured_datasheet": {
+        "label": {
+          "en": "Hot fettling mass technical datasheet",
+          "ar": "النشرة الفنية — كتلة الترميم على الساخن"
+        },
+        "url": "/catalogue/hot-fettling-mass.pdf"
+      },
+      "datasheet_groups": [
+        {
+          "name": null,
+          "sheets": [
+            {
+              "label": "PT1700-85L",
+              "url": "/catalogue/hot-fettling-mass.pdf"
+            }
+          ]
+        }
+      ]
     },
     {
-      "slug": "castables",
+      "slug": "hot-gunning-mass",
       "category": "Unshaped",
       "sort_order": 6,
       "published": true,
-      "image": "/images/about.jpg",
+      "image": "/images/catalogue/furnace-slag.jpg",
       "name": {
-        "en": "Refractory castables",
-        "ar": "الخرسانات الحرارية"
+        "en": "Hot gunning mass",
+        "ar": "كتلة الرش على الساخن"
       },
       "short": {
-        "en": "Versatile materials. Application-led specifications.",
-        "ar": "مواد متعددة الاستخدامات بمواصفات تناسب التطبيق."
+        "en": "Magnesia gunning mix for hot repair of EAF walls.",
+        "ar": "خلطة ماغنسيا لإصلاح جدران الفرن وهو ساخن."
       },
       "description": {
-        "en": "Choose from lightweight, low-cement, traditional alumina, and cordierite castables. Our team supports material selection around the requirements of your installation.",
-        "ar": "اختر من بين الخرسانات الحرارية خفيفة الوزن، ومنخفضة الأسمنت، والألومينية التقليدية، وخرسانات الكورديريت. يدعمك فريقنا في اختيار المادة وفق متطلبات التركيب."
+        "en": "A magnesia gunning mass with special binders that give it the stickiness needed for hot repairs, sealing leaks and cracks in the walls of the electric arc furnace.",
+        "ar": "كتلة رش أساسها الماغنسيا مع مواد رابطة خاصة تمنحها قابلية الالتصاق اللازمة للإصلاح على الساخن، لسد التسريبات والشقوق في جدران فرن القوس الكهربائي."
       },
-      "grades": [],
-      "datasheet_groups": []
+      "grades": [
+        "MgPT-90H"
+      ],
+      "applications": [],
+      "specs": {
+        "title": "MgPT-90H",
+        "sections": [
+          {
+            "name": {
+              "en": "Chemical properties",
+              "ar": "الخواص الكيميائية"
+            },
+            "rows": [
+              {
+                "label": {
+                  "en": "MgO",
+                  "ar": "MgO"
+                },
+                "value": {
+                  "en": "88–92 %",
+                  "ar": "88–92 %"
+                }
+              },
+              {
+                "label": {
+                  "en": "SiO₂",
+                  "ar": "SiO₂"
+                },
+                "value": {
+                  "en": "3.5 %",
+                  "ar": "3.5 %"
+                }
+              },
+              {
+                "label": {
+                  "en": "Fe₂O₃",
+                  "ar": "Fe₂O₃"
+                },
+                "value": {
+                  "en": "1.5 %",
+                  "ar": "1.5 %"
+                }
+              },
+              {
+                "label": {
+                  "en": "Al₂O₃",
+                  "ar": "Al₂O₃"
+                },
+                "value": {
+                  "en": "0.8 %",
+                  "ar": "0.8 %"
+                }
+              },
+              {
+                "label": {
+                  "en": "CaO",
+                  "ar": "CaO"
+                },
+                "value": {
+                  "en": "2.5 %",
+                  "ar": "2.5 %"
+                }
+              }
+            ]
+          },
+          {
+            "name": {
+              "en": "Physical properties",
+              "ar": "الخواص الفيزيائية"
+            },
+            "rows": [
+              {
+                "label": {
+                  "en": "Grain size, mm",
+                  "ar": "حجم الحبيبات، مم"
+                },
+                "value": {
+                  "en": "0–3",
+                  "ar": "0–3"
+                }
+              },
+              {
+                "label": {
+                  "en": "Method of application",
+                  "ar": "طريقة التطبيق"
+                },
+                "value": {
+                  "en": "Hot repair",
+                  "ar": "إصلاح على الساخن"
+                }
+              },
+              {
+                "label": {
+                  "en": "Max service temperature, °C",
+                  "ar": "أقصى درجة حرارة تشغيل، °م"
+                },
+                "value": {
+                  "en": "1750",
+                  "ar": "1750"
+                }
+              },
+              {
+                "label": {
+                  "en": "Bulk density, g/cm³",
+                  "ar": "الكثافة الظاهرية، جم/سم³"
+                },
+                "value": {
+                  "en": "2.50",
+                  "ar": "2.50"
+                }
+              },
+              {
+                "label": {
+                  "en": "Type of bonding",
+                  "ar": "نوع الترابط"
+                },
+                "value": {
+                  "en": "Ceramic",
+                  "ar": "سيراميكي"
+                }
+              },
+              {
+                "label": {
+                  "en": "Expiration",
+                  "ar": "مدة الصلاحية"
+                },
+                "value": {
+                  "en": "12 months",
+                  "ar": "12 شهرًا"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "featured_datasheet": {
+        "label": {
+          "en": "Hot gunning mass technical datasheet",
+          "ar": "النشرة الفنية — كتلة الرش على الساخن"
+        },
+        "url": "/catalogue/hot-gunning-mass.pdf"
+      },
+      "datasheet_groups": [
+        {
+          "name": null,
+          "sheets": [
+            {
+              "label": "MgPT-90H",
+              "url": "/catalogue/hot-gunning-mass.pdf"
+            }
+          ]
+        }
+      ]
     },
     {
-      "slug": "mortars",
+      "slug": "tundish-spray-mass",
       "category": "Unshaped",
       "sort_order": 7,
       "published": true,
-      "image": "/images/about.jpg",
+      "image": "/images/catalogue/tundish.jpg",
       "name": {
-        "en": "Refractory mortars",
-        "ar": "المونة الحرارية"
+        "en": "Tundish spray mass",
+        "ar": "كتلة رش التنديش"
       },
       "short": {
-        "en": "The right connection between refractory components.",
-        "ar": "الرابط الصحيح بين المكوّنات الحرارية."
+        "en": "Magnesia working lining sprayed onto the tundish.",
+        "ar": "بطانة عمل من الماغنسيا تُرش على التنديش."
       },
       "description": {
-        "en": "Our mortar range includes heat-setting, air-setting, acid-resistant, and phosphate-bonded materials. Discuss the brick grade and installation requirements with our team.",
-        "ar": "تشمل مجموعة المونة لدينا مواد تتصلّب بالحرارة، وأخرى تتصلّب بالهواء، ومونة مقاومة للأحماض، ومونة مترابطة بالفوسفات. ناقش درجة الطوب ومتطلبات التركيب مع فريقنا."
+        "en": "A magnesia-based material graded below 1 mm and sprayed as the working lining of the tundish, protecting it during casting and making it easier to clean afterwards.",
+        "ar": "مادة أساسها الماغنسيا بحبيبات أقل من 1 مم، تُرش كبطانة عمل للتنديش لحمايته أثناء الصب وتسهيل تنظيفه بعد ذلك."
       },
-      "grades": [],
-      "datasheet_groups": []
+      "grades": [
+        "PT5001-HM"
+      ],
+      "applications": [],
+      "specs": {
+        "title": "PT5001-HM",
+        "sections": [
+          {
+            "name": {
+              "en": "Chemical properties",
+              "ar": "الخواص الكيميائية"
+            },
+            "rows": [
+              {
+                "label": {
+                  "en": "MgO",
+                  "ar": "MgO"
+                },
+                "value": {
+                  "en": "90.0 %",
+                  "ar": "90.0 %"
+                }
+              },
+              {
+                "label": {
+                  "en": "CaO",
+                  "ar": "CaO"
+                },
+                "value": {
+                  "en": "3.0 %",
+                  "ar": "3.0 %"
+                }
+              },
+              {
+                "label": {
+                  "en": "Fe₂O₃",
+                  "ar": "Fe₂O₃"
+                },
+                "value": {
+                  "en": "1.5 %",
+                  "ar": "1.5 %"
+                }
+              },
+              {
+                "label": {
+                  "en": "SiO₂",
+                  "ar": "SiO₂"
+                },
+                "value": {
+                  "en": "5.0 %",
+                  "ar": "5.0 %"
+                }
+              }
+            ]
+          },
+          {
+            "name": {
+              "en": "Physical properties",
+              "ar": "الخواص الفيزيائية"
+            },
+            "rows": [
+              {
+                "label": {
+                  "en": "Grain size, mm",
+                  "ar": "حجم الحبيبات، مم"
+                },
+                "value": {
+                  "en": "0–0.5",
+                  "ar": "0–0.5"
+                }
+              },
+              {
+                "label": {
+                  "en": "Bulk density, g/cm³",
+                  "ar": "الكثافة الظاهرية، جم/سم³"
+                },
+                "value": {
+                  "en": "1.4–1.7",
+                  "ar": "1.4–1.7"
+                }
+              },
+              {
+                "label": {
+                  "en": "Expiration",
+                  "ar": "مدة الصلاحية"
+                },
+                "value": {
+                  "en": "12 months",
+                  "ar": "12 شهرًا"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "featured_datasheet": {
+        "label": {
+          "en": "Tundish spray mass technical datasheet",
+          "ar": "النشرة الفنية — كتلة رش التنديش"
+        },
+        "url": "/catalogue/tundish-spray-mass.pdf"
+      },
+      "datasheet_groups": [
+        {
+          "name": null,
+          "sheets": [
+            {
+              "label": "PT5001-HM",
+              "url": "/catalogue/tundish-spray-mass.pdf"
+            }
+          ]
+        }
+      ]
     },
     {
-      "slug": "chamotte",
+      "slug": "blast-furnace-monolithics",
       "category": "Unshaped",
       "sort_order": 8,
       "published": true,
-      "image": "/images/hero.jpg",
+      "image": "/images/catalogue/blast-furnace.jpg",
       "name": {
-        "en": "Chamotte",
-        "ar": "الشاموت"
+        "en": "Blast furnace monolithics",
+        "ar": "مونوليثيات الفرن العالي"
       },
       "short": {
-        "en": "Raw materials for refractory and ceramic production.",
-        "ar": "مواد خام لإنتاج المواد الحرارية والسيراميك."
+        "en": "Monolithic refractories for blast furnace operation and repair.",
+        "ar": "مواد حرارية مونوليثية لتشغيل الفرن العالي وإصلاحه."
       },
       "description": {
-        "en": "Chamotte is supplied across refractory, lightweight, and sanitary-ware ranges. Ask our sales team about available particle sizes and compositions for your production process.",
-        "ar": "يتوفر الشاموت بأنواع حرارية وخفيفة الوزن ولصناعة الأدوات الصحية. اسأل فريق المبيعات عن أحجام الحبيبات والتركيبات المتاحة لعملية الإنتاج لديك."
+        "en": "The blast furnace uses more monolithic refractories in continuous operation than any other stage of steel production, from taphole mixes and runner masses to preshapes for skimmers and tilting troughs. Hot metal ladles also vary widely between plants, so we supply individual solutions, including highly adhesive mortars for insulation and maintenance mixes.",
+        "ar": "يستهلك الفرن العالي من المواد الحرارية المونوليثية في التشغيل المستمر أكثر من أي مرحلة أخرى في إنتاج الصلب، من خلطات فتحة الصب وكتل المجاري إلى القطع الجاهزة للكاشطات والمجاري المائلة. وتختلف بواتق نقل الحديد الزهر كثيرًا من مصنع لآخر، لذلك نقدم حلولًا خاصة بكل مصنع، منها مونة عالية الالتصاق للعزل وخلطات الصيانة."
       },
       "grades": [],
-      "datasheet_groups": []
+      "applications": [
+        {
+          "en": "Gunning mixes",
+          "ar": "خلطات الرش"
+        },
+        {
+          "en": "Taphole mixes",
+          "ar": "خلطات فتحة الصب"
+        },
+        {
+          "en": "Castables",
+          "ar": "الخرسانات الحرارية"
+        },
+        {
+          "en": "Mortar",
+          "ar": "المونة"
+        },
+        {
+          "en": "Preshapes",
+          "ar": "القطع الجاهزة"
+        }
+      ],
+      "specs": null,
+      "featured_datasheet": {
+        "label": {
+          "en": "Blast furnace monolithics technical datasheet",
+          "ar": "النشرة الفنية — مونوليثيات الفرن العالي"
+        },
+        "url": "/catalogue/blast-furnace-monolithics.pdf"
+      },
+      "datasheet_groups": [
+        {
+          "name": null,
+          "sheets": [
+            {
+              "label": "Blast furnace monolithics",
+              "url": "/catalogue/blast-furnace-monolithics.pdf"
+            }
+          ]
+        }
+      ]
     },
     {
-      "slug": "calcined-bauxite",
-      "category": "Unshaped",
+      "slug": "pre-shaped-castables",
+      "category": "Shaped",
       "sort_order": 9,
       "published": true,
-      "image": "/images/about.jpg",
+      "image": "/images/catalogue/preshaped.jpg",
       "name": {
-        "en": "Calcined bauxite",
-        "ar": "البوكسيت المكلسن"
+        "en": "Pre-shaped castables",
+        "ar": "الخرسانات مسبقة التشكيل"
       },
       "short": {
-        "en": "A selection of particle sizes for your process.",
-        "ar": "مجموعة من أحجام الحبيبات لعمليتك."
+        "en": "Precast refractory shapes for the molten steel flow system.",
+        "ar": "قطع حرارية مصبوبة مسبقًا لنظام تدفق الصلب المنصهر."
       },
       "description": {
-        "en": "Calcined bauxite is offered in fine and aggregate sizes to meet a range of production requirements. Request current technical specifications and availability from our team.",
-        "ar": "يتوفر البوكسيت المكلسن بأحجام ناعمة وحبيبية لتلبية مجموعة من متطلبات الإنتاج. اطلب المواصفات الفنية الحالية والتوافر من فريقنا."
+        "en": "Special refractory shapes designed and made for the flow system of molten steel. Each is formulated to resist severe abrasion from flowing steel and attack by slag, then cast and carefully dried to reach its full properties. We have wide experience in producing and fabricating these shapes.",
+        "ar": "أشكال حرارية خاصة مصممة ومصنعة لنظام تدفق الصلب المنصهر. تُركّب كل قطعة كيميائيًا لمقاومة البري الشديد من الصلب المتدفق وهجوم الخبث، ثم تُصب وتُجفف بعناية لتصل إلى كامل خواصها. ولدينا خبرة واسعة في إنتاج هذه القطع وتصنيعها."
       },
       "grades": [],
-      "datasheet_groups": []
+      "applications": [],
+      "specs": null,
+      "featured_datasheet": {
+        "label": {
+          "en": "Pre-shaped castables technical datasheet",
+          "ar": "النشرة الفنية — الخرسانات مسبقة التشكيل"
+        },
+        "url": "/catalogue/pre-shaped-castables.pdf"
+      },
+      "datasheet_groups": [
+        {
+          "name": null,
+          "sheets": [
+            {
+              "label": "Pre-shaped castables",
+              "url": "/catalogue/pre-shaped-castables.pdf"
+            }
+          ]
+        }
+      ]
     }
   ],
   "industries": [
@@ -867,6 +1852,11 @@
       "ar": "الوظائف"
     },
     {
+      "key": "footer.catalogue",
+      "en": "Product catalogue (PDF)",
+      "ar": "كتالوج المنتجات (PDF)"
+    },
+    {
       "key": "footer.contact",
       "en": "Get in touch",
       "ar": "تواصل معنا"
@@ -1013,8 +2003,18 @@
     },
     {
       "key": "productsPage.description",
-      "en": "Explore shaped and unshaped refractory products. Find a product family, or speak to our team about your specific requirements.",
-      "ar": "استكشف المنتجات الحرارية المشكّلة وغير المشكّلة. اعثر على مجموعة المنتجات المناسبة، أو تحدّث إلى فريقنا عن متطلباتك."
+      "en": "Monolithic refractories and precast shapes for steel production. Find a product, download its datasheet, or speak to our team about your requirements.",
+      "ar": "مواد حرارية مونوليثية وقطع مصبوبة مسبقًا لصناعة الصلب. اعثر على المنتج، وحمّل نشرته الفنية، أو تحدّث إلى فريقنا عن متطلباتك."
+    },
+    {
+      "key": "productsPage.download",
+      "en": "Download the catalogue",
+      "ar": "تحميل الكتالوج"
+    },
+    {
+      "key": "productsPage.downloadNote",
+      "en": "All products and technical data in one PDF.",
+      "ar": "كل المنتجات والبيانات الفنية في ملف PDF واحد."
     },
     {
       "key": "product.notFound",
@@ -1045,6 +2045,21 @@
       "key": "product.grades",
       "en": "Available grades & ranges",
       "ar": "الدرجات والمجموعات المتاحة"
+    },
+    {
+      "key": "product.specs",
+      "en": "Technical data",
+      "ar": "البيانات الفنية"
+    },
+    {
+      "key": "product.applications",
+      "en": "Applications",
+      "ar": "الاستخدامات"
+    },
+    {
+      "key": "product.catalogue",
+      "en": "Full catalogue",
+      "ar": "الكتالوج الكامل"
     },
     {
       "key": "product.enquire",

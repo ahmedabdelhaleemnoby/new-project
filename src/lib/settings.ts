@@ -1,4 +1,5 @@
 import type { Locale } from "@/i18n/config";
+import { CATALOGUE_PDF } from "@/lib/data";
 import { site } from "@/lib/site";
 
 // Company details and page photos, resolved for one locale. The content API (`GET /settings`) can
@@ -6,17 +7,17 @@ import { site } from "@/lib/site";
 export const imageKeys = ["hero_1", "hero_2", "hero_3", "about", "research", "laboratory", "installation", "preview_shaped", "preview_unshaped"] as const;
 export type ImageKey = (typeof imageKeys)[number];
 
-// TODO: placeholder photos (see ASSET_SOURCES.md); replace them from the dashboard's company settings.
+// Photos taken from the Ajyad catalogue (public/images/catalogue); replaceable from the dashboard's company settings.
 export const defaultImages: Record<ImageKey, string> = {
-  hero_1: "/images/hero.jpg",
-  hero_2: "/images/production.jpg",
-  hero_3: "/images/about.jpg",
-  about: "/images/factory.jpg",
-  research: "/images/research.jpg",
-  laboratory: "/images/laboratory.jpg",
-  installation: "/images/kiln.jpg",
-  preview_shaped: "/images/production.jpg",
-  preview_unshaped: "/images/about.jpg",
+  hero_1: "/images/catalogue/molten-pour.jpg",
+  hero_2: "/images/catalogue/blast-furnace.jpg",
+  hero_3: "/images/catalogue/furnace-slag.jpg",
+  about: "/images/catalogue/ladle-glow.jpg",
+  research: "/images/catalogue/olivine-rock.jpg",
+  laboratory: "/images/catalogue/silica-ramming.jpg",
+  installation: "/images/catalogue/preshaped-install.jpg",
+  preview_shaped: "/images/catalogue/preshaped.jpg",
+  preview_unshaped: "/images/catalogue/backfill.jpg",
 };
 
 export type SiteSettings = {
@@ -24,7 +25,9 @@ export type SiteSettings = {
   fullName: string;
   email: string;
   secondaryEmail: { email: string; label: string } | null;
-  phone: string | null;
+  phones: string[];
+  /** The downloadable product catalogue (PDF). */
+  catalogueUrl: string;
   address: { lines: string[]; mapUrl: string } | null;
   legal: { form: string; commercialRegister: string; taxCard: string };
   images: Record<ImageKey, string>;
@@ -36,7 +39,8 @@ export function localSettings(lang: Locale): SiteSettings {
     fullName: site.fullName[lang],
     email: site.salesEmail,
     secondaryEmail: site.secondaryEmail ? { email: site.secondaryEmail.email, label: site.secondaryEmail.label[lang] } : null,
-    phone: site.phone,
+    phones: site.phones,
+    catalogueUrl: CATALOGUE_PDF,
     address: site.address ? { lines: site.address[lang], mapUrl: site.address.mapUrl } : null,
     legal: { form: site.legal.form[lang], commercialRegister: site.legal.commercialRegister, taxCard: site.legal.taxCard },
     images: { ...defaultImages },

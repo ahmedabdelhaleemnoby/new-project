@@ -9,5 +9,6 @@ export default defineConfig({
     { name: "desktop", use: { ...devices["Desktop Chrome"] } },
     { name: "mobile", use: { ...devices["iPhone 13"], browserName: "chromium" } },
   ],
-  webServer: { command: "npm run dev -- --port 3100", url: "http://127.0.0.1:3100", reuseExistingServer: !process.env.CI, timeout: 120000 },
+  // Tests use the built-in content, not whatever the live CMS holds (an unreachable content API falls back to local data).
+  webServer: { command: "npm run dev -- --port 3100", url: "http://127.0.0.1:3100", reuseExistingServer: !process.env.CI, timeout: 120000, env: { CONTENT_API_URL: "http://127.0.0.1:9/api/v1" } },
 });
