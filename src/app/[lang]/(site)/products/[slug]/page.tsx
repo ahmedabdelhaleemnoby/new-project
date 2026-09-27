@@ -32,7 +32,10 @@ export default async function ProductPage({ params }: PageProps<"/[lang]/product
   return <>
     <PageIntro lang={lang} eyebrow={fill(p.eyebrow, { category: t.categories[product.category] })} title={product.name} description={product.short} />
     <section className="section-pad"><div className="container"><div className="product-detail">
-      <div className="product-detail-image" data-wipe=""><Image src={product.image} alt={p.imageAlt} fill sizes="(max-width:600px) 100vw, 50vw" /></div>
+      <div className="product-media">
+        <div className={`product-detail-image${product.imageFit === "contain" ? " is-contain" : ""}`} data-wipe=""><Image src={product.image} alt={product.name} fill sizes="(max-width:600px) 100vw, 50vw" /></div>
+        {product.gallery && product.gallery.length > 0 && <div className="product-gallery" data-stagger="">{product.gallery.map(src => <div key={src} className="product-gallery-item"><Image src={src} alt={product.name} fill sizes="(max-width:600px) 50vw, 25vw" /></div>)}</div>}
+      </div>
       <div data-reveal="end">
         <h2>{p.heading[0]}<br />{p.heading[1]}</h2>
         <p>{product.description}</p>

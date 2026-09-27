@@ -7,6 +7,10 @@ export type Product = {
   slug: string; name: string; category: "Shaped" | "Unshaped"; short: string; description: string; grades: string[]; image: string;
   datasheet?: { label: string; url: string };
   applications?: string[];
+  /** "contain" shows the whole image (diagrams on white) instead of cropping it to fill the frame. */
+  imageFit?: "cover" | "contain";
+  /** Further photos from the product's catalogue page, shown under the main photo. */
+  gallery?: string[];
   /** Technical data table from the catalogue. */
   specs?: { title: string; sections: SpecSection[] };
 };
@@ -19,7 +23,7 @@ type IndustryText = Pick<Industry, "name" | "text">;
 export const CATALOGUE_PDF = "/catalogue/ajyad-catalogue.pdf";
 const sheet = (slug: string) => `/catalogue/${slug}.pdf`;
 
-type Base = Pick<Product, "slug" | "category" | "grades" | "image"> & { grade: string | null; specs?: Record<Locale, SpecSection[]> };
+type Base = Pick<Product, "slug" | "category" | "grades" | "image" | "imageFit" | "gallery"> & { grade: string | null; specs?: Record<Locale, SpecSection[]> };
 
 // Spec labels and text values per language.
 const L = {
@@ -29,7 +33,7 @@ const L = {
 const both = (build: (l: (typeof L)["en"]) => SpecSection[]): Record<Locale, SpecSection[]> => ({ en: build(L.en), ar: build(L.ar) });
 
 const productBase: Base[] = [
-  { slug: "ebt-olivine-sand", category: "Unshaped", grade: "EBT Olivine Sand", grades: ["EBT Olivine Sand"], image: "/images/catalogue/olivine-sand.jpg",
+  { slug: "ebt-olivine-sand", category: "Unshaped", grade: "EBT Olivine Sand", grades: ["EBT Olivine Sand"], image: "/images/catalogue/olivine-sand.jpg", gallery: ["/images/catalogue/olivine-rock.jpg"],
     specs: both(l => [{ name: l.chem, rows: [["MgO", "47–50 %"], ["CaO", "0.5–1 %"], ["SiO₂", "39 %"], ["Fe₂O₃", "6–10 %"]] }, { name: l.phys, rows: [[l.bonding, l.chemical], [l.grain, "2–6"]] }]) },
   { slug: "dry-backfill-mixes", category: "Unshaped", grade: "Dry Backfill Mix", grades: ["Dry Backfill Mix"], image: "/images/catalogue/backfill.jpg",
     specs: both(l => [{ name: l.chem, rows: [["MgO", "90 %"], ["CaO", "3–5 %"], ["SiO₂", "5 %"], ["Fe₂O₃", "1–3 %"]] }, { name: l.phys, rows: [[l.bonding, l.chemical], [l.grain, "0–3"], [l.refract, "1610"], [l.maxTemp, "1560"]] }]) },
@@ -37,14 +41,15 @@ const productBase: Base[] = [
     specs: both(l => [{ name: l.chem, rows: [[l.moisture, "≥ 0.10 %"], ["SiO₂", "98.00 %"], ["Fe₂O₃", "≥ 0.01 %"], ["H₃BO₃", "≥ 1.30 %"]] }, { name: l.phys, rows: [[l.application, l.dryRamming], [l.method, l.ramming], [l.maxTemp, "1715"], [l.grain, l.anySize]] }]) },
   { slug: "hearth-ramming-mass", category: "Unshaped", grade: "ProRam-G", grades: ["ProRam-G"], image: "/images/catalogue/hearth.jpg",
     specs: both(l => [{ name: l.chem, rows: [["MgO", "80–85 %"], ["SiO₂", "1–2 %"], ["Fe₂O₃", "1.5 %"], ["Al₂O₃", "0.8 %"], ["CaO", "15 %"]] }, { name: l.phys, rows: [[l.grain, "0–8"], [l.method, l.coldRamming], [l.maxTemp, "1750"], [l.grainDensity, "3.20"], [l.bonding, l.ceramic], [l.expiry, l.months]] }]) },
+  // The catalogue's hot fettling page has no photo; this EAF photo comes from the catalogue's introduction page.
   { slug: "hot-fettling-mass", category: "Unshaped", grade: "PT1700-85L", grades: ["PT1700-85L"], image: "/images/catalogue/ladle-glow.jpg",
     specs: both(l => [{ name: l.chem, rows: [["MgO", "80–85 %"], ["SiO₂", "1–2 %"], ["Fe₂O₃", "1.5 %"], ["Al₂O₃", "0.8 %"], ["CaO", "5–10 %"]] }, { name: l.phys, rows: [[l.grain, "0–8"], [l.method, l.hotRepair], [l.maxTemp, "1750"], [l.grainDensity, "3.20"], [l.bonding, l.ceramic], [l.expiry, l.months]] }]) },
-  { slug: "hot-gunning-mass", category: "Unshaped", grade: "MgPT-90H", grades: ["MgPT-90H"], image: "/images/catalogue/furnace-slag.jpg",
+  { slug: "hot-gunning-mass", category: "Unshaped", grade: "MgPT-90H", grades: ["MgPT-90H"], image: "/images/catalogue/hot-gunning.jpg", imageFit: "contain",
     specs: both(l => [{ name: l.chem, rows: [["MgO", "88–92 %"], ["SiO₂", "3.5 %"], ["Fe₂O₃", "1.5 %"], ["Al₂O₃", "0.8 %"], ["CaO", "2.5 %"]] }, { name: l.phys, rows: [[l.grain, "0–3"], [l.method, l.hotRepair], [l.maxTemp, "1750"], [l.bulkDensity, "2.50"], [l.bonding, l.ceramic], [l.expiry, l.months]] }]) },
   { slug: "tundish-spray-mass", category: "Unshaped", grade: "PT5001-HM", grades: ["PT5001-HM"], image: "/images/catalogue/tundish.jpg",
     specs: both(l => [{ name: l.chem, rows: [["MgO", "90.0 %"], ["CaO", "3.0 %"], ["Fe₂O₃", "1.5 %"], ["SiO₂", "5.0 %"]] }, { name: l.phys, rows: [[l.grain, "0–0.5"], [l.bulkDensity, "1.4–1.7"], [l.expiry, l.months]] }]) },
   { slug: "blast-furnace-monolithics", category: "Unshaped", grade: null, grades: [], image: "/images/catalogue/blast-furnace.jpg" },
-  { slug: "pre-shaped-castables", category: "Shaped", grade: null, grades: [], image: "/images/catalogue/preshaped.jpg" },
+  { slug: "pre-shaped-castables", category: "Shaped", grade: null, grades: [], image: "/images/catalogue/preshaped.jpg", gallery: ["/images/catalogue/preshaped-install.jpg"] },
 ];
 
 const productText: Record<Locale, Record<string, ProductText>> = {

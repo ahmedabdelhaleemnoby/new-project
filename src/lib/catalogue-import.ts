@@ -58,6 +58,7 @@ async function productPayloads(upload: (publicPath: string) => Promise<string>) 
       featured_datasheet: pdf && p.datasheet && a.datasheet ? { label: { en: p.datasheet.label, ar: a.datasheet.label }, url: pdf } : null,
       datasheet_groups: pdf ? [{ name: null, sheets: [{ label: p.grades[0] ?? p.name, url: pdf }] }] : [],
       applications: (p.applications ?? []).map((text, j) => ({ en: text, ar: a.applications?.[j] ?? text })),
+      gallery: await Promise.all((p.gallery ?? []).map(upload)),
       specs: p.specs && a.specs ? {
         title: p.specs.title,
         sections: p.specs.sections.map((section, j) => ({
