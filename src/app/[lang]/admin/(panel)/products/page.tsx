@@ -7,6 +7,7 @@ import type { AdminProduct } from "@/lib/admin-shared";
 import { formatDate } from "@/components/admin/format";
 import { NotReady } from "@/components/admin/cms/not-ready";
 import { PageHead } from "@/components/admin/cms/page-head";
+import { CatalogueImport } from "@/components/admin/cms/catalogue-import";
 
 export async function generateMetadata({ params }: PageProps<"/[lang]/admin/products">): Promise<Metadata> {
   return { title: (await getLocale(params)).t.cms.products.title };
@@ -18,6 +19,7 @@ export default async function ProductsAdmin({ params }: PageProps<"/[lang]/admin
   const result = await adminLoad<AdminProduct[]>(lang, "/admin/products");
   return <>
     <PageHead eyebrow={c.nav.products} title={c.products.title} action={{ href: localePath(lang, "/admin/products/new"), label: c.products.new }} />
+    {!("notReady" in result) && <CatalogueImport lang={lang} t={c.import} />}
     {"notReady" in result ? <NotReady t={c} endpoint="GET /admin/products" section="§3.1" />
       : "error" in result ? <div className="form-error" role="alert"><p>{result.error}</p></div>
       : result.data.length === 0 ? <div className="admin-empty"><p>{c.empty}</p></div>
