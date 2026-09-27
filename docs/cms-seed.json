@@ -182,6 +182,9 @@
             }
           ]
         }
+      ],
+      "gallery": [
+        "/images/catalogue/olivine-rock.jpg"
       ]
     },
     {
@@ -324,7 +327,8 @@
             }
           ]
         }
-      ]
+      ],
+      "gallery": []
     },
     {
       "slug": "silica-ramming-mass",
@@ -466,7 +470,8 @@
             }
           ]
         }
-      ]
+      ],
+      "gallery": []
     },
     {
       "slug": "hearth-ramming-mass",
@@ -638,7 +643,8 @@
             }
           ]
         }
-      ]
+      ],
+      "gallery": []
     },
     {
       "slug": "hot-fettling-mass",
@@ -810,14 +816,15 @@
             }
           ]
         }
-      ]
+      ],
+      "gallery": []
     },
     {
       "slug": "hot-gunning-mass",
       "category": "Unshaped",
       "sort_order": 6,
       "published": true,
-      "image": "/images/catalogue/furnace-slag.jpg",
+      "image": "/images/catalogue/hot-gunning.jpg",
       "name": {
         "en": "Hot gunning mass",
         "ar": "كتلة الرش على الساخن"
@@ -982,7 +989,8 @@
             }
           ]
         }
-      ]
+      ],
+      "gallery": []
     },
     {
       "slug": "tundish-spray-mass",
@@ -1114,7 +1122,8 @@
             }
           ]
         }
-      ]
+      ],
+      "gallery": []
     },
     {
       "slug": "blast-furnace-monolithics",
@@ -1175,7 +1184,8 @@
             }
           ]
         }
-      ]
+      ],
+      "gallery": []
     },
     {
       "slug": "pre-shaped-castables",
@@ -1215,6 +1225,9 @@
             }
           ]
         }
+      ],
+      "gallery": [
+        "/images/catalogue/preshaped-install.jpg"
       ]
     }
   ],

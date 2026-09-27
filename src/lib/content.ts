@@ -35,6 +35,8 @@ const isProduct = (p: Row): boolean =>
   isText(p.slug) && isText(p.name) && (p.category === "Shaped" || p.category === "Unshaped") && isText(p.short) && isText(p.description) && isText(p.image)
   && Array.isArray(p.grades) && p.grades.every(isText) && (p.datasheet === undefined || isSheet(p.datasheet))
   && (p.applications === undefined || (Array.isArray(p.applications) && p.applications.every(isText)))
+  && (p.imageFit === undefined || p.imageFit === "cover" || p.imageFit === "contain")
+  && (p.gallery === undefined || (Array.isArray(p.gallery) && p.gallery.every(isText)))
   && (p.specs === undefined || isSpecs(p.specs));
 const isIndustry = (i: Row): boolean => isText(i.slug) && isText(i.name) && isText(i.text) && isText(i.icon);
 const isMenuFamily = (f: Row): boolean =>
@@ -71,9 +73,14 @@ function isServable(url: string) {
 }
 /** Used when an API product's photo is missing and no local product matches its slug. */
 const DEFAULT_PRODUCT_IMAGE = "/images/catalogue/backfill.jpg";
+/** The CMS's first seed: placeholder products from another company's range, retired for the Ajyad catalogue.
+ *  They're dropped from API responses; a list made only of them falls back to the local catalogue. Loading the
+ *  catalogue from the dashboard (Products → Load the Ajyad catalogue) removes them from the CMS. */
+const RETIRED_PRODUCT_SLUGS = new Set(["lightweight-bricks", "dense-alumina-bricks", "cordierite-mullite-bricks", "chemical-bond-bricks", "acid-resistant-bricks", "castables", "mortars", "chamotte", "calcined-bauxite"]);
 
-async function load<T extends object>(apiPath: string, lang: Locale, local: T[], key: keyof T & string, isValid: (row: Row) => boolean): Promise<T[]> {
-  const rows = await fetchRows(apiPath, lang);
+async function load<T extends object>(apiPath: string, lang: Locale, local: T[], key: keyof T & string, isValid: (row: Row) => boolean, retired?: Set<string>): Promise<T[]> {
+  const fetched = await fetchRows(apiPath, lang);
+  const rows = retired ? fetched?.filter(row => !(isRecord(row) && typeof row[key] === "string" && retired.has(row[key]))) : fetched;
   if (!rows?.length) return local;
   const merged = rows.filter(isRecord).map(row => {
     const fallback: Row = local.find(item => (item as Row)[key] === row[key]) ?? {};
@@ -81,20 +88,21 @@ async function load<T extends object>(apiPath: string, lang: Locale, local: T[],
       value !== null && value !== undefined && !(Array.isArray(value) && value.length === 0 && Array.isArray(fallback[field]) && (fallback[field] as unknown[]).length > 0)));
     const item = { ...fallback, ...present } as Row;
     if (typeof item.image === "string" && !isServable(item.image)) item.image = typeof fallback.image === "string" ? fallback.image : DEFAULT_PRODUCT_IMAGE;
+    if (Array.isArray(item.gallery)) item.gallery = item.gallery.filter(url => typeof url === "string" && isServable(url));
     return item;
   });
   const valid = merged.filter(isValid) as T[];
   return valid.length ? valid : local;
 }
 
-export const getProducts = (lang: Locale) => load<Product>("/products", lang, localProducts(lang), "slug", isProduct);
+export const getProducts = (lang: Locale) => load<Product>("/products", lang, localProducts(lang), "slug", isProduct, RETIRED_PRODUCT_SLUGS);
 export const getIndustries = (lang: Locale) => load<Industry>("/industries", lang, localIndustries(lang), "slug", isIndustry);
 export async function getProductMenu(lang: Locale) {
   const local: MenuFamily[] = (await getProducts(lang)).map(({ slug, name, category, grades, datasheet }) => ({
     slug, name, category,
     groups: datasheet ? [{ name: null, sheets: [{ label: grades[0] ?? name, url: datasheet.url }] }] : [],
   }));
-  return load<MenuFamily>("/menus/products", lang, local, "slug", isMenuFamily);
+  return load<MenuFamily>("/menus/products", lang, local, "slug", isMenuFamily, RETIRED_PRODUCT_SLUGS);
 }
 export const getSectorMenu = (lang: Locale) => load<Datasheet>("/menus/sectors", lang, [], "url", isSheet);
 

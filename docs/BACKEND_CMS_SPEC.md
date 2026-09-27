@@ -122,7 +122,7 @@ Strings may contain placeholders in braces, such as `{year}`, `{name}`, `{count}
 - `category` is exactly `"Shaped"` or `"Unshaped"`.
 - `grades` may be `[]`.
 - `datasheet` is optional: the product's featured PDF, or omit the key.
-- `applications` (list of strings) and `specs` (the technical data table: a title plus sections of `[label, value]` rows) are optional.
+- `applications` (list of strings), `gallery` (list of extra photo URLs from the product's catalogue page) and `specs` (the technical data table: a title plus sections of `[label, value]` rows) are optional.
 
 ### `GET /industries?locale=en`
 
@@ -221,6 +221,7 @@ Return `[]` if no sector has a brochure; the site then links each sector to its 
 | `featured_datasheet` | Nullable. `url` must be an absolute URL to a PDF. |
 | `datasheet_groups` | Array (max 30). Each group has `name` (nullable `{en, ar}`) and `sheets` (max 60), and each sheet has `label` (max 80) and `url` (absolute PDF URL). Replace the whole array on write. |
 | `applications` | Array (max 20) of `{en, ar}`, each max 200. |
+| `gallery` | Array (max 8) of absolute image URLs (normally media library URLs). |
 | `specs` | Nullable. `title` max 80. `sections` (max 6) each has `name` `{en, ar}` and `rows` (max 30) of `{ label: {en, ar}, value: {en, ar} }`, each max 80. Public endpoints resolve it to one locale (see 2A). |
 | `sort_order` | Integer ≥ 0. |
 | `published` | Boolean. Unpublished products are hidden from public endpoints. |

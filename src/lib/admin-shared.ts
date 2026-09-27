@@ -32,6 +32,7 @@ export type AdminProduct = {
   featured_datasheet: { label: Bilingual; url: string } | null; datasheet_groups: DatasheetGroup[];
   /** Optional (spec §3.1): applications and the technical data table. */
   applications?: Bilingual[];
+  gallery?: string[];
   specs?: { title: string; sections: { name: Bilingual; rows: { label: Bilingual; value: Bilingual }[] }[] } | null;
   created_at?: string | null; updated_at?: string | null;
 };
