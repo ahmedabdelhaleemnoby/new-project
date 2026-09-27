@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import { Cairo, IBM_Plex_Sans_Arabic } from "next/font/google";
 import { dirOf, locales } from "@/i18n/config";
 import { getLocale } from "@/i18n/dictionaries";
 import { RevealObserver } from "@/components/motion";
@@ -9,9 +8,10 @@ import "../motion.css";
 
 const manrope = localFont({ src: [{ path: "../../../public/fonts/manrope-400.ttf", weight: "400" }, { path: "../../../public/fonts/manrope-500.ttf", weight: "500" }, { path: "../../../public/fonts/manrope-600.ttf", weight: "600" }, { path: "../../../public/fonts/manrope-700.ttf", weight: "700" }], variable: "--font-manrope", display: "swap" });
 const barlow = localFont({ src: [{ path: "../../../public/fonts/barlow-condensed-500.ttf", weight: "500" }, { path: "../../../public/fonts/barlow-condensed-600.ttf", weight: "600" }, { path: "../../../public/fonts/barlow-condensed-700.ttf", weight: "700" }], variable: "--font-barlow", display: "swap" });
-// Arabic faces are only preloaded where they are used (see globals.css `html[lang=ar]`).
-const plexArabic = IBM_Plex_Sans_Arabic({ subsets: ["arabic"], weight: ["400", "500", "600", "700"], variable: "--font-plex-arabic", display: "swap", preload: false });
-const cairo = Cairo({ subsets: ["arabic"], weight: ["600", "700", "800"], variable: "--font-cairo", display: "swap", preload: false });
+// Arabic faces (Arabic subset, self-hosted like the Latin ones so builds don't depend on Google Fonts) are only
+// preloaded where they are used (see globals.css `html[lang=ar]`).
+const plexArabic = localFont({ src: [{ path: "../../../public/fonts/ibm-plex-sans-arabic-400-arabic.woff2", weight: "400" }, { path: "../../../public/fonts/ibm-plex-sans-arabic-500-arabic.woff2", weight: "500" }, { path: "../../../public/fonts/ibm-plex-sans-arabic-600-arabic.woff2", weight: "600" }, { path: "../../../public/fonts/ibm-plex-sans-arabic-700-arabic.woff2", weight: "700" }], variable: "--font-plex-arabic", display: "swap", preload: false });
+const cairo = localFont({ src: [{ path: "../../../public/fonts/cairo-arabic-variable.woff2", weight: "200 1000" }], variable: "--font-cairo", display: "swap", preload: false });
 
 export function generateStaticParams() {
   return locales.map(lang => ({ lang }));

@@ -30,6 +30,9 @@ export type AdminProduct = {
   id: number; slug: string; category: "Shaped" | "Unshaped"; sort_order: number; published: boolean; image: string;
   name: Bilingual; short: Bilingual; description: Bilingual; grades: string[];
   featured_datasheet: { label: Bilingual; url: string } | null; datasheet_groups: DatasheetGroup[];
+  /** Optional (spec §3.1): applications and the technical data table. */
+  applications?: Bilingual[];
+  specs?: { title: string; sections: { name: Bilingual; rows: { label: Bilingual; value: Bilingual }[] }[] } | null;
   created_at?: string | null; updated_at?: string | null;
 };
 export type AdminIndustry = {

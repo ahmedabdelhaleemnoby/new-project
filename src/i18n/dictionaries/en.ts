@@ -407,6 +407,14 @@ export const en = {
       roles: { admin: "Admin (everything)", editor: "Editor (website content)", sales: "Sales (enquiries)", hr: "HR (career enquiries)" },
     },
     retry: "Try again",
+    import: {
+      title: "Load the Ajyad catalogue",
+      text: "Replaces the website’s products with the 9 products from the Ajyad catalogue (photos, technical data and datasheet PDFs), updates the phone numbers, catalogue link and page photos, and clears page-text edits. Products that aren’t in the catalogue are deleted.",
+      button: "Load catalogue",
+      confirm: "This deletes products that aren’t in the Ajyad catalogue and clears all page-text edits. Continue?",
+      running: "Loading… this can take a minute.",
+      done: "Done: {created} products created, {updated} updated, {deleted} removed; {uploaded} files uploaded ({reused} already in the library); {texts} text edits cleared.",
+    },
     assignTo: "Assign to",
   },
   admin: {

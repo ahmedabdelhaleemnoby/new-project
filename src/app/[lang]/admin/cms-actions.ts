@@ -6,6 +6,8 @@ import { hasLocale, localePath, type Locale } from "@/i18n/config";
 import { flattenDictionary, getDictionary } from "@/i18n/dictionaries";
 import { CONTENT_TAG } from "@/lib/content";
 import { AdminApiError, adminErrorMessage, adminFetch, adminSend, adminUpload, isNotReady, type MediaItem, type PageMeta } from "@/lib/admin-api";
+import { importCatalogue } from "@/lib/catalogue-import";
+import { fill } from "@/i18n/config";
 
 // Dashboard content actions (docs/BACKEND_CMS_SPEC.md §3). Forms send their record as JSON in a `payload`
 // field; the backend validates it and 422 field errors come back keyed by dot path (e.g. "name.ar").
@@ -185,4 +187,16 @@ export async function setStaffActiveAction(rawLang: string, id: number, active: 
     return failure(error, lang);
   }
   redirect(localePath(lang, "/admin/staff"));
+}
+
+/** Replaces the CMS products, company settings and page-text overrides with the built-in Ajyad catalogue. */
+export async function importCatalogueAction(rawLang: string, _: CmsState): Promise<CmsState> {
+  const lang = safeLocale(rawLang);
+  try {
+    const report = await importCatalogue(lang);
+    updateTag(CONTENT_TAG);
+    return { ok: true, message: fill(getDictionary(lang).cms.import.done, { ...report, texts: report.clearedTexts }) };
+  } catch (error) {
+    return failure(error, lang);
+  }
 }
