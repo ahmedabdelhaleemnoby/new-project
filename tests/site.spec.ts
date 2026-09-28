@@ -44,6 +44,38 @@ test("home navigation, highlight controls, and category preview", async ({ page,
   expect(errors).toEqual([]);
 });
 
+// Exercise the exact homepage actions reported broken, including the legacy English URL.
+for (const route of [
+  { home: "/", canonical: "/", lang: "en", dir: "ltr", prefix: "" },
+  { home: "/en/", canonical: "/", lang: "en", dir: "ltr", prefix: "" },
+  { home: "/ar", canonical: "/ar", lang: "ar", dir: "rtl", prefix: "/ar" },
+] as const) {
+  for (const action of [
+    { path: "/products", label: { en: "Explore our products", ar: "استكشف منتجاتنا" }, heading: { en: "Materials made for the challenge.", ar: "مواد صُنعت للتحدي." } },
+    { path: "/about", label: { en: "Discover Ajyad", ar: "تعرّف على أجياد" }, heading: { en: "Built on experience. Driven by possibility.", ar: "مبنية على الخبرة. مدفوعة بالطموح." } },
+  ]) {
+    test(`hero ${action.label.en} from ${route.home} opens the correct localized page`, async ({ page }) => {
+      const errors: string[] = [];
+      page.on("pageerror", error => errors.push(error.message));
+      await page.emulateMedia({ reducedMotion: "reduce" });
+      const response = await page.goto(route.home);
+      expect(response?.status()).toBe(200);
+      await expect(page).toHaveURL(url => url.pathname === route.canonical);
+      const link = page.locator(".hero-actions").getByRole("link", { name: action.label[route.lang], exact: true });
+      const destination = `${route.prefix}${action.path}`;
+      await expect(link).toHaveAttribute("href", destination);
+      await link.click();
+      await expect(page).toHaveURL(url => url.pathname === destination);
+      const heading = page.getByRole("heading", { level: 1 });
+      await expect(heading).toHaveText(action.heading[route.lang]);
+      await expect(heading).toBeVisible();
+      await expect(page.locator("html")).toHaveAttribute("lang", route.lang);
+      await expect(page.locator("html")).toHaveAttribute("dir", route.dir);
+      expect(errors).toEqual([]);
+    });
+  }
+}
+
 test("catalogue filters, search, empty state, and product enquiry", async ({ page }) => {
   await page.goto("/products?category=Unshaped");
   await expect(page.getByRole("status")).toHaveText("8 product families");

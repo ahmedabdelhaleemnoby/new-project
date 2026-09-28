@@ -5,6 +5,7 @@ import { PageIntro } from "@/components/page-intro";
 import { getLocale } from "@/i18n/dictionaries";
 import { getProducts, getSettings } from "@/lib/content";
 import { resolveEnquiryPrefill } from "@/lib/enquiry";
+import { SocialContactLinks } from "@/components/social-contact-links";
 
 export async function generateMetadata({ params }: PageProps<"/[lang]/contact">): Promise<Metadata> {
   const { t } = await getLocale(params);
@@ -41,6 +42,7 @@ export default async function ContactPage({ params, searchParams }: PageProps<"/
               <Phone size={22} aria-hidden="true" />
               <div><h3>{c.call}</h3>{site.phones.map(phone => <a key={phone} href={`tel:${phone.replace(/[^\d+]/g, "")}`} dir="ltr">{phone}</a>)}</div>
             </div>}
+            <SocialContactLinks settings={site} t={t.contactLinks} detailed />
             {site.address && <div className="contact-detail">
               <MapPin size={22} aria-hidden="true" />
               <div>

@@ -6,6 +6,25 @@ const mediaHosts = ["project2.gfoura.com", ...(process.env.MEDIA_HOSTS ?? "").sp
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  // Keep locale routing internal. Absolute proxy rewrites can be treated as external
+  // when Next normalizes a loopback host (127.0.0.1 → localhost), causing a redirect loop.
+  async redirects() {
+    return [
+      { source: "/en", destination: "/", permanent: true },
+      { source: "/en/:path*", destination: "/:path*", permanent: true },
+    ];
+  },
+  async rewrites() {
+    return {
+      beforeFiles: [
+        { source: "/", destination: "/en" },
+        {
+          source: "/:path((?!en(?:/|$)|ar(?:/|$)|_next(?:/|$)|api(?:/|$)|.*\\.).+)",
+          destination: "/en/:path",
+        },
+      ],
+    };
+  },
   images: {
     remotePatterns: [
       ...mediaHosts.map(hostname => ({ protocol: "https" as const, hostname })),

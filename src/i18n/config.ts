@@ -1,5 +1,5 @@
 // Locale settings shared by server and client code.
-// English is served on unprefixed URLs (rewritten to /en by src/proxy.ts); Arabic lives under /ar.
+// English is served on unprefixed URLs (rewritten to /en by next.config.ts); Arabic lives under /ar.
 export const locales = ["en", "ar"] as const;
 export type Locale = (typeof locales)[number];
 export const defaultLocale: Locale = "en";
