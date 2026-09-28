@@ -1,4 +1,4 @@
-node_modules/
+anode_modules/
 .next/
 out/
 .env*
@@ -7,3 +7,4 @@ out/
 test-results/
 playwright-report/
 .DS_Store
+WhatsApp Video 2026-09-28 at 16.40.37.mp4

@@ -124,6 +124,9 @@ export async function getSettings(lang: Locale): Promise<SiteSettings> {
     secondaryEmail: secondary === null ? null : isRecord(secondary) && isText(secondary.email) && isText(secondary.label) ? { email: secondary.email, label: secondary.label } : local.secondaryEmail,
     // `phone` may hold several numbers separated by commas.
     phones: api.phone === null ? [] : isText(api.phone) ? api.phone.split(/[,;]/).map(p => p.trim()).filter(Boolean) : local.phones,
+    whatsappPhone: isText(api.whatsapp_phone) ? api.whatsapp_phone : isText(api.whatsapp) ? api.whatsapp : local.whatsappPhone,
+    linkedinUrl: isText(api.linkedin_url) ? api.linkedin_url : isText(api.linkedin) ? api.linkedin : local.linkedinUrl,
+    facebookUrl: isText(api.facebook_url) ? api.facebook_url : isText(api.facebook) ? api.facebook : local.facebookUrl,
     catalogueUrl: isUrl(api.catalogue_url) && isServable(api.catalogue_url) ? api.catalogue_url : local.catalogueUrl,
     address: address === null ? null : isRecord(address) && Array.isArray(address.lines) && address.lines.every(isText) && isUrl(address.map_url) ? { lines: address.lines, mapUrl: address.map_url } : local.address,
     legal: {
